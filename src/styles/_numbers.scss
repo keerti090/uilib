@@ -1,0 +1,61 @@
+@use 'primitives' as *;
+
+/* Spacing Tokens */
+$number-tokens-spacing-10: $primitives-numbers-16;
+$number-tokens-spacing-9: $primitives-numbers-15;
+$number-tokens-spacing-8: $primitives-numbers-12;
+$number-tokens-spacing-7: $primitives-numbers-10;
+$number-tokens-spacing-6: $primitives-numbers-8;
+$number-tokens-spacing-5: $primitives-numbers-6;
+$number-tokens-spacing-4: $primitives-numbers-5;
+$number-tokens-spacing-3: $primitives-numbers-3;
+$number-tokens-spacing-2: $primitives-numbers-2;
+$number-tokens-spacing-1: $primitives-numbers-1;
+
+/* Padding Tokens */
+$number-tokens-padding-1: $primitives-numbers-1;
+$number-tokens-padding-2: $primitives-numbers-2;
+$number-tokens-padding-3: $primitives-numbers-3;
+$number-tokens-padding-4: $primitives-numbers-4;
+$number-tokens-padding-5: $primitives-numbers-5;
+$number-tokens-padding-6: $primitives-numbers-6;
+$number-tokens-padding-7: $primitives-numbers-7;
+$number-tokens-padding-8: $primitives-numbers-8;
+$number-tokens-padding-9: $primitives-numbers-9;
+$number-tokens-padding-10: $primitives-numbers-10;
+$number-tokens-padding-11: $primitives-numbers-11;
+$number-tokens-padding-12: $primitives-numbers-12;
+$number-tokens-padding-13: $primitives-numbers-13;
+$number-tokens-padding-14: $primitives-numbers-14;
+
+/* Corner Radius Tokens */
+$number-tokens-corner-radius-1: $primitives-numbers-1;
+$number-tokens-corner-radius-2: $primitives-numbers-2;
+$number-tokens-corner-radius-3: $primitives-numbers-3;
+
+/* Weight Tokens */
+$number-tokens-weight-1: $primitives-numbers-0;
+$number-tokens-weight-2: $primitives-numbers-1;
+$number-tokens-weight-3: $primitives-numbers-2;
+
+/* Size Tokens */
+$number-tokens-size-1: $primitives-numbers-5;
+
+/* Other Tokens */
+$number-tokens-other-0: $primitives-numbers-0;
+$number-tokens-other-1: $primitives-numbers-1;
+$number-tokens-other-2: $primitives-numbers-2;
+$number-tokens-other-3: $primitives-numbers-3;
+$number-tokens-other-4: $primitives-numbers-4;
+$number-tokens-other-5: $primitives-numbers-5;
+$number-tokens-other-6: $primitives-numbers-6;
+$number-tokens-other-7: $primitives-numbers-7;
+$number-tokens-other-8: $primitives-numbers-8;
+$number-tokens-other-9: $primitives-numbers-9;
+$number-tokens-other-10: $primitives-numbers-10;
+$number-tokens-other-11: $primitives-numbers-11;
+$number-tokens-other-12: $primitives-numbers-12;
+$number-tokens-other-13: $primitives-numbers-13;
+$number-tokens-other-14: $primitives-numbers-14;
+$number-tokens-other-15: $primitives-numbers-15;
+$number-tokens-other-16: $primitives-numbers-16;

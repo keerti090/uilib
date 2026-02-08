@@ -1,0 +1,109 @@
+/* Base styles */
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+@use 'sass:map';
+
+.storybook-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap:$number-tokens-spacing-3; 
+  padding: 0.625rem $number-tokens-spacing-3;
+  border-radius: $number-tokens-corner-radius-3;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Label */
+.storybook-button__label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-button-darkbg;
+}
+
+
+/* Icon */
+.storybook-button__icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+/* ===== Button Types (Default State) ===== */
+.storybook-button--primary {
+  background-color: $color-tokens-surface-primary-default;
+  color: $color-tokens-content-neutral-button-darkbg;
+}
+
+.storybook-button--secondary {
+  background-color: $color-tokens-surface-neutral-white ;
+  color: $color-tokens-content-primary-default;
+  border: 1px solid;
+  border-color:$color-tokens-border-primary-default;
+}
+
+.storybook-button--tertiary {
+  background-color: $color-tokens-surface-tertiary-default ;
+  color: $color-tokens-content-primary-default;
+}
+
+.storybook-button--toned {
+  background-color: $color-tokens-surface-primary-background-light ;
+  color: $color-tokens-content-primary-default;
+}
+
+.storybook-button--link {
+  background-color: transparent;
+  color: $color-tokens-border-primary-default ;
+  text-decoration: underline;
+}
+
+/* ===== States ===== */
+.storybook-button--hover:hover {
+  background-color: $color-tokens-surface-primary-hover ;
+}
+
+.storybook-button--pressed {
+  background-color: $color-tokens-surface-primary-pressed ;
+}
+
+.storybook-button--disabled {
+  background-color: $color-tokens-surface-neutral-white-disabled;
+  color: $color-tokens-content-neutral-disabled;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.storybook-button--loading {
+  background-color: $color-tokens-surface-primary-default;
+  color: $color-tokens-content-neutral-button-darkbg;
+}
+
+.storybook-button--success {
+  background-color: $color-tokens-surface-success-default ;
+  color: $color-tokens-content-neutral-button-darkbg;
+}
+
+.storybook-button--onerror {
+  background-color: $color-tokens-surface-error-default;
+  color: $color-tokens-content-neutral-button-darkbg;
+}
+
+/* ===== Sizes ===== */
+.storybook-button--small {
+  padding: 0.25rem $number-tokens-spacing-2 ;
+  font-size: $font-size-16;
+}
+
+.storybook-button--medium {
+  padding: 0.5rem $number-tokens-spacing-3;
+  font-size: $font-size-8;
+}
+
+.storybook-button--large {
+  padding: 0.75rem $number-tokens-spacing-4;
+  font-size: $font-size-8;
+}

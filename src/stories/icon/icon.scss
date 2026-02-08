@@ -1,0 +1,38 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+@use 'sass:map';
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+  
+    &.sm {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  
+    &.md {
+      width: 1rem;
+      height: 1rem;
+    }
+  
+    &.lg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  
+    &.primary {
+     color: $color-tokens-content-primary-default;
+      // Or use fill if you convert to inline SVG
+    }
+  
+    &.neutral {
+      color: $color-tokens-content-neutral-body2;
+    }
+      
+    &.default {
+      color: $color-tokens-content-neutral-heading2-label2-body1;
+    }
+  }
