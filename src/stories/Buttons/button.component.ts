@@ -27,7 +27,7 @@ import { IconComponent } from '../icon/icon.component';
     >
       <!-- Left Icon or fallback -->
       <ng-content select="[leftIconSwap]"></ng-content>
-      <mat-icon *ngIf="!hasLeftIcon" class="material-symbols-rounded">arrow_back</mat-icon>
+      <mat-icon *ngIf="!hasLeftIcon">help_outline</mat-icon>
 
       <!-- Label -->
       <div *ngIf="buttonText" class="button-text-wrapper">
@@ -39,7 +39,7 @@ import { IconComponent } from '../icon/icon.component';
 
       <!-- Right Icon or fallback -->
       <ng-content select="[rightIconSwap]"></ng-content>
-      <mat-icon *ngIf="!hasRightIcon" class="material-symbols-rounded">arrow_forward</mat-icon>
+      <mat-icon *ngIf="!hasRightIcon">help_outline</mat-icon>
     </button>
   `
 })
