@@ -1,12 +1,13 @@
 import { Component, Input, ContentChild, AfterContentInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common'; // <-- required
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'storybook-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, IconComponent], // <-- add MatButtonModule
+  imports: [CommonModule, MatButtonModule, MatIconModule, IconComponent], // <-- add MatIconModule
   styleUrls: ['./button.scss'],
   template: `
     <button
@@ -26,7 +27,7 @@ import { IconComponent } from '../icon/icon.component';
     >
       <!-- Left Icon or fallback -->
       <ng-content select="[leftIconSwap]"></ng-content>
-      <app-icon *ngIf="!hasLeftIcon" icon="default-left" size="sm"></app-icon>
+      <mat-icon *ngIf="!hasLeftIcon" class="material-symbols-rounded">arrow_back</mat-icon>
 
       <!-- Label -->
       <div *ngIf="buttonText" class="button-text-wrapper">
@@ -38,7 +39,7 @@ import { IconComponent } from '../icon/icon.component';
 
       <!-- Right Icon or fallback -->
       <ng-content select="[rightIconSwap]"></ng-content>
-      <app-icon *ngIf="!hasRightIcon" icon="default-right" size="sm"></app-icon>
+      <mat-icon *ngIf="!hasRightIcon" class="material-symbols-rounded">arrow_forward</mat-icon>
     </button>
   `
 })

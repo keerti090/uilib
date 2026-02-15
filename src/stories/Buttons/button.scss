@@ -39,6 +39,24 @@
   width: 1.25rem;
 }
 
+/* Material Icons Rounded */
+.storybook-button mat-icon.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded' !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+}
+
 /* ===== Button Types (Default State) ===== */
 .storybook-button--primary {
   background-color: $color-tokens-surface-primary-default !important;
