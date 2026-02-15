@@ -50,8 +50,8 @@ export class ButtonComponent implements AfterContentInit {
   @Input() state: 'default' | 'hover' | 'pressed' | 'disabled' | 'error' | 'success' | 'loading' = 'default';
   @Input() type: 'primary' | 'secondary' | 'tertiary' | 'toned' | 'link' = 'primary';
 
-  @ContentChild('leftIconSwap', { read: ElementRef }) leftIcon?: ElementRef;
-  @ContentChild('rightIconSwap', { read: ElementRef }) rightIcon?: ElementRef;
+  @ContentChild('[leftIconSwap]', { read: ElementRef }) leftIcon?: ElementRef;
+  @ContentChild('[rightIconSwap]', { read: ElementRef }) rightIcon?: ElementRef;
 
   hasLeftIcon = false;
   hasRightIcon = false;
