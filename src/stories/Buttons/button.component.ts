@@ -25,9 +25,11 @@ import { IconComponent } from '../icon/icon.component';
       (mouseup)="onReleased()"
       (click)="onClick()"
     >
-      <!-- Left Icon or fallback -->
-      <ng-content select="[leftIconSwap]"></ng-content>
-      <mat-icon *ngIf="!hasLeftIcon">help_outline</mat-icon>
+      <!-- Left Icon -->
+      <ng-container *ngIf="showLeftIcon">
+        <ng-content select="[leftIconSwap]"></ng-content>
+        <app-icon *ngIf="!hasLeftIcon" [icon]="leftIconName" size="sm"></app-icon>
+      </ng-container>
 
       <!-- Label -->
       <div *ngIf="buttonText" class="button-text-wrapper">
@@ -37,9 +39,11 @@ import { IconComponent } from '../icon/icon.component';
         </ng-container>
       </div>
 
-      <!-- Right Icon or fallback -->
-      <ng-content select="[rightIconSwap]"></ng-content>
-      <mat-icon *ngIf="!hasRightIcon">help_outline</mat-icon>
+      <!-- Right Icon -->
+      <ng-container *ngIf="showRightIcon">
+        <ng-content select="[rightIconSwap]"></ng-content>
+        <app-icon *ngIf="!hasRightIcon" [icon]="rightIconName" size="sm"></app-icon>
+      </ng-container>
     </button>
   `
 })
@@ -49,6 +53,10 @@ export class ButtonComponent implements AfterContentInit {
   @Input() size: 'small' | 'medium' | 'large' = 'large';
   @Input() state: 'default' | 'hover' | 'pressed' | 'disabled' | 'error' | 'success' | 'loading' = 'default';
   @Input() type: 'primary' | 'secondary' | 'tertiary' | 'toned' | 'link' = 'primary';
+  @Input() showLeftIcon = false;
+  @Input() showRightIcon = false;
+  @Input() leftIconName = 'icon-add';
+  @Input() rightIconName = 'icon-add';
 
   @ContentChild('[leftIconSwap]', { read: ElementRef }) leftIcon?: ElementRef;
   @ContentChild('[rightIconSwap]', { read: ElementRef }) rightIcon?: ElementRef;

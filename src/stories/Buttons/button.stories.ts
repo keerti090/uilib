@@ -28,6 +28,18 @@ const meta: Meta<ButtonComponent> = {
     buttonText: {
       control: 'boolean',
     },
+    showLeftIcon: {
+      control: 'boolean',
+    },
+    showRightIcon: {
+      control: 'boolean',
+    },
+    leftIconName: {
+      control: 'text',
+    },
+    rightIconName: {
+      control: 'text',
+    },
   },
   args: {
     label: 'Button',
@@ -35,6 +47,10 @@ const meta: Meta<ButtonComponent> = {
     state: 'default',
     size: 'large',
     buttonText: true,
+    showLeftIcon: false,
+    showRightIcon: false,
+    leftIconName: 'icon-add',
+    rightIconName: 'icon-add',
   },
 };
 
@@ -43,23 +59,20 @@ type Story = StoryObj<ButtonComponent>;
 
 export const Primary: Story = {
   args: {
-    label: 'Primary Button',
+    label: 'Button',
+    showLeftIcon: true,
+    showRightIcon: true,
+    leftIconName: 'icon-add',
+    rightIconName: 'icon-add',
   },
-  render: (args) => ({
-    props: args,
-    template: `
-      <storybook-button [type]="type" [state]="state" [size]="size" [buttonText]="buttonText" [label]="label">
-        <app-icon icon="icon-search" size="sm" leftIconSwap></app-icon>
-        <app-icon icon="icon-add" size="sm" rightIconSwap></app-icon>
-      </storybook-button>
-    `,
-  }),
 };
 
 export const Disabled: Story = {
   args: {
-    label: 'Disabled',
+    label: 'Button',
     state: 'disabled',
+    showLeftIcon: true,
+    showRightIcon: true,
   },
 };
 
@@ -87,21 +100,70 @@ export const Error: Story = {
 export const WithIconsOnly: Story = {
   args: {
     buttonText: false,
+    showLeftIcon: true,
+    showRightIcon: true,
   },
-  render: (args) => ({
-    props: args,
-    template: `
-      <storybook-button [type]="type" [state]="state" [size]="size" [buttonText]="buttonText">
-        <app-icon icon="icon-check" size="sm" leftIconSwap></app-icon>
-        <app-icon icon="icon-chevron-right" size="sm" rightIconSwap></app-icon>
-      </storybook-button>
-    `,
-  }),
 };
 
 export const NoIcons: Story = {
   args: {
     buttonText: true,
+    showLeftIcon: false,
+    showRightIcon: false,
+  },
+};
+
+export const OnState: Story = {
+  args: {
+    label: 'Button',
+    showLeftIcon: true,
+    showRightIcon: true,
+    type: 'primary',
+  },
+};
+
+export const OffState: Story = {
+  args: {
+    label: 'Button',
+    showLeftIcon: true,
+    showRightIcon: true,
+    type: 'primary',
+  },
+};
+
+export const SmallSize: Story = {
+  args: {
+    label: 'Button',
+    size: 'small',
+    showLeftIcon: true,
+    showRightIcon: true,
+  },
+};
+
+export const MediumSize: Story = {
+  args: {
+    label: 'Button',
+    size: 'medium',
+    showLeftIcon: true,
+    showRightIcon: true,
+  },
+};
+
+export const LargeSize: Story = {
+  args: {
+    label: 'Button',
+    size: 'large',
+    showLeftIcon: true,
+    showRightIcon: true,
+  },
+};
+
+export const Toned: Story = {
+  args: {
+    label: 'Button',
+    type: 'toned',
+    showLeftIcon: false,
+    showRightIcon: true,
   },
 };
 
