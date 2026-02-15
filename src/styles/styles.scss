@@ -1,7 +1,27 @@
+// All @use rules must come first
+@use '@angular/material' as mat;
 @use './primitives' as *;
-
 @use './numbers' as *;
 @use './typography' as *;
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Define a custom Material theme (optional, can customize colors)
+$custom-primary: mat.define-palette(mat.$indigo-palette);
+$custom-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app
+@include mat.all-component-themes($custom-theme);
 
 
 

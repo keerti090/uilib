@@ -5,17 +5,24 @@
 @use '../../styles/colors' as *;
 @use 'sass:map';
 
+/* Override Material UI button styles with custom styles */
 .storybook-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap:$number-tokens-spacing-3; 
-  padding: 0.625rem $number-tokens-spacing-3;
-  border-radius: $number-tokens-corner-radius-3;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: $number-tokens-spacing-3 !important; 
+  padding: 0.625rem $number-tokens-spacing-3 !important;
+  border-radius: $number-tokens-corner-radius-3 !important;
   position: relative;
   cursor: pointer;
   border: none;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
+  
+  /* Reset Material UI defaults */
+  min-width: auto !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: none !important;
 }
 
 /* Label */
@@ -34,76 +41,76 @@
 
 /* ===== Button Types (Default State) ===== */
 .storybook-button--primary {
-  background-color: $color-tokens-surface-primary-default;
-  color: $color-tokens-content-neutral-button-darkbg;
+  background-color: $color-tokens-surface-primary-default !important;
+  color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
 .storybook-button--secondary {
-  background-color: $color-tokens-surface-neutral-white ;
-  color: $color-tokens-content-primary-default;
-  border: 1px solid;
-  border-color:$color-tokens-border-primary-default;
+  background-color: $color-tokens-surface-neutral-white !important;
+  color: $color-tokens-content-primary-default !important;
+  border: 1px solid !important;
+  border-color: $color-tokens-border-primary-default !important;
 }
 
 .storybook-button--tertiary {
-  background-color: $color-tokens-surface-tertiary-default ;
-  color: $color-tokens-content-primary-default;
+  background-color: $color-tokens-surface-tertiary-default !important;
+  color: $color-tokens-content-primary-default !important;
 }
 
 .storybook-button--toned {
-  background-color: $color-tokens-surface-primary-background-light ;
-  color: $color-tokens-content-primary-default;
+  background-color: $color-tokens-surface-primary-background-light !important;
+  color: $color-tokens-content-primary-default !important;
 }
 
 .storybook-button--link {
-  background-color: transparent;
-  color: $color-tokens-border-primary-default ;
-  text-decoration: underline;
+  background-color: transparent !important;
+  color: $color-tokens-border-primary-default !important;
+  text-decoration: underline !important;
 }
 
 /* ===== States ===== */
 .storybook-button--hover:hover {
-  background-color: $color-tokens-surface-primary-hover ;
+  background-color: $color-tokens-surface-primary-hover !important;
 }
 
 .storybook-button--pressed {
-  background-color: $color-tokens-surface-primary-pressed ;
+  background-color: $color-tokens-surface-primary-pressed !important;
 }
 
 .storybook-button--disabled {
-  background-color: $color-tokens-surface-neutral-white-disabled;
-  color: $color-tokens-content-neutral-disabled;
-  cursor: not-allowed;
-  pointer-events: none;
+  background-color: $color-tokens-surface-neutral-white-disabled !important;
+  color: $color-tokens-content-neutral-disabled !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
 .storybook-button--loading {
-  background-color: $color-tokens-surface-primary-default;
-  color: $color-tokens-content-neutral-button-darkbg;
+  background-color: $color-tokens-surface-primary-default !important;
+  color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
 .storybook-button--success {
-  background-color: $color-tokens-surface-success-default ;
-  color: $color-tokens-content-neutral-button-darkbg;
+  background-color: $color-tokens-surface-success-default !important;
+  color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
 .storybook-button--onerror {
-  background-color: $color-tokens-surface-error-default;
-  color: $color-tokens-content-neutral-button-darkbg;
+  background-color: $color-tokens-surface-error-default !important;
+  color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
 /* ===== Sizes ===== */
 .storybook-button--small {
-  padding: 0.25rem $number-tokens-spacing-2 ;
-  font-size: $font-size-16;
+  padding: 0.25rem $number-tokens-spacing-2 !important;
+  font-size: $font-size-16 !important;
 }
 
 .storybook-button--medium {
-  padding: 0.5rem $number-tokens-spacing-3;
-  font-size: $font-size-8;
+  padding: 0.5rem $number-tokens-spacing-3 !important;
+  font-size: $font-size-8 !important;
 }
 
 .storybook-button--large {
-  padding: 0.75rem $number-tokens-spacing-4;
-  font-size: $font-size-8;
+  padding: 0.75rem $number-tokens-spacing-4 !important;
+  font-size: $font-size-8 !important;
 }

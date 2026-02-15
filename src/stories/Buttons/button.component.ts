@@ -1,20 +1,23 @@
 import { Component, Input, ContentChild, AfterContentInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common'; // <-- required
+import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'storybook-button',
   standalone: true,
-  imports: [CommonModule, IconComponent], // <-- add CommonModule here
+  imports: [CommonModule, MatButtonModule, IconComponent], // <-- add MatButtonModule
   styleUrls: ['./button.scss'],
   template: `
-    <div
+    <button
+      mat-button
       class="storybook-button"
       [ngClass]="[
   'storybook-button--' + type,
   'storybook-button--' + state,
   'storybook-button--' + size
 ]"
+      [disabled]="state === 'disabled'"
       (mouseenter)="onHover()"
       (mouseleave)="onLeave()"
       (mousedown)="onPressed()"
@@ -36,7 +39,7 @@ import { IconComponent } from '../icon/icon.component';
       <!-- Right Icon or fallback -->
       <ng-content select="[rightIconSwap]"></ng-content>
       <app-icon *ngIf="!hasRightIcon" icon="default-right" size="sm"></app-icon>
-    </div>
+    </button>
   `
 })
 export class ButtonComponent implements AfterContentInit {
