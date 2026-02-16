@@ -85,19 +85,19 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-b3bbb8e6cde271952055ec54632e9e8e49b45585bc060eb8431d1f4ed4abf8a52ffedb58809e41f40b438fc1c5d9183b48cefb40452be9f7ff4c3aa818cb723c",
+            "id": "component-ButtonComponent-d063e6773488d7dd4198ea152bac0cea7f368a4537150e43d28b7ac2c30cbc23cf479387ea6b6e7bbe81d1428482d0246554384d6b60738c205c9431a818187d",
             "file": "src/stories/Buttons/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "storybook-button",
+            "selector": "AppCore-button",
             "styleUrls": [
                 "./button.scss"
             ],
             "styles": [],
-            "template": "    <button\n      mat-button\n      class=\"storybook-button\"\n      [ngClass]=\"[\n  'storybook-button--' + type,\n  'storybook-button--' + state,\n  'storybook-button--' + size\n]\"\n      [disabled]=\"state === 'disabled'\"\n      (mouseenter)=\"onHover()\"\n      (mouseleave)=\"onLeave()\"\n      (mousedown)=\"onPressed()\"\n      (mouseup)=\"onReleased()\"\n      (click)=\"onClick()\"\n    >\n      <!-- Left Icon or fallback -->\n      <ng-content select=\"[leftIconSwap]\"></ng-content>\n      <app-icon *ngIf=\"!hasLeftIcon\" icon=\"default-left\" size=\"sm\"></app-icon>\n\n      <!-- Label -->\n      <div *ngIf=\"buttonText\" class=\"button-text-wrapper\">\n        <ng-container [ngSwitch]=\"state\">\n          <span *ngSwitchCase=\"'loading'\">⏳</span>\n          <span *ngSwitchDefault>{{ label }}</span>\n        </ng-container>\n      </div>\n\n      <!-- Right Icon or fallback -->\n      <ng-content select=\"[rightIconSwap]\"></ng-content>\n      <app-icon *ngIf=\"!hasRightIcon\" icon=\"default-right\" size=\"sm\"></app-icon>\n    </button>\n",
+            "template": "    <button\n      mat-button\n      class=\"AppCore-button\"\n      [ngClass]=\"[\n  'AppCore-button--' + type,\n  'AppCore-button--' + state,\n  'AppCore-button--' + size\n]\"\n      [disabled]=\"state === 'disabled'\"\n      (mouseenter)=\"onHover()\"\n      (mouseleave)=\"onLeave()\"\n      (mousedown)=\"onPressed()\"\n      (mouseup)=\"onReleased()\"\n      (click)=\"onClick()\"\n    >\n      <!-- Left Icon -->\n      <ng-container *ngIf=\"showLeftIcon\">\n        <ng-content select=\"[leftIconSwap]\"></ng-content>\n        <app-icon *ngIf=\"!hasLeftIcon\" [icon]=\"leftIconName\" size=\"sm\"></app-icon>\n      </ng-container>\n\n      <!-- Label -->\n      <div *ngIf=\"buttonText\" class=\"button-text-wrapper\">\n        <ng-container [ngSwitch]=\"state\">\n          <span *ngSwitchCase=\"'loading'\">⏳</span>\n          <span *ngSwitchDefault>{{ label }}</span>\n        </ng-container>\n      </div>\n\n      <!-- Right Icon -->\n      <ng-container *ngIf=\"showRightIcon\">\n        <ng-content select=\"[rightIconSwap]\"></ng-content>\n        <app-icon *ngIf=\"!hasRightIcon\" [icon]=\"rightIconName\" size=\"sm\"></app-icon>\n      </ng-container>\n    </button>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -107,7 +107,7 @@
                     "defaultValue": "true",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 46,
+                    "line": 51,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -116,8 +116,44 @@
                     "defaultValue": "'Button'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 47,
+                    "line": 52,
                     "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "leftIconName",
+                    "defaultValue": "'icon-add'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 58,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "rightIconName",
+                    "defaultValue": "'icon-add'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 59,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "showLeftIcon",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 56,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showRightIcon",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 57,
+                    "type": "boolean",
                     "decorators": []
                 },
                 {
@@ -125,7 +161,7 @@
                     "defaultValue": "'large'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 48,
+                    "line": 53,
                     "type": "\"small\" | \"medium\" | \"large\"",
                     "decorators": []
                 },
@@ -134,7 +170,7 @@
                     "defaultValue": "'default'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 49,
+                    "line": 54,
                     "type": "\"default\" | \"hover\" | \"pressed\" | \"disabled\" | \"error\" | \"success\" | \"loading\"",
                     "decorators": []
                 },
@@ -143,7 +179,7 @@
                     "defaultValue": "'primary'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 50,
+                    "line": 55,
                     "type": "\"primary\" | \"secondary\" | \"tertiary\" | \"toned\" | \"link\"",
                     "decorators": []
                 }
@@ -159,7 +195,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 55
+                    "line": 64
                 },
                 {
                     "name": "hasRightIcon",
@@ -170,7 +206,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 56
+                    "line": 65
                 },
                 {
                     "name": "leftIcon",
@@ -180,11 +216,11 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 52,
+                    "line": 61,
                     "decorators": [
                         {
                             "name": "ContentChild",
-                            "stringifiedArguments": "'leftIconSwap', {read: ElementRef}"
+                            "stringifiedArguments": "'[leftIconSwap]', {read: ElementRef}"
                         }
                     ],
                     "modifierKind": [
@@ -199,11 +235,11 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 53,
+                    "line": 62,
                     "decorators": [
                         {
                             "name": "ContentChild",
-                            "stringifiedArguments": "'rightIconSwap', {read: ElementRef}"
+                            "stringifiedArguments": "'[rightIconSwap]', {read: ElementRef}"
                         }
                     ],
                     "modifierKind": [
@@ -218,7 +254,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 58,
+                    "line": 67,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -228,7 +264,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 75,
+                    "line": 84,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -238,7 +274,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 63,
+                    "line": 72,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -248,7 +284,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 66,
+                    "line": 75,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -258,7 +294,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 69,
+                    "line": 78,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -268,7 +304,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 72,
+                    "line": 81,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -288,6 +324,10 @@
                     "type": "module"
                 },
                 {
+                    "name": "MatIconModule",
+                    "type": "module"
+                },
+                {
                     "name": "IconComponent",
                     "type": "component"
                 }
@@ -295,11 +335,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, ContentChild, AfterContentInit, ElementRef } from '@angular/core';\nimport { CommonModule } from '@angular/common'; // <-- required\nimport { MatButtonModule } from '@angular/material/button';\nimport { IconComponent } from '../icon/icon.component';\n\n@Component({\n  selector: 'storybook-button',\n  standalone: true,\n  imports: [CommonModule, MatButtonModule, IconComponent], // <-- add MatButtonModule\n  styleUrls: ['./button.scss'],\n  template: `\n    <button\n      mat-button\n      class=\"storybook-button\"\n      [ngClass]=\"[\n  'storybook-button--' + type,\n  'storybook-button--' + state,\n  'storybook-button--' + size\n]\"\n      [disabled]=\"state === 'disabled'\"\n      (mouseenter)=\"onHover()\"\n      (mouseleave)=\"onLeave()\"\n      (mousedown)=\"onPressed()\"\n      (mouseup)=\"onReleased()\"\n      (click)=\"onClick()\"\n    >\n      <!-- Left Icon or fallback -->\n      <ng-content select=\"[leftIconSwap]\"></ng-content>\n      <app-icon *ngIf=\"!hasLeftIcon\" icon=\"default-left\" size=\"sm\"></app-icon>\n\n      <!-- Label -->\n      <div *ngIf=\"buttonText\" class=\"button-text-wrapper\">\n        <ng-container [ngSwitch]=\"state\">\n          <span *ngSwitchCase=\"'loading'\">⏳</span>\n          <span *ngSwitchDefault>{{ label }}</span>\n        </ng-container>\n      </div>\n\n      <!-- Right Icon or fallback -->\n      <ng-content select=\"[rightIconSwap]\"></ng-content>\n      <app-icon *ngIf=\"!hasRightIcon\" icon=\"default-right\" size=\"sm\"></app-icon>\n    </button>\n  `\n})\nexport class ButtonComponent implements AfterContentInit {\n  @Input() buttonText = true;\n  @Input() label = 'Button';\n  @Input() size: 'small' | 'medium' | 'large' = 'large';\n  @Input() state: 'default' | 'hover' | 'pressed' | 'disabled' | 'error' | 'success' | 'loading' = 'default';\n  @Input() type: 'primary' | 'secondary' | 'tertiary' | 'toned' | 'link' = 'primary';\n\n  @ContentChild('leftIconSwap', { read: ElementRef }) leftIcon?: ElementRef;\n  @ContentChild('rightIconSwap', { read: ElementRef }) rightIcon?: ElementRef;\n\n  hasLeftIcon = false;\n  hasRightIcon = false;\n\n  ngAfterContentInit() {\n    this.hasLeftIcon = !!this.leftIcon;\n    this.hasRightIcon = !!this.rightIcon;\n  }\n\n  onHover() {\n    if (this.state !== 'disabled') this.state = 'hover';\n  }\n  onLeave() {\n    if (this.state !== 'disabled') this.state = 'default';\n  }\n  onPressed() {\n    if (this.state !== 'disabled') this.state = 'pressed';\n  }\n  onReleased() {\n    if (this.state !== 'disabled') this.state = 'default';\n  }\n  onClick() {\n    if (this.state !== 'disabled') console.log('Button clicked');\n  }\n}\n",
+            "sourceCode": "import { Component, Input, ContentChild, AfterContentInit, ElementRef } from '@angular/core';\nimport { CommonModule } from '@angular/common'; // <-- required\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatIconModule } from '@angular/material/icon';\nimport { IconComponent } from '../icon/icon.component';\n\n@Component({\n  selector: 'AppCore-button',\n  standalone: true,\n  imports: [CommonModule, MatButtonModule, MatIconModule, IconComponent], // <-- add MatIconModule\n  styleUrls: ['./button.scss'],\n  template: `\n    <button\n      mat-button\n      class=\"AppCore-button\"\n      [ngClass]=\"[\n  'AppCore-button--' + type,\n  'AppCore-button--' + state,\n  'AppCore-button--' + size\n]\"\n      [disabled]=\"state === 'disabled'\"\n      (mouseenter)=\"onHover()\"\n      (mouseleave)=\"onLeave()\"\n      (mousedown)=\"onPressed()\"\n      (mouseup)=\"onReleased()\"\n      (click)=\"onClick()\"\n    >\n      <!-- Left Icon -->\n      <ng-container *ngIf=\"showLeftIcon\">\n        <ng-content select=\"[leftIconSwap]\"></ng-content>\n        <app-icon *ngIf=\"!hasLeftIcon\" [icon]=\"leftIconName\" size=\"sm\"></app-icon>\n      </ng-container>\n\n      <!-- Label -->\n      <div *ngIf=\"buttonText\" class=\"button-text-wrapper\">\n        <ng-container [ngSwitch]=\"state\">\n          <span *ngSwitchCase=\"'loading'\">⏳</span>\n          <span *ngSwitchDefault>{{ label }}</span>\n        </ng-container>\n      </div>\n\n      <!-- Right Icon -->\n      <ng-container *ngIf=\"showRightIcon\">\n        <ng-content select=\"[rightIconSwap]\"></ng-content>\n        <app-icon *ngIf=\"!hasRightIcon\" [icon]=\"rightIconName\" size=\"sm\"></app-icon>\n      </ng-container>\n    </button>\n  `\n})\nexport class ButtonComponent implements AfterContentInit {\n  @Input() buttonText = true;\n  @Input() label = 'Button';\n  @Input() size: 'small' | 'medium' | 'large' = 'large';\n  @Input() state: 'default' | 'hover' | 'pressed' | 'disabled' | 'error' | 'success' | 'loading' = 'default';\n  @Input() type: 'primary' | 'secondary' | 'tertiary' | 'toned' | 'link' = 'primary';\n  @Input() showLeftIcon = false;\n  @Input() showRightIcon = false;\n  @Input() leftIconName = 'icon-add';\n  @Input() rightIconName = 'icon-add';\n\n  @ContentChild('[leftIconSwap]', { read: ElementRef }) leftIcon?: ElementRef;\n  @ContentChild('[rightIconSwap]', { read: ElementRef }) rightIcon?: ElementRef;\n\n  hasLeftIcon = false;\n  hasRightIcon = false;\n\n  ngAfterContentInit() {\n    this.hasLeftIcon = !!this.leftIcon;\n    this.hasRightIcon = !!this.rightIcon;\n  }\n\n  onHover() {\n    if (this.state !== 'disabled') this.state = 'hover';\n  }\n  onLeave() {\n    if (this.state !== 'disabled') this.state = 'default';\n  }\n  onPressed() {\n    if (this.state !== 'disabled') this.state = 'pressed';\n  }\n  onReleased() {\n    if (this.state !== 'disabled') this.state = 'default';\n  }\n  onClick() {\n    if (this.state !== 'disabled') console.log('Button clicked');\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.storybook-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  gap: $number-tokens-spacing-3 !important; \n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Label */\n.storybook-button__label {\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: $color-tokens-content-neutral-button-darkbg;\n}\n\n\n/* Icon */\n.storybook-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* ===== Button Types (Default State) ===== */\n.storybook-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.storybook-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.storybook-button--tertiary {\n  background-color: $color-tokens-surface-tertiary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.storybook-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.storybook-button--link {\n  background-color: transparent !important;\n  color: $color-tokens-border-primary-default !important;\n  text-decoration: underline !important;\n}\n\n/* ===== States ===== */\n.storybook-button--hover:hover {\n  background-color: $color-tokens-surface-primary-hover !important;\n}\n\n.storybook-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.storybook-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.storybook-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.storybook-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.storybook-button--onerror {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.storybook-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.storybook-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.storybook-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
+                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.AppCore-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  gap: $number-tokens-spacing-3 !important; \n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Label */\n.AppCore-button__label {\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: $color-tokens-content-neutral-button-darkbg;\n}\n\n\n/* Icon */\n.AppCore-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* Material Icons Rounded */\n.AppCore-button mat-icon.material-symbols-rounded {\n  font-family: 'Material Symbols Rounded' !important;\n  font-weight: normal;\n  font-style: normal;\n  font-size: 1.25rem !important;\n  line-height: 1 !important;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-smoothing: antialiased;\n  height: 1.25rem !important;\n  width: 1.25rem !important;\n}\n\n/* ===== Button Types (Default State) ===== */\n.AppCore-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.AppCore-button--tertiary {\n  background-color: $color-tokens-surface-tertiary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--link {\n  background-color: transparent !important;\n  color: $color-tokens-border-primary-default !important;\n  text-decoration: underline !important;\n}\n\n/* ===== States ===== */\n.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-hover !important;\n}\n\n.AppCore-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.AppCore-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.AppCore-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--onerror {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.AppCore-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.AppCore-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.AppCore-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
                     "styleUrl": "./button.scss"
                 }
             ],
@@ -311,19 +351,19 @@
         },
         {
             "name": "HeaderComponent",
-            "id": "component-HeaderComponent-e402c8aec9ad9d8f83f44a52641fb8a23c75b4f14071147ff2fc64c3f0cc2e9b33da45ec4cd5e09f48a0c00e2b0df0805b19d8826da55b31b5481cd81a57d624",
+            "id": "component-HeaderComponent-7c528b7108042afd3d7055ec0754141e6dc12df51c700b5303db7319ab2d72df478bb19eba3d9d77429488a67af032f8e7ad491ca2c7f283dde55659597fbfb4",
             "file": "src/stories/Header/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "storybook-header",
+            "selector": "AppCore-header",
             "styleUrls": [
                 "./header.scss"
             ],
             "styles": [],
-            "template": "<header>  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <!-- <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div> -->\n  </div>\n</header>",
+            "template": "<header>  <div class=\"AppCore-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <!-- <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <AppCore-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></AppCore-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <AppCore-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></AppCore-button>\n        <AppCore-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></AppCore-button>\n      </div>\n    </div> -->\n  </div>\n</header>",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -384,11 +424,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from '../Buttons/button.component';\nimport type { User } from '../user';\n\n@Component({\n  selector: 'storybook-header',\n  standalone: true,\n  imports: [CommonModule, ButtonComponent],\n  template: `<header>\n  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <!-- <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div> -->\n  </div>\n</header>`,\n  styleUrls: ['./header.scss'],\n})\nexport class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from '../Buttons/button.component';\nimport type { User } from '../user';\n\n@Component({\n  selector: 'AppCore-header',\n  standalone: true,\n  imports: [CommonModule, ButtonComponent],\n  template: `<header>\n  <div class=\"AppCore-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <!-- <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <AppCore-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></AppCore-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <AppCore-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></AppCore-button>\n        <AppCore-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></AppCore-button>\n      </div>\n    </div> -->\n  </div>\n</header>`,\n  styleUrls: ['./header.scss'],\n})\nexport class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".storybook-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n}\n\n.storybook-header svg {\n  display: inline-block;\n  vertical-align: top;\n}\n\n.storybook-header h1 {\n  display: inline-block;\n  vertical-align: top;\n  margin: 6px 0 6px 10px;\n  font-weight: 700;\n  font-size: 20px;\n  line-height: 1;\n}\n\n.storybook-header button + button {\n  margin-left: 10px;\n}\n\n.storybook-header .welcome {\n  margin-right: 10px;\n  color: #333;\n  font-size: 14px;\n}\n",
+                    "data": ".AppCore-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n}\n\n.AppCore-header svg {\n  display: inline-block;\n  vertical-align: top;\n}\n\n.AppCore-header h1 {\n  display: inline-block;\n  vertical-align: top;\n  margin: 6px 0 6px 10px;\n  font-weight: 700;\n  font-size: 20px;\n  line-height: 1;\n}\n\n.AppCore-header button + button {\n  margin-left: 10px;\n}\n\n.AppCore-header .welcome {\n  margin-right: 10px;\n  color: #333;\n  font-size: 14px;\n}\n",
                     "styleUrl": "./header.scss"
                 }
             ],
@@ -543,7 +583,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Disabled',\n    state: 'disabled',\n  },\n}"
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    state: 'disabled',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
             },
             {
                 "name": "Error",
@@ -554,6 +594,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Error',\n    state: 'error',\n  },\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'large',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
             },
             {
                 "name": "Loading",
@@ -586,6 +636,16 @@
                 "defaultValue": "{}"
             },
             {
+                "name": "MediumSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'medium',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+            },
+            {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -593,7 +653,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ButtonComponent>",
-                "defaultValue": "{\n  title: 'Example/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n  },\n}"
+                "defaultValue": "{\n  title: 'components/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n    showLeftIcon: {\n      control: 'boolean',\n    },\n    showRightIcon: {\n      control: 'boolean',\n    },\n    leftIconName: {\n      control: 'text',\n    },\n    rightIconName: {\n      control: 'text',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n    leftIconName: 'icon-add',\n    rightIconName: 'icon-add',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -603,7 +663,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<HeaderComponent>",
-                "defaultValue": "{\n  title: 'Example/Header',\n  component: HeaderComponent,\n  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs\n  tags: ['autodocs'],\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout\n    layout: 'fullscreen',\n  },\n  args: {\n    onLogin: fn(),\n    onLogout: fn(),\n    onCreateAccount: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'components/Header',\n  component: HeaderComponent,\n  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs\n  tags: ['autodocs'],\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout\n    layout: 'fullscreen',\n  },\n  args: {\n    onLogin: fn(),\n    onLogout: fn(),\n    onCreateAccount: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -613,7 +673,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<IconComponent>",
-                "defaultValue": "{\n  title: 'Example/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'icon-search',\n    size: 'md',\n    alt: 'Search Icon',\n  },\n}"
+                "defaultValue": "{\n  title: 'components/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'icon-search',\n    size: 'md',\n    alt: 'Search Icon',\n  },\n}"
             },
             {
                 "name": "NoIcons",
@@ -623,7 +683,27 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    buttonText: true,\n  },\n}"
+                "defaultValue": "{\n  args: {\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n  },\n}"
+            },
+            {
+                "name": "OffState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    type: 'primary',\n  },\n}"
+            },
+            {
+                "name": "OnState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    type: 'primary',\n  },\n}"
             },
             {
                 "name": "preview",
@@ -643,7 +723,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Primary Button',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <storybook-button [type]=\"type\" [state]=\"state\" [size]=\"size\" [buttonText]=\"buttonText\" [label]=\"label\">\n        <app-icon icon=\"icon-search\" size=\"sm\" leftIconSwap></app-icon>\n        <app-icon icon=\"icon-add\" size=\"sm\" rightIconSwap></app-icon>\n      </storybook-button>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    leftIconName: 'icon-add',\n    rightIconName: 'icon-add',\n  },\n}"
             },
             {
                 "name": "serverConfig",
@@ -656,6 +736,16 @@
                 "defaultValue": "{\n  providers: [\n    provideServerRendering()\n  ]\n}"
             },
             {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'small',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+            },
+            {
                 "name": "Success",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -666,6 +756,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Success',\n    state: 'success',\n  },\n}"
             },
             {
+                "name": "Toned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Button',\n    type: 'toned',\n    showLeftIcon: false,\n    showRightIcon: true,\n  },\n}"
+            },
+            {
                 "name": "WithIconsOnly",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -673,7 +773,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    buttonText: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <storybook-button [type]=\"type\" [state]=\"state\" [size]=\"size\" [buttonText]=\"buttonText\">\n        <app-icon icon=\"icon-check\" size=\"sm\" leftIconSwap></app-icon>\n        <app-icon icon=\"icon-chevron-right\" size=\"sm\" rightIconSwap></app-icon>\n      </storybook-button>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n    buttonText: false,\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
             }
         ],
         "functions": [],
@@ -791,7 +891,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<IconComponent>",
-                    "defaultValue": "{\n  title: 'Example/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'icon-search',\n    size: 'md',\n    alt: 'Search Icon',\n  },\n}"
+                    "defaultValue": "{\n  title: 'components/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'icon-search',\n    size: 'md',\n    alt: 'Search Icon',\n  },\n}"
                 }
             ],
             "src/stories/Buttons/button.stories.ts": [
@@ -803,7 +903,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Disabled',\n    state: 'disabled',\n  },\n}"
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    state: 'disabled',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
                 },
                 {
                     "name": "Error",
@@ -816,6 +916,16 @@
                     "defaultValue": "{\n  args: {\n    label: 'Error',\n    state: 'error',\n  },\n}"
                 },
                 {
+                    "name": "LargeSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'large',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+                },
+                {
                     "name": "Loading",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -826,6 +936,16 @@
                     "defaultValue": "{\n  args: {\n    label: 'Loading...',\n    state: 'loading',\n  },\n}"
                 },
                 {
+                    "name": "MediumSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'medium',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -833,7 +953,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ButtonComponent>",
-                    "defaultValue": "{\n  title: 'Example/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n  },\n}"
+                    "defaultValue": "{\n  title: 'components/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n    showLeftIcon: {\n      control: 'boolean',\n    },\n    showRightIcon: {\n      control: 'boolean',\n    },\n    leftIconName: {\n      control: 'text',\n    },\n    rightIconName: {\n      control: 'text',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n    leftIconName: 'icon-add',\n    rightIconName: 'icon-add',\n  },\n}"
                 },
                 {
                     "name": "NoIcons",
@@ -843,7 +963,27 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    buttonText: true,\n  },\n}"
+                    "defaultValue": "{\n  args: {\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n  },\n}"
+                },
+                {
+                    "name": "OffState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    type: 'primary',\n  },\n}"
+                },
+                {
+                    "name": "OnState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    type: 'primary',\n  },\n}"
                 },
                 {
                     "name": "Primary",
@@ -853,7 +993,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Primary Button',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <storybook-button [type]=\"type\" [state]=\"state\" [size]=\"size\" [buttonText]=\"buttonText\" [label]=\"label\">\n        <app-icon icon=\"icon-search\" size=\"sm\" leftIconSwap></app-icon>\n        <app-icon icon=\"icon-add\" size=\"sm\" rightIconSwap></app-icon>\n      </storybook-button>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    leftIconName: 'icon-add',\n    rightIconName: 'icon-add',\n  },\n}"
+                },
+                {
+                    "name": "SmallSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'small',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
                 },
                 {
                     "name": "Success",
@@ -866,6 +1016,16 @@
                     "defaultValue": "{\n  args: {\n    label: 'Success',\n    state: 'success',\n  },\n}"
                 },
                 {
+                    "name": "Toned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Buttons/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Button',\n    type: 'toned',\n    showLeftIcon: false,\n    showRightIcon: true,\n  },\n}"
+                },
+                {
                     "name": "WithIconsOnly",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -873,7 +1033,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    buttonText: false,\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <storybook-button [type]=\"type\" [state]=\"state\" [size]=\"size\" [buttonText]=\"buttonText\">\n        <app-icon icon=\"icon-check\" size=\"sm\" leftIconSwap></app-icon>\n        <app-icon icon=\"icon-chevron-right\" size=\"sm\" rightIconSwap></app-icon>\n      </storybook-button>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: {\n    buttonText: false,\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
                 }
             ],
             "src/stories/Header/header.stories.ts": [
@@ -905,7 +1065,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<HeaderComponent>",
-                    "defaultValue": "{\n  title: 'Example/Header',\n  component: HeaderComponent,\n  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs\n  tags: ['autodocs'],\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout\n    layout: 'fullscreen',\n  },\n  args: {\n    onLogin: fn(),\n    onLogout: fn(),\n    onCreateAccount: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'components/Header',\n  component: HeaderComponent,\n  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs\n  tags: ['autodocs'],\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout\n    layout: 'fullscreen',\n  },\n  args: {\n    onLogin: fn(),\n    onLogout: fn(),\n    onCreateAccount: fn(),\n  },\n}"
                 }
             ],
             ".storybook/preview.ts": [
@@ -1049,7 +1209,7 @@
                 "linktype": "component",
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/16",
+                "coverageCount": "0/20",
                 "status": "low"
             },
             {
@@ -1077,7 +1237,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "LargeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Loading",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MediumSize",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1107,6 +1287,26 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "OffState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "OnState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Primary",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -1117,7 +1317,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "SmallSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Success",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Buttons/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Toned",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
