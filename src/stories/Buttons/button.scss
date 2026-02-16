@@ -6,7 +6,7 @@
 @use 'sass:map';
 
 /* Override Material UI button styles with custom styles */
-.storybook-button {
+.AppCore-button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -26,7 +26,7 @@
 }
 
 /* Label */
-.storybook-button__label {
+.AppCore-button__label {
   @include apply-typography($typography-label-sm);
   font-family: $font-inter;
   color: $color-tokens-content-neutral-button-darkbg;
@@ -34,13 +34,13 @@
 
 
 /* Icon */
-.storybook-button__icon {
+.AppCore-button__icon {
   height: 1.25rem;
   width: 1.25rem;
 }
 
 /* Material Icons Rounded */
-.storybook-button mat-icon.material-symbols-rounded {
+.AppCore-button mat-icon.material-symbols-rounded {
   font-family: 'Material Symbols Rounded' !important;
   font-weight: normal;
   font-style: normal;
@@ -58,77 +58,77 @@
 }
 
 /* ===== Button Types (Default State) ===== */
-.storybook-button--primary {
+.AppCore-button--primary {
   background-color: $color-tokens-surface-primary-default !important;
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
-.storybook-button--secondary {
+.AppCore-button--secondary {
   background-color: $color-tokens-surface-neutral-white !important;
   color: $color-tokens-content-primary-default !important;
   border: 1px solid !important;
   border-color: $color-tokens-border-primary-default !important;
 }
 
-.storybook-button--tertiary {
+.AppCore-button--tertiary {
   background-color: $color-tokens-surface-tertiary-default !important;
   color: $color-tokens-content-primary-default !important;
 }
 
-.storybook-button--toned {
+.AppCore-button--toned {
   background-color: $color-tokens-surface-primary-background-light !important;
   color: $color-tokens-content-primary-default !important;
 }
 
-.storybook-button--link {
+.AppCore-button--link {
   background-color: transparent !important;
   color: $color-tokens-border-primary-default !important;
   text-decoration: underline !important;
 }
 
 /* ===== States ===== */
-.storybook-button--hover:hover {
+.AppCore-button--hover:hover {
   background-color: $color-tokens-surface-primary-hover !important;
 }
 
-.storybook-button--pressed {
+.AppCore-button--pressed {
   background-color: $color-tokens-surface-primary-pressed !important;
 }
 
-.storybook-button--disabled {
+.AppCore-button--disabled {
   background-color: $color-tokens-surface-neutral-white-disabled !important;
   color: $color-tokens-content-neutral-disabled !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
 
-.storybook-button--loading {
+.AppCore-button--loading {
   background-color: $color-tokens-surface-primary-default !important;
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
-.storybook-button--success {
+.AppCore-button--success {
   background-color: $color-tokens-surface-success-default !important;
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
-.storybook-button--onerror {
+.AppCore-button--onerror {
   background-color: $color-tokens-surface-error-default !important;
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
 /* ===== Sizes ===== */
-.storybook-button--small {
+.AppCore-button--small {
   padding: 0.25rem $number-tokens-spacing-2 !important;
   font-size: $font-size-16 !important;
 }
 
-.storybook-button--medium {
+.AppCore-button--medium {
   padding: 0.5rem $number-tokens-spacing-3 !important;
   font-size: $font-size-8 !important;
 }
 
-.storybook-button--large {
+.AppCore-button--large {
   padding: 0.75rem $number-tokens-spacing-4 !important;
   font-size: $font-size-8 !important;
 }

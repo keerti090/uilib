@@ -4,7 +4,7 @@ import { ButtonComponent } from './button.component';
 import { IconComponent } from '../icon/icon.component';
 
 const meta: Meta<ButtonComponent> = {
-  title: 'Example/Button',
+  title: 'components/Button',
   component: ButtonComponent,
   tags: ['autodocs'],
   decorators: [
