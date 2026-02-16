@@ -5,18 +5,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
-  selector: 'storybook-button',
+  selector: 'AppCore-button',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, IconComponent], // <-- add MatIconModule
   styleUrls: ['./button.scss'],
   template: `
     <button
       mat-button
-      class="storybook-button"
+      class="AppCore-button"
       [ngClass]="[
-  'storybook-button--' + type,
-  'storybook-button--' + state,
-  'storybook-button--' + size
+  'AppCore-button--' + type,
+  'AppCore-button--' + state,
+  'AppCore-button--' + size
 ]"
       [disabled]="state === 'disabled'"
       (mouseenter)="onHover()"
