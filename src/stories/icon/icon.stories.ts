@@ -7,6 +7,10 @@ const meta: Meta<IconComponent> = {
   tags: ['autodocs'],
   argTypes: {
     icon: { control: 'text' },
+    iconSet: {
+      control: 'select',
+      options: ['material', 'asset'],
+    },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
@@ -14,9 +18,10 @@ const meta: Meta<IconComponent> = {
     alt: { control: 'text' },
   },
   args: {
-    icon: 'icon-search',
+    icon: 'search',
+    iconSet: 'material',
     size: 'md',
-    alt: 'Search Icon',
+    alt: 'Search',
   },
 };
 

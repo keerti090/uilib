@@ -4,35 +4,71 @@
 @use '../../styles/colors' as *;
 @use 'sass:map';
 
+/* Shared icon wrapper (img or Material Symbol span) */
 .icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.sm {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &.md {
     width: 1rem;
     height: 1rem;
-  
-    &.sm {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-  
-    &.md {
-      width: 1rem;
-      height: 1rem;
-    }
-  
-    &.lg {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-  
-    &.primary {
-     color: $color-tokens-content-primary-default;
-      // Or use fill if you convert to inline SVG
-    }
-  
-    &.neutral {
-      color: $color-tokens-content-neutral-body2;
-    }
-      
-    &.default {
-      color: $color-tokens-content-neutral-heading2-label2-body1;
-    }
   }
+
+  &.lg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.primary {
+    color: $color-tokens-content-primary-default;
+  }
+
+  &.neutral {
+    color: $color-tokens-content-neutral-body2;
+  }
+
+  &.default {
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+}
+
+/* Material Symbols Rounded (font-based) – size via font-size */
+.icon.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded', sans-serif !important;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+
+  &.sm {
+    font-size: 0.75rem !important;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &.md {
+    font-size: 1rem !important;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &.lg {
+    font-size: 1.5rem !important;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

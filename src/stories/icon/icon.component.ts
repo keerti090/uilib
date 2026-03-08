@@ -6,7 +6,14 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    @if (iconSet === 'material') {
+    @if (src) {
+      <img
+        class="icon"
+        [ngClass]="[size, color ?? 'default', background ?? 'default']"
+        [src]="src"
+        [alt]="alt || icon || 'icon'"
+      />
+    } @else if (iconSet === 'material') {
       <span
         class="material-symbols-rounded icon"
         [ngClass]="[size, color ?? 'default', background ?? 'default']"
@@ -26,6 +33,11 @@ import { CommonModule } from '@angular/common';
 export class IconComponent {
   /** Icon name: for Material use names like "add", "search", "arrow_forward"; for asset use file name without .svg (e.g. "icon-search"). */
   @Input() icon!: string;
+  /**
+   * Custom icon URL. When set, this is used as the img src and icon/iconSet are ignored.
+   * Use for fully custom icons passed from outside (e.g. CDN, data URL, or app asset path).
+   */
+  @Input() src?: string;
   /**
    * 'material' = Material Symbols Rounded (default); 'asset' = SVG from assets/icons/
    * When using iconSet="material", the host app must load the font, e.g. in index.html:

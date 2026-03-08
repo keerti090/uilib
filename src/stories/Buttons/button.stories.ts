@@ -40,6 +40,22 @@ const meta: Meta<ButtonComponent> = {
     rightIconName: {
       control: 'text',
     },
+    leftIconSet: {
+      control: 'select',
+      options: ['material', 'asset'],
+    },
+    rightIconSet: {
+      control: 'select',
+      options: ['material', 'asset'],
+    },
+    leftIconSrc: {
+      control: 'text',
+      description: 'Custom left icon URL (overrides leftIconName/leftIconSet)',
+    },
+    rightIconSrc: {
+      control: 'text',
+      description: 'Custom right icon URL (overrides rightIconName/rightIconSet)',
+    },
   },
   args: {
     label: 'Button',
@@ -49,8 +65,10 @@ const meta: Meta<ButtonComponent> = {
     buttonText: true,
     showLeftIcon: false,
     showRightIcon: false,
-    leftIconName: 'icon-add',
-    rightIconName: 'icon-add',
+    leftIconName: 'add',
+    rightIconName: 'add',
+    leftIconSet: 'material',
+    rightIconSet: 'material',
   },
 };
 
@@ -62,8 +80,8 @@ export const Primary: Story = {
     label: 'Button',
     showLeftIcon: true,
     showRightIcon: true,
-    leftIconName: 'icon-add',
-    rightIconName: 'icon-add',
+    leftIconName: 'add',
+    rightIconName: 'add',
   },
 };
 
@@ -113,24 +131,6 @@ export const NoIcons: Story = {
   },
 };
 
-export const OnState: Story = {
-  args: {
-    label: 'Button',
-    showLeftIcon: true,
-    showRightIcon: true,
-    type: 'primary',
-  },
-};
-
-export const OffState: Story = {
-  args: {
-    label: 'Button',
-    showLeftIcon: true,
-    showRightIcon: true,
-    type: 'primary',
-  },
-};
-
 export const SmallSize: Story = {
   args: {
     label: 'Button',
@@ -164,6 +164,30 @@ export const Toned: Story = {
     type: 'toned',
     showLeftIcon: false,
     showRightIcon: true,
+  },
+};
+
+/** Custom icon from URL: pass any image URL (e.g. CDN, app asset, or data URL). */
+export const CustomIconFromUrl: Story = {
+  args: {
+    label: 'Custom icon',
+    showLeftIcon: true,
+    leftIconSrc: 'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsrounded/arrow_forward/default/24px.svg',
+    showRightIcon: true,
+    rightIconSrc: 'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsrounded/arrow_forward/default/24px.svg',
+  },
+};
+
+/** Asset icons: use SVG files from assets/icons/ (e.g. "my-icon" → assets/icons/my-icon.svg). */
+export const AssetIcons: Story = {
+  args: {
+    label: 'Asset icons',
+    showLeftIcon: true,
+    leftIconName: 'icon-search',
+    leftIconSet: 'asset',
+    showRightIcon: true,
+    rightIconName: 'icon-add',
+    rightIconSet: 'asset',
   },
 };
 

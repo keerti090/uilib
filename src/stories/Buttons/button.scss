@@ -10,7 +10,6 @@
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: $number-tokens-spacing-3 !important; 
   padding: 0.625rem $number-tokens-spacing-3 !important;
   border-radius: $number-tokens-corner-radius-3 !important;
   position: relative;
@@ -25,8 +24,24 @@
   text-transform: none !important;
 }
 
+/* Inner row: keeps icon + label + icon in one horizontal, vertically centered row */
+.AppCore-button__inner {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-direction: row !important;
+  gap: $number-tokens-spacing-3 !important;
+}
+
+/* Material wraps content in .mdc-button__label – keep it a row so our __inner layout wins */
+.AppCore-button .mdc-button__label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: $number-tokens-spacing-3 !important;
+}
+
 /* Label */
 .AppCore-button__label {
+  display: inline;
   @include apply-typography($typography-label-sm);
   font-family: $font-inter;
   color: $color-tokens-content-neutral-button-darkbg;

@@ -25,25 +25,39 @@ import { IconComponent } from '../icon/icon.component';
       (mouseup)="onReleased()"
       (click)="onClick()"
     >
-      <!-- Left Icon -->
-      <ng-container *ngIf="showLeftIcon">
-        <ng-content select="[leftIconSwap]"></ng-content>
-        <app-icon *ngIf="!hasLeftIcon" [icon]="leftIconName" size="sm"></app-icon>
-      </ng-container>
-
-      <!-- Label -->
-      <div *ngIf="buttonText" class="button-text-wrapper">
-        <ng-container [ngSwitch]="state">
-          <span *ngSwitchCase="'loading'">⏳</span>
-          <span *ngSwitchDefault>{{ label }}</span>
+      <span class="AppCore-button__inner">
+        <!-- Left Icon -->
+        <ng-container *ngIf="showLeftIcon">
+          <ng-content select="[leftIconSwap]"></ng-content>
+          <app-icon
+            *ngIf="!hasLeftIcon"
+            [icon]="leftIconName"
+            [iconSet]="leftIconSet"
+            [src]="leftIconSrc"
+            size="sm"
+          ></app-icon>
         </ng-container>
-      </div>
 
-      <!-- Right Icon -->
-      <ng-container *ngIf="showRightIcon">
-        <ng-content select="[rightIconSwap]"></ng-content>
-        <app-icon *ngIf="!hasRightIcon" [icon]="rightIconName" size="sm"></app-icon>
-      </ng-container>
+        <!-- Label -->
+        <span *ngIf="buttonText" class="AppCore-button__label">
+          <ng-container [ngSwitch]="state">
+            <span *ngSwitchCase="'loading'">⏳</span>
+            <span *ngSwitchDefault>{{ label }}</span>
+          </ng-container>
+        </span>
+
+        <!-- Right Icon -->
+        <ng-container *ngIf="showRightIcon">
+          <ng-content select="[rightIconSwap]"></ng-content>
+          <app-icon
+            *ngIf="!hasRightIcon"
+            [icon]="rightIconName"
+            [iconSet]="rightIconSet"
+            [src]="rightIconSrc"
+            size="sm"
+          ></app-icon>
+        </ng-container>
+      </span>
     </button>
   `
 })
@@ -55,8 +69,16 @@ export class ButtonComponent implements AfterContentInit {
   @Input() type: 'primary' | 'secondary' | 'tertiary' | 'toned' | 'link' = 'primary';
   @Input() showLeftIcon = false;
   @Input() showRightIcon = false;
-  @Input() leftIconName = 'icon-add';
-  @Input() rightIconName = 'icon-add';
+  @Input() leftIconName = 'add';
+  @Input() rightIconName = 'add';
+  /** Icon set for left icon: 'material' (default) or 'asset' (assets/icons/<leftIconName>.svg). */
+  @Input() leftIconSet: 'material' | 'asset' = 'material';
+  /** Icon set for right icon: 'material' (default) or 'asset'. */
+  @Input() rightIconSet: 'material' | 'asset' = 'material';
+  /** Custom left icon URL. When set, overrides leftIconName/leftIconSet (use for external or custom SVGs). */
+  @Input() leftIconSrc?: string;
+  /** Custom right icon URL. When set, overrides rightIconName/rightIconSet. */
+  @Input() rightIconSrc?: string;
 
   @ContentChild('[leftIconSwap]', { read: ElementRef }) leftIcon?: ElementRef;
   @ContentChild('[rightIconSwap]', { read: ElementRef }) rightIcon?: ElementRef;
