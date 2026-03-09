@@ -39,12 +39,12 @@
   gap: $number-tokens-spacing-3 !important;
 }
 
-/* Label */
+/* Label – inherits color from button type so primary/secondary/toned etc. each control text */
 .AppCore-button__label {
   display: inline;
   @include apply-typography($typography-label-sm);
   font-family: $font-inter;
-  color: $color-tokens-content-neutral-button-darkbg;
+  color: inherit;
 }
 
 
@@ -52,6 +52,17 @@
 .AppCore-button__icon {
   height: 1.25rem;
   width: 1.25rem;
+}
+
+/* Icon color matches button text color */
+.AppCore-button ::ng-deep .icon,
+.AppCore-button ::ng-deep .material-symbols-rounded {
+  color: inherit !important;
+}
+
+/* Custom icon img: use currentColor so SVGs can inherit button text color */
+.AppCore-button ::ng-deep .icon img {
+  color: inherit !important;
 }
 
 /* Material Icons Rounded */
@@ -80,13 +91,13 @@
 
 .AppCore-button--secondary {
   background-color: $color-tokens-surface-neutral-white !important;
-  color: $color-tokens-content-secondary-default !important;
+  color: $color-tokens-content-primary-default !important;
   border: 1px solid !important;
   border-color: $color-tokens-border-primary-default !important;
 }
 
 .AppCore-button--tertiary {
-  background-color: $color-tokens-surface-tertiary-default !important;
+  background-color: transparent !important;
   color: $color-tokens-content-primary-default !important;
 }
 
@@ -97,13 +108,30 @@
 
 .AppCore-button--link {
   background-color: transparent !important;
-  color: $color-tokens-border-primary-default !important;
+  color: $color-tokens-content-primary-default !important;
   text-decoration: underline !important;
+
+  .AppCore-button__label {
+    text-decoration: underline !important;
+  }
 }
 
 /* ===== States ===== */
 .AppCore-button--hover:hover {
   background-color: $color-tokens-surface-primary-hover !important;
+}
+
+/* Secondary: no hover state – keep same appearance on hover */
+.AppCore-button--secondary.AppCore-button--hover:hover {
+  background-color: $color-tokens-surface-neutral-white !important;
+  border-color: $color-tokens-border-primary-default !important;
+  color: $color-tokens-content-primary-default !important;
+}
+
+/* Tertiary: text only – no background on hover or pressed */
+.AppCore-button--tertiary.AppCore-button--hover:hover,
+.AppCore-button--tertiary.AppCore-button--pressed {
+  background-color: transparent !important;
 }
 
 .AppCore-button--pressed {
