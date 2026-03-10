@@ -1,0 +1,116 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+
+/* Root container – inline bar matching the design spec */
+.AppCore-actionbar {
+  display: inline-flex;
+  align-items: center;
+  gap: $number-tokens-spacing-3;
+}
+
+.AppCore-actionbar .set {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: $number-tokens-spacing-2;
+}
+
+/* Icon button inside the bar */
+.AppCore-actionbar__icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $number-tokens-spacing-1;
+  border-radius: $number-tokens-corner-radius-2;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.05s ease;
+
+  /* Reset default button styles */
+  outline: none;
+}
+
+.AppCore-actionbar__icon-button:hover {
+  background-color: $color-tokens-surface-neutral-white-faded;
+}
+
+.AppCore-actionbar__icon-button:active {
+  background-color: $color-tokens-surface-neutral-white-faded;
+  transform: translateY(1px);
+}
+
+.AppCore-actionbar__icon-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Divider between sets */
+.AppCore-actionbar__divider {
+  width: 1px;
+  height: 1.5rem;
+  background-color: $color-tokens-border-neutral-light-stroke-divider;
+}
+
+/* Trailing kebab wrapper – light neutral chip background */
+.AppCore-actionbar .icon-button-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  padding: $number-tokens-spacing-1;
+  background-color: $color-tokens-surface-neutral-white-faded;
+  border-radius: $number-tokens-corner-radius-2;
+}
+
+/* Text buttons inherit sizing from ButtonComponent; this hook allows future overrides */
+.AppCore-actionbar__text-button {
+  margin: 0;
+}
+
+/* ==== Size variants: icon dimensions per spec ==== */
+
+/* XS */
+.AppCore-actionbar--xs ::ng-deep .icon {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+  font-size: 0.875rem !important;
+  aspect-ratio: 1 / 1;
+}
+
+/* S */
+.AppCore-actionbar--s ::ng-deep .icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  font-size: 1rem !important;
+  aspect-ratio: 1 / 1;
+}
+
+/* M */
+.AppCore-actionbar--m ::ng-deep .icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  font-size: 1rem !important;
+  aspect-ratio: 1 / 1;
+}
+
+/* L */
+.AppCore-actionbar--l ::ng-deep .icon {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  font-size: 1.125rem !important;
+  aspect-ratio: 1 / 1;
+}
+
+/* XL */
+.AppCore-actionbar--xl ::ng-deep .icon {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  font-size: 1.25rem !important;
+  aspect-ratio: 1 / 1;
+}
+
+

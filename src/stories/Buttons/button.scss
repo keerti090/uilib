@@ -107,13 +107,10 @@
 }
 
 .AppCore-button--link {
-  background-color: transparent !important;
+  background-color: $color-tokens-surface-neutral-white !important;
   color: $color-tokens-content-primary-default !important;
-  text-decoration: underline !important;
-
-  .AppCore-button__label {
-    text-decoration: underline !important;
-  }
+  border: 1px solid !important;
+  border-color: $color-tokens-border-primary-default !important;
 }
 
 /* ===== States ===== */
@@ -132,6 +129,19 @@
 .AppCore-button--tertiary.AppCore-button--hover:hover,
 .AppCore-button--tertiary.AppCore-button--pressed {
   background-color: transparent !important;
+}
+
+/* Toned: no hover state – keep same appearance on hover */
+.AppCore-button--toned.AppCore-button--hover:hover {
+  background-color: $color-tokens-surface-primary-background-light !important;
+  color: $color-tokens-content-primary-default !important;
+}
+
+/* Link: same as secondary – no hover state */
+.AppCore-button--link.AppCore-button--hover:hover {
+  background-color: $color-tokens-surface-neutral-white !important;
+  border-color: $color-tokens-border-primary-default !important;
+  color: $color-tokens-content-primary-default !important;
 }
 
 .AppCore-button--pressed {

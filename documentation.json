@@ -2,6 +2,76 @@
     "pipes": [],
     "interfaces": [
         {
+            "name": "ActionBarButtonConfig",
+            "id": "interface-ActionBarButtonConfig-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "file": "src/stories/Actionbar/actionbar.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "iconSet",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "\"material\" | \"asset\"",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ActionBarTextButtonConfig",
+            "id": "interface-ActionBarTextButtonConfig-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "file": "src/stories/Actionbar/actionbar.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "leftIconName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "User",
             "id": "interface-User-d4821beac0e4a852e513391b7470981c4353fdd95a18628bb68136c8695b489ee15b926e2e5031bc26cf30e1508e0a362c3ee13a06734702b4d15af140e485d5",
             "file": "src/stories/user.ts",
@@ -33,6 +103,196 @@
     "classes": [],
     "directives": [],
     "components": [
+        {
+            "name": "ActionbarComponent",
+            "id": "component-ActionbarComponent-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "file": "src/stories/Actionbar/actionbar.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "AppCore-actionbar",
+            "styleUrls": [
+                "./actionbar.scss"
+            ],
+            "styles": [],
+            "template": "<div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n  @if (type === 'icon') {\n    <div class=\"set\">\n      @for (button of set1; track button.icon) {\n        <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n          <app-icon\n            [icon]=\"button.icon\"\n            [iconSet]=\"button.iconSet ?? 'material'\"\n            size=\"sm\"\n          ></app-icon>\n        </button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set2; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set3; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  } @else {\n    <!-- Text Action Bar -->\n    <div class=\"set\">\n      @for (btn of textSet1; track btn.label + $index) {\n        <AppCore-button\n          class=\"AppCore-actionbar__text-button\"\n          [size]=\"buttonSize\"\n          type=\"secondary\"\n          [buttonText]=\"true\"\n          [label]=\"btn.label\"\n          [showLeftIcon]=\"!!btn.leftIconName\"\n          [leftIconName]=\"btn.leftIconName ?? ''\"\n        ></AppCore-button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet2; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"secondary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet3; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"secondary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  }\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "set1",
+                    "defaultValue": "DEFAULT_ICON_SET1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nIcon buttons for the first group (icon mode).",
+                    "description": "<p>Icon buttons for the first group (icon mode).</p>\n",
+                    "line": 205,
+                    "type": "ActionBarButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "set2",
+                    "defaultValue": "DEFAULT_ICON_SET2",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nIcon buttons for the second group (icon mode).",
+                    "description": "<p>Icon buttons for the second group (icon mode).</p>\n",
+                    "line": 208,
+                    "type": "ActionBarButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "set3",
+                    "defaultValue": "DEFAULT_ICON_SET3",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nIcon buttons for the third group (icon mode).",
+                    "description": "<p>Icon buttons for the third group (icon mode).</p>\n",
+                    "line": 211,
+                    "type": "ActionBarButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "showKebabMenu",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nWhether to show the trailing kebab menu.",
+                    "description": "<p>Whether to show the trailing kebab menu.</p>\n",
+                    "line": 202,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showSet2",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nWhether to show the middle set.",
+                    "description": "<p>Whether to show the middle set.</p>\n",
+                    "line": 196,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showSet3",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nWhether to show the right-hand set.",
+                    "description": "<p>Whether to show the right-hand set.</p>\n",
+                    "line": 199,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "size",
+                    "defaultValue": "'xs'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nSize preset that controls spacing; mirrors the design spec (XS by default).",
+                    "description": "<p>Size preset that controls spacing; mirrors the design spec (XS by default).</p>\n",
+                    "line": 193,
+                    "type": "ActionBarSize",
+                    "decorators": []
+                },
+                {
+                    "name": "textSet1",
+                    "defaultValue": "DEFAULT_TEXT_SET1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nText buttons for the first group (text mode).",
+                    "description": "<p>Text buttons for the first group (text mode).</p>\n",
+                    "line": 214,
+                    "type": "ActionBarTextButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "textSet2",
+                    "defaultValue": "DEFAULT_TEXT_SET2",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nText buttons for the second group (text mode).",
+                    "description": "<p>Text buttons for the second group (text mode).</p>\n",
+                    "line": 217,
+                    "type": "ActionBarTextButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "textSet3",
+                    "defaultValue": "DEFAULT_TEXT_SET3",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nText buttons for the third group (text mode).",
+                    "description": "<p>Text buttons for the third group (text mode).</p>\n",
+                    "line": 220,
+                    "type": "ActionBarTextButtonConfig[]",
+                    "decorators": []
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "'icon'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nVisual style for the bar – \"icon\" or \"text\".",
+                    "description": "<p>Visual style for the bar – &quot;icon&quot; or &quot;text&quot;.</p>\n",
+                    "line": 190,
+                    "type": "ActionBarType",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "IconComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "ButtonComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/colors' as *;\n\n/* Root container – inline bar matching the design spec */\n.AppCore-actionbar {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-3;\n}\n\n.AppCore-actionbar .set {\n  display: inline-flex;\n  align-items: center;\n  flex: 0 0 auto;\n  gap: $number-tokens-spacing-2;\n}\n\n/* Icon button inside the bar */\n.AppCore-actionbar__icon-button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: $number-tokens-spacing-1;\n  border-radius: $number-tokens-corner-radius-2;\n  border: none;\n  background-color: $color-tokens-surface-neutral-white;\n  cursor: pointer;\n  transition:\n    background-color 0.15s ease,\n    box-shadow 0.15s ease,\n    transform 0.05s ease;\n\n  /* Reset default button styles */\n  outline: none;\n}\n\n.AppCore-actionbar__icon-button:hover {\n  background-color: $color-tokens-surface-neutral-white-hover;\n}\n\n.AppCore-actionbar__icon-button:active {\n  background-color: $color-tokens-surface-neutral-white-pressed;\n  transform: translateY(1px);\n}\n\n.AppCore-actionbar__icon-button:disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled;\n  cursor: not-allowed;\n}\n\n/* Divider between sets */\n.AppCore-actionbar__divider {\n  width: 1px;\n  height: 1.5rem;\n  background-color: $color-tokens-border-neutral-light-stroke-divider;\n}\n\n/* Trailing kebab wrapper – light neutral chip background */\n.AppCore-actionbar .icon-button-wrapper {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-2;\n  padding: $number-tokens-spacing-1;\n  background-color: $color-tokens-surface-neutral-white-faded;\n  border-radius: $number-tokens-corner-radius-2;\n}\n\n/* Text buttons inherit sizing from ButtonComponent; this hook allows future overrides */\n.AppCore-actionbar__text-button {\n  margin: 0;\n}\n\n/* ==== Size variants: icon dimensions per spec ==== */\n\n/* XS – 14px */\n.AppCore-actionbar--xs ::ng-deep .icon {\n  width: 14px !important;\n  height: 14px !important;\n  font-size: 14px !important;\n}\n\n/* S – 16px */\n.AppCore-actionbar--s ::ng-deep .icon {\n  width: 16px !important;\n  height: 16px !important;\n  font-size: 16px !important;\n}\n\n/* M – 18px */\n.AppCore-actionbar--m ::ng-deep .icon {\n  width: 18px !important;\n  height: 18px !important;\n  font-size: 18px !important;\n}\n\n/* L – 20px */\n.AppCore-actionbar--l ::ng-deep .icon {\n  width: 20px !important;\n  height: 20px !important;\n  font-size: 20px !important;\n}\n\n/* XL – 24px */\n.AppCore-actionbar--xl ::ng-deep .icon {\n  width: 24px !important;\n  height: 24px !important;\n  font-size: 24px !important;\n}\n\n\n",
+                    "styleUrl": "./actionbar.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "accessors": {
+                "buttonSize": {
+                    "name": "buttonSize",
+                    "getSignature": {
+                        "name": "buttonSize",
+                        "type": "unknown",
+                        "returnType": "\"small\" | \"medium\" | \"large\"",
+                        "line": 223,
+                        "rawdescription": "\nMap ActionBar size to ButtonComponent size (text variant starts from S).",
+                        "description": "<p>Map ActionBar size to ButtonComponent size (text variant starts from S).</p>\n"
+                    }
+                }
+            }
+        },
         {
             "name": "AppComponent",
             "id": "component-AppComponent-d0d0b7b411ef7634d3cb7de9c8a798c249a53fcf9c7c599688cff5a7c443c711eb3f2d15ac1117eeaa8952fb8da092d327699300eded814d7518473b506dcd15",
@@ -386,7 +646,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.AppCore-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Inner row: keeps icon + label + icon in one horizontal, vertically centered row */\n.AppCore-button__inner {\n  display: inline-flex !important;\n  align-items: center !important;\n  flex-direction: row !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Material wraps content in .mdc-button__label – keep it a row so our __inner layout wins */\n.AppCore-button .mdc-button__label {\n  display: inline-flex !important;\n  align-items: center !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Label */\n.AppCore-button__label {\n  display: inline;\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: $color-tokens-content-neutral-button-darkbg;\n}\n\n\n/* Icon */\n.AppCore-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* Material Icons Rounded */\n.AppCore-button mat-icon.material-symbols-rounded {\n  font-family: 'Material Symbols Rounded' !important;\n  font-weight: normal;\n  font-style: normal;\n  font-size: 1.25rem !important;\n  line-height: 1 !important;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-smoothing: antialiased;\n  height: 1.25rem !important;\n  width: 1.25rem !important;\n}\n\n/* ===== Button Types (Default State) ===== */\n.AppCore-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-secondary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.AppCore-button--tertiary {\n  background-color: $color-tokens-surface-tertiary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--link {\n  background-color: transparent !important;\n  color: $color-tokens-border-primary-default !important;\n  text-decoration: underline !important;\n}\n\n/* ===== States ===== */\n.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-hover-default !important;\n}\n\n.AppCore-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.AppCore-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.AppCore-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--onerror {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.AppCore-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.AppCore-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.AppCore-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
+                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.AppCore-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Inner row: keeps icon + label + icon in one horizontal, vertically centered row */\n.AppCore-button__inner {\n  display: inline-flex !important;\n  align-items: center !important;\n  flex-direction: row !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Material wraps content in .mdc-button__label – keep it a row so our __inner layout wins */\n.AppCore-button .mdc-button__label {\n  display: inline-flex !important;\n  align-items: center !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Label – inherits color from button type so primary/secondary/toned etc. each control text */\n.AppCore-button__label {\n  display: inline;\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: inherit;\n}\n\n\n/* Icon */\n.AppCore-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* Icon color matches button text color */\n.AppCore-button ::ng-deep .icon,\n.AppCore-button ::ng-deep .material-symbols-rounded {\n  color: inherit !important;\n}\n\n/* Custom icon img: use currentColor so SVGs can inherit button text color */\n.AppCore-button ::ng-deep .icon img {\n  color: inherit !important;\n}\n\n/* Material Icons Rounded */\n.AppCore-button mat-icon.material-symbols-rounded {\n  font-family: 'Material Symbols Rounded' !important;\n  font-weight: normal;\n  font-style: normal;\n  font-size: 1.25rem !important;\n  line-height: 1 !important;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-smoothing: antialiased;\n  height: 1.25rem !important;\n  width: 1.25rem !important;\n}\n\n/* ===== Button Types (Default State) ===== */\n.AppCore-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.AppCore-button--tertiary {\n  background-color: transparent !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--link {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n/* ===== States ===== */\n.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-hover !important;\n}\n\n/* Secondary: no hover state – keep same appearance on hover */\n.AppCore-button--secondary.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Tertiary: text only – no background on hover or pressed */\n.AppCore-button--tertiary.AppCore-button--hover:hover,\n.AppCore-button--tertiary.AppCore-button--pressed {\n  background-color: transparent !important;\n}\n\n/* Toned: no hover state – keep same appearance on hover */\n.AppCore-button--toned.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Link: same as secondary – no hover state */\n.AppCore-button--link.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.AppCore-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.AppCore-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--onerror {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.AppCore-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.AppCore-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.AppCore-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
                     "styleUrl": "./button.scss"
                 }
             ],
@@ -678,6 +938,36 @@
                 "description": "<p>Custom icon from URL: pass any image URL (e.g. CDN, app asset, or data URL).</p>\n"
             },
             {
+                "name": "CustomIcons",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'icon',\n    size: 'm',\n    set1: [\n      { icon: 'edit' },\n      { icon: 'content_copy' },\n      { icon: 'share' },\n    ],\n    set2: [\n      { icon: 'star' },\n      { icon: 'bookmark' },\n    ],\n    set3: [\n      { icon: 'delete' },\n    ],\n  },\n}"
+            },
+            {
+                "name": "CustomTextButtons",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'text',\n    size: 'm',\n    textSet1: [\n      { label: 'New', leftIconName: 'add' },\n      { label: 'Import', leftIconName: 'upload' },\n    ],\n    textSet2: [\n      { label: 'Filter', leftIconName: 'filter_list' },\n      { label: 'Sort', leftIconName: 'sort' },\n    ],\n    textSet3: [\n      { label: 'Export', leftIconName: 'download' },\n    ],\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -686,6 +976,66 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{}"
+            },
+            {
+                "name": "DEFAULT_ICON_SET1",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarButtonConfig[]",
+                "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+            },
+            {
+                "name": "DEFAULT_ICON_SET2",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarButtonConfig[]",
+                "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+            },
+            {
+                "name": "DEFAULT_ICON_SET3",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarButtonConfig[]",
+                "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+            },
+            {
+                "name": "DEFAULT_TEXT_SET1",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarTextButtonConfig[]",
+                "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
+            },
+            {
+                "name": "DEFAULT_TEXT_SET2",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarTextButtonConfig[]",
+                "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
+            },
+            {
+                "name": "DEFAULT_TEXT_SET3",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ActionBarTextButtonConfig[]",
+                "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
             },
             {
                 "name": "Disabled",
@@ -756,6 +1106,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Button',\n    size: 'medium',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ActionbarComponent>",
+                "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -848,6 +1208,46 @@
                 "defaultValue": "{\n  args: {\n    label: 'Success',\n    state: 'success',\n  },\n}"
             },
             {
+                "name": "TextActionBarLarge",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'text', size: 'l' },\n}"
+            },
+            {
+                "name": "TextActionBarMedium",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'text', size: 'm' },\n}"
+            },
+            {
+                "name": "TextActionBarSmall",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'text', size: 's' },\n}"
+            },
+            {
+                "name": "TextActionBarXL",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'text', size: 'xl' },\n}"
+            },
+            {
                 "name": "Toned",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -866,10 +1266,73 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    buttonText: false,\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
+            },
+            {
+                "name": "WithoutKebab",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { showKebabMenu: false },\n}"
+            },
+            {
+                "name": "WithoutSet2",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { showSet2: false },\n}"
+            },
+            {
+                "name": "WithoutSet3",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { showSet3: false },\n}"
             }
         ],
         "functions": [],
         "typealiases": [
+            {
+                "name": "ActionBarSize",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"xs\" | \"s\" | \"m\" | \"l\" | \"xl\"",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "ActionBarType",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"icon\" | \"text\"",
+                "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ActionbarComponent>",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
             {
                 "name": "Story",
                 "ctype": "miscellaneous",
@@ -1110,6 +1573,118 @@
                     "defaultValue": "{\n  providers: [\n    provideServerRendering()\n  ]\n}"
                 }
             ],
+            "src/stories/Actionbar/actionbar.stories.ts": [
+                {
+                    "name": "CustomIcons",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'icon',\n    size: 'm',\n    set1: [\n      { icon: 'edit' },\n      { icon: 'content_copy' },\n      { icon: 'share' },\n    ],\n    set2: [\n      { icon: 'star' },\n      { icon: 'bookmark' },\n    ],\n    set3: [\n      { icon: 'delete' },\n    ],\n  },\n}"
+                },
+                {
+                    "name": "CustomTextButtons",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'text',\n    size: 'm',\n    textSet1: [\n      { label: 'New', leftIconName: 'add' },\n      { label: 'Import', leftIconName: 'upload' },\n    ],\n    textSet2: [\n      { label: 'Filter', leftIconName: 'filter_list' },\n      { label: 'Sort', leftIconName: 'sort' },\n    ],\n    textSet3: [\n      { label: 'Export', leftIconName: 'download' },\n    ],\n  },\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ActionbarComponent>",
+                    "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
+                },
+                {
+                    "name": "TextActionBarLarge",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'text', size: 'l' },\n}"
+                },
+                {
+                    "name": "TextActionBarMedium",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'text', size: 'm' },\n}"
+                },
+                {
+                    "name": "TextActionBarSmall",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'text', size: 's' },\n}"
+                },
+                {
+                    "name": "TextActionBarXL",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'text', size: 'xl' },\n}"
+                },
+                {
+                    "name": "WithoutKebab",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { showKebabMenu: false },\n}"
+                },
+                {
+                    "name": "WithoutSet2",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { showSet2: false },\n}"
+                },
+                {
+                    "name": "WithoutSet3",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { showSet3: false },\n}"
+                }
+            ],
             "src/stories/icon/icon.stories.ts": [
                 {
                     "name": "Default",
@@ -1130,6 +1705,68 @@
                     "deprecationMessage": "",
                     "type": "Meta<IconComponent>",
                     "defaultValue": "{\n  title: 'components/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    iconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'search',\n    iconSet: 'material',\n    size: 'md',\n    alt: 'Search',\n  },\n}"
+                }
+            ],
+            "src/stories/Actionbar/actionbar.component.ts": [
+                {
+                    "name": "DEFAULT_ICON_SET1",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarButtonConfig[]",
+                    "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+                },
+                {
+                    "name": "DEFAULT_ICON_SET2",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarButtonConfig[]",
+                    "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+                },
+                {
+                    "name": "DEFAULT_ICON_SET3",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarButtonConfig[]",
+                    "defaultValue": "[\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n]"
+                },
+                {
+                    "name": "DEFAULT_TEXT_SET1",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarTextButtonConfig[]",
+                    "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
+                },
+                {
+                    "name": "DEFAULT_TEXT_SET2",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarTextButtonConfig[]",
+                    "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
+                },
+                {
+                    "name": "DEFAULT_TEXT_SET3",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ActionBarTextButtonConfig[]",
+                    "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
                 }
             ],
             "src/stories/Header/header.stories.ts": [
@@ -1180,6 +1817,43 @@
         "groupedFunctions": {},
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "src/stories/Actionbar/actionbar.component.ts": [
+                {
+                    "name": "ActionBarSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"xs\" | \"s\" | \"m\" | \"l\" | \"xl\"",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "ActionBarType",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"icon\" | \"text\"",
+                    "file": "src/stories/Actionbar/actionbar.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
+            "src/stories/Actionbar/actionbar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ActionbarComponent>",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "src/stories/Buttons/button.stories.ts": [
                 {
                     "name": "Story",
@@ -1227,7 +1901,7 @@
         "children": []
     },
     "coverage": {
-        "count": 7,
+        "count": 6,
         "status": "low",
         "files": [
             {
@@ -1295,6 +1969,233 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "bootstrap",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ActionbarComponent",
+                "coveragePercent": 91,
+                "coverageCount": "11/12",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ActionBarButtonConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ActionBarTextButtonConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_ICON_SET1",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_ICON_SET2",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_ICON_SET3",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_TEXT_SET1",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_TEXT_SET2",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_TEXT_SET3",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "ActionBarSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "ActionBarType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomIcons",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomTextButtons",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TextActionBarLarge",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TextActionBarMedium",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TextActionBarSmall",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TextActionBarXL",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutKebab",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutSet2",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutSet3",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
