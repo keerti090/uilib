@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "ActionBarButtonConfig",
-            "id": "interface-ActionBarButtonConfig-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "id": "interface-ActionBarButtonConfig-84878ed305eb129aedf7a728f3560e733f01b6a8e7715e08e3ebdf90f707579ba032b49b1b542c98c514cc1d1c2456e34af0d63cb115eef697d33d4fc7f0d342",
             "file": "src/stories/Actionbar/actionbar.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"tertiary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
             "properties": [
                 {
                     "name": "icon",
@@ -38,12 +38,12 @@
         },
         {
             "name": "ActionBarTextButtonConfig",
-            "id": "interface-ActionBarTextButtonConfig-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "id": "interface-ActionBarTextButtonConfig-84878ed305eb129aedf7a728f3560e733f01b6a8e7715e08e3ebdf90f707579ba032b49b1b542c98c514cc1d1c2456e34af0d63cb115eef697d33d4fc7f0d342",
             "file": "src/stories/Actionbar/actionbar.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"tertiary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
             "properties": [
                 {
                     "name": "label",
@@ -105,7 +105,7 @@
     "components": [
         {
             "name": "ActionbarComponent",
-            "id": "component-ActionbarComponent-c559e8ed2d49322c4ca4e584c629edfd969ae08557de2aec6fb4d8d7e549cd7ecfab9f751bdd74e0d911e5ae2ec9d3d2a5d5fa8b2326f4c9121c2babc6d17278",
+            "id": "component-ActionbarComponent-84878ed305eb129aedf7a728f3560e733f01b6a8e7715e08e3ebdf90f707579ba032b49b1b542c98c514cc1d1c2456e34af0d63cb115eef697d33d4fc7f0d342",
             "file": "src/stories/Actionbar/actionbar.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -117,7 +117,7 @@
                 "./actionbar.scss"
             ],
             "styles": [],
-            "template": "<div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n  @if (type === 'icon') {\n    <div class=\"set\">\n      @for (button of set1; track button.icon) {\n        <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n          <app-icon\n            [icon]=\"button.icon\"\n            [iconSet]=\"button.iconSet ?? 'material'\"\n            size=\"sm\"\n          ></app-icon>\n        </button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set2; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set3; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  } @else {\n    <!-- Text Action Bar -->\n    <div class=\"set\">\n      @for (btn of textSet1; track btn.label + $index) {\n        <AppCore-button\n          class=\"AppCore-actionbar__text-button\"\n          [size]=\"buttonSize\"\n          type=\"secondary\"\n          [buttonText]=\"true\"\n          [label]=\"btn.label\"\n          [showLeftIcon]=\"!!btn.leftIconName\"\n          [leftIconName]=\"btn.leftIconName ?? ''\"\n        ></AppCore-button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet2; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"secondary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet3; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"secondary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  }\n</div>\n",
+            "template": "<div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n  @if (type === 'icon') {\n    <div class=\"set\">\n      @for (button of set1; track button.icon) {\n        <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n          <app-icon\n            [icon]=\"button.icon\"\n            [iconSet]=\"button.iconSet ?? 'material'\"\n            size=\"sm\"\n          ></app-icon>\n        </button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set2; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (button of set3; track button.icon) {\n          <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n            <app-icon\n              [icon]=\"button.icon\"\n              [iconSet]=\"button.iconSet ?? 'material'\"\n              size=\"sm\"\n            ></app-icon>\n          </button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  } @else {\n    <!-- Text Action Bar -->\n    <div class=\"set\">\n      @for (btn of textSet1; track btn.label + $index) {\n        <AppCore-button\n          class=\"AppCore-actionbar__text-button\"\n          [size]=\"buttonSize\"\n          type=\"tertiary\"\n          [buttonText]=\"true\"\n          [label]=\"btn.label\"\n          [showLeftIcon]=\"!!btn.leftIconName\"\n          [leftIconName]=\"btn.leftIconName ?? ''\"\n        ></AppCore-button>\n      }\n    </div>\n\n    @if (showSet2) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet2; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"tertiary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n      </div>\n    }\n\n    @if (showSet3) {\n      <div class=\"set\">\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n        @for (btn of textSet3; track btn.label + $index) {\n          <AppCore-button\n            class=\"AppCore-actionbar__text-button\"\n            [size]=\"buttonSize\"\n            type=\"tertiary\"\n            [buttonText]=\"true\"\n            [label]=\"btn.label\"\n            [showLeftIcon]=\"!!btn.leftIconName\"\n            [leftIconName]=\"btn.leftIconName ?? ''\"\n          ></AppCore-button>\n        }\n        <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n      </div>\n    }\n\n    @if (showKebabMenu) {\n      <div class=\"icon-button-wrapper\">\n        <button\n          type=\"button\"\n          class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n        >\n          <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n        </button>\n      </div>\n    }\n  }\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -269,11 +269,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"secondary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"secondary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\nimport { ButtonComponent } from '../Buttons/button.component';\n\ntype ActionBarSize = 'xs' | 's' | 'm' | 'l' | 'xl';\ntype ActionBarType = 'icon' | 'text';\n\nexport interface ActionBarButtonConfig {\n  icon: string;\n  iconSet?: 'material' | 'asset';\n}\n\nexport interface ActionBarTextButtonConfig {\n  label: string;\n  leftIconName?: string;\n}\n\nconst DEFAULT_ICON_SET1: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET2: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_ICON_SET3: ActionBarButtonConfig[] = [\n  { icon: 'add' },\n  { icon: 'filter_list' },\n  { icon: 'attach_file' },\n  { icon: 'delete' },\n  { icon: 'upload' },\n];\n\nconst DEFAULT_TEXT_SET1: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET2: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\nconst DEFAULT_TEXT_SET3: ActionBarTextButtonConfig[] = [\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n];\n\n@Component({\n  selector: 'AppCore-actionbar',\n  standalone: true,\n  imports: [CommonModule, IconComponent, ButtonComponent],\n  styleUrls: ['./actionbar.scss'],\n  template: `\n    <div class=\"AppCore-actionbar\" [ngClass]=\"'AppCore-actionbar--' + size\">\n      @if (type === 'icon') {\n        <div class=\"set\">\n          @for (button of set1; track button.icon) {\n            <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n              <app-icon\n                [icon]=\"button.icon\"\n                [iconSet]=\"button.iconSet ?? 'material'\"\n                size=\"sm\"\n              ></app-icon>\n            </button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set2; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (button of set3; track button.icon) {\n              <button type=\"button\" class=\"AppCore-actionbar__icon-button\">\n                <app-icon\n                  [icon]=\"button.icon\"\n                  [iconSet]=\"button.iconSet ?? 'material'\"\n                  size=\"sm\"\n                ></app-icon>\n              </button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      } @else {\n        <!-- Text Action Bar -->\n        <div class=\"set\">\n          @for (btn of textSet1; track btn.label + $index) {\n            <AppCore-button\n              class=\"AppCore-actionbar__text-button\"\n              [size]=\"buttonSize\"\n              type=\"tertiary\"\n              [buttonText]=\"true\"\n              [label]=\"btn.label\"\n              [showLeftIcon]=\"!!btn.leftIconName\"\n              [leftIconName]=\"btn.leftIconName ?? ''\"\n            ></AppCore-button>\n          }\n        </div>\n\n        @if (showSet2) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet2; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n          </div>\n        }\n\n        @if (showSet3) {\n          <div class=\"set\">\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n            @for (btn of textSet3; track btn.label + $index) {\n              <AppCore-button\n                class=\"AppCore-actionbar__text-button\"\n                [size]=\"buttonSize\"\n                type=\"tertiary\"\n                [buttonText]=\"true\"\n                [label]=\"btn.label\"\n                [showLeftIcon]=\"!!btn.leftIconName\"\n                [leftIconName]=\"btn.leftIconName ?? ''\"\n              ></AppCore-button>\n            }\n            <div class=\"AppCore-actionbar__divider\" aria-hidden=\"true\"></div>\n          </div>\n        }\n\n        @if (showKebabMenu) {\n          <div class=\"icon-button-wrapper\">\n            <button\n              type=\"button\"\n              class=\"AppCore-actionbar__icon-button AppCore-actionbar__icon-button--kebab\"\n            >\n              <app-icon icon=\"more_vert\" iconSet=\"material\" size=\"sm\"></app-icon>\n            </button>\n          </div>\n        }\n      }\n    </div>\n  `,\n})\nexport class ActionbarComponent {\n  /** Visual style for the bar – \"icon\" or \"text\". */\n  @Input() type: ActionBarType = 'icon';\n\n  /** Size preset that controls spacing; mirrors the design spec (XS by default). */\n  @Input() size: ActionBarSize = 'xs';\n\n  /** Whether to show the middle set. */\n  @Input() showSet2 = true;\n\n  /** Whether to show the right-hand set. */\n  @Input() showSet3 = true;\n\n  /** Whether to show the trailing kebab menu. */\n  @Input() showKebabMenu = true;\n\n  /** Icon buttons for the first group (icon mode). */\n  @Input() set1: ActionBarButtonConfig[] = DEFAULT_ICON_SET1;\n\n  /** Icon buttons for the second group (icon mode). */\n  @Input() set2: ActionBarButtonConfig[] = DEFAULT_ICON_SET2;\n\n  /** Icon buttons for the third group (icon mode). */\n  @Input() set3: ActionBarButtonConfig[] = DEFAULT_ICON_SET3;\n\n  /** Text buttons for the first group (text mode). */\n  @Input() textSet1: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET1;\n\n  /** Text buttons for the second group (text mode). */\n  @Input() textSet2: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET2;\n\n  /** Text buttons for the third group (text mode). */\n  @Input() textSet3: ActionBarTextButtonConfig[] = DEFAULT_TEXT_SET3;\n\n  /** Map ActionBar size to ButtonComponent size (text variant starts from S). */\n  get buttonSize(): 'small' | 'medium' | 'large' {\n    switch (this.size) {\n      case 's':\n        return 'small';\n      case 'm':\n        return 'medium';\n      case 'l':\n      case 'xl':\n        return 'large';\n      default:\n        return 'small';\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/colors' as *;\n\n/* Root container – inline bar matching the design spec */\n.AppCore-actionbar {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-3;\n}\n\n.AppCore-actionbar .set {\n  display: inline-flex;\n  align-items: center;\n  flex: 0 0 auto;\n  gap: $number-tokens-spacing-2;\n}\n\n/* Icon button inside the bar */\n.AppCore-actionbar__icon-button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: $number-tokens-spacing-1;\n  border-radius: $number-tokens-corner-radius-2;\n  border: none;\n  background-color: $color-tokens-surface-neutral-white;\n  cursor: pointer;\n  transition:\n    background-color 0.15s ease,\n    box-shadow 0.15s ease,\n    transform 0.05s ease;\n\n  /* Reset default button styles */\n  outline: none;\n}\n\n.AppCore-actionbar__icon-button:hover {\n  background-color: $color-tokens-surface-neutral-white-hover;\n}\n\n.AppCore-actionbar__icon-button:active {\n  background-color: $color-tokens-surface-neutral-white-pressed;\n  transform: translateY(1px);\n}\n\n.AppCore-actionbar__icon-button:disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled;\n  cursor: not-allowed;\n}\n\n/* Divider between sets */\n.AppCore-actionbar__divider {\n  width: 1px;\n  height: 1.5rem;\n  background-color: $color-tokens-border-neutral-light-stroke-divider;\n}\n\n/* Trailing kebab wrapper – light neutral chip background */\n.AppCore-actionbar .icon-button-wrapper {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-2;\n  padding: $number-tokens-spacing-1;\n  background-color: $color-tokens-surface-neutral-white-faded;\n  border-radius: $number-tokens-corner-radius-2;\n}\n\n/* Text buttons inherit sizing from ButtonComponent; this hook allows future overrides */\n.AppCore-actionbar__text-button {\n  margin: 0;\n}\n\n/* ==== Size variants: icon dimensions per spec ==== */\n\n/* XS – 14px */\n.AppCore-actionbar--xs ::ng-deep .icon {\n  width: 14px !important;\n  height: 14px !important;\n  font-size: 14px !important;\n}\n\n/* S – 16px */\n.AppCore-actionbar--s ::ng-deep .icon {\n  width: 16px !important;\n  height: 16px !important;\n  font-size: 16px !important;\n}\n\n/* M – 18px */\n.AppCore-actionbar--m ::ng-deep .icon {\n  width: 18px !important;\n  height: 18px !important;\n  font-size: 18px !important;\n}\n\n/* L – 20px */\n.AppCore-actionbar--l ::ng-deep .icon {\n  width: 20px !important;\n  height: 20px !important;\n  font-size: 20px !important;\n}\n\n/* XL – 24px */\n.AppCore-actionbar--xl ::ng-deep .icon {\n  width: 24px !important;\n  height: 24px !important;\n  font-size: 24px !important;\n}\n\n\n",
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/colors' as *;\n\n/* Root container – inline bar matching the design spec */\n.AppCore-actionbar {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-3;\n}\n\n.AppCore-actionbar .set {\n  display: inline-flex;\n  align-items: center;\n  flex: 0 0 auto;\n  gap: $number-tokens-spacing-2;\n}\n\n/* Icon button inside the bar */\n.AppCore-actionbar__icon-button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: $number-tokens-spacing-1;\n  border-radius: $number-tokens-corner-radius-2;\n  border: none;\n  background-color: transparent;\n  cursor: pointer;\n  transition:\n    background-color 0.15s ease,\n    box-shadow 0.15s ease,\n    transform 0.05s ease;\n\n  /* Reset default button styles */\n  outline: none;\n}\n\n.AppCore-actionbar__icon-button:hover {\n  background-color: $color-tokens-surface-neutral-white-faded;\n}\n\n.AppCore-actionbar__icon-button:active {\n  background-color: $color-tokens-surface-neutral-white-faded;\n  transform: translateY(1px);\n}\n\n.AppCore-actionbar__icon-button:disabled {\n  opacity: 0.4;\n  cursor: not-allowed;\n}\n\n/* Divider between sets */\n.AppCore-actionbar__divider {\n  width: 1px;\n  height: 1.5rem;\n  background-color: $color-tokens-border-neutral-light-stroke-divider;\n}\n\n/* Trailing kebab wrapper – light neutral chip background */\n.AppCore-actionbar .icon-button-wrapper {\n  display: inline-flex;\n  align-items: center;\n  gap: $number-tokens-spacing-2;\n  padding: $number-tokens-spacing-1;\n  background-color: $color-tokens-surface-neutral-white-faded;\n  border-radius: $number-tokens-corner-radius-2;\n}\n\n/* Text buttons inherit sizing from ButtonComponent; this hook allows future overrides */\n.AppCore-actionbar__text-button {\n  margin: 0;\n}\n\n/* ==== Size variants: icon dimensions per spec ==== */\n\n/* XS */\n.AppCore-actionbar--xs ::ng-deep .icon {\n  width: 0.875rem !important;\n  height: 0.875rem !important;\n  font-size: 0.875rem !important;\n  aspect-ratio: 1 / 1;\n}\n\n/* S */\n.AppCore-actionbar--s ::ng-deep .icon {\n  width: 1rem !important;\n  height: 1rem !important;\n  font-size: 1rem !important;\n  aspect-ratio: 1 / 1;\n}\n\n/* M */\n.AppCore-actionbar--m ::ng-deep .icon {\n  width: 1rem !important;\n  height: 1rem !important;\n  font-size: 1rem !important;\n  aspect-ratio: 1 / 1;\n}\n\n/* L */\n.AppCore-actionbar--l ::ng-deep .icon {\n  width: 1.125rem !important;\n  height: 1.125rem !important;\n  font-size: 1.125rem !important;\n  aspect-ratio: 1 / 1;\n}\n\n/* XL */\n.AppCore-actionbar--xl ::ng-deep .icon {\n  width: 1.25rem !important;\n  height: 1.25rem !important;\n  font-size: 1.25rem !important;\n  aspect-ratio: 1 / 1;\n}\n\n\n",
                     "styleUrl": "./actionbar.scss"
                 }
             ],
@@ -347,6 +347,259 @@
             "stylesData": "",
             "extends": [],
             "templateData": "<header class=\"app-header\">\n  <h1 class=\"app-title\">AppCore UI Library</h1>\n  <p class=\"app-subtitle\">Component showcase and design system</p>\n</header>\n\n<main class=\"app-main\">\n  <section class=\"app-section\" aria-labelledby=\"section-buttons\">\n    <h2 id=\"section-buttons\" class=\"app-section__title\">Buttons</h2>\n    <p class=\"app-section__desc\">Primary, secondary, tertiary, toned, and link variants across sizes.</p>\n\n    <div class=\"app-subsection\">\n      <h3 class=\"app-subsection__title\">Variants</h3>\n      <div class=\"app-button-row\">\n        <AppCore-button\n          label=\"Primary\"\n          type=\"primary\"\n          state=\"default\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"false\"\n        />\n        <AppCore-button\n          label=\"Secondary\"\n          type=\"secondary\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"false\"\n        />\n        <AppCore-button\n          label=\"Tertiary\"\n          type=\"tertiary\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"false\"\n        />\n        <AppCore-button\n          label=\"Toned\"\n          type=\"toned\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"false\"\n        />\n        <AppCore-button\n          label=\"Link\"\n          type=\"link\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"false\"\n        />\n      </div>\n    </div>\n\n    <div class=\"app-subsection\">\n      <h3 class=\"app-subsection__title\">Sizes</h3>\n      <div class=\"app-button-row\">\n        <AppCore-button label=\"Small\" type=\"primary\" size=\"small\" [showLeftIcon]=\"true\" [showRightIcon]=\"false\" />\n        <AppCore-button label=\"Medium\" type=\"primary\" size=\"medium\" [showLeftIcon]=\"true\" [showRightIcon]=\"false\" />\n        <AppCore-button label=\"Large\" type=\"primary\" size=\"large\" [showLeftIcon]=\"true\" [showRightIcon]=\"false\" />\n      </div>\n    </div>\n\n    <div class=\"app-subsection\">\n      <h3 class=\"app-subsection__title\">With both icons</h3>\n      <div class=\"app-button-row\">\n        <AppCore-button\n          label=\"Button\"\n          type=\"primary\"\n          size=\"large\"\n          [showLeftIcon]=\"true\"\n          [showRightIcon]=\"true\"\n        />\n      </div>\n    </div>\n  </section>\n</main>\n"
+        },
+        {
+            "name": "BadgeComponent",
+            "id": "component-BadgeComponent-98bfb27c8ae83f1b780b31a4a9bb33b487cf97231911c5b40549556b5c6f3777f8bc1fa4776d05d1b0430791c1a2cd7f7406b871862e15134dfd4fb7dfa2331c",
+            "file": "src/stories/Badge/badge.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-badge",
+            "styleUrls": [
+                "./badge.scss"
+            ],
+            "styles": [],
+            "template": "<span\n  class=\"AppCore-badge\"\n  [ngClass]=\"[\n    'AppCore-badge--type-' + type,\n    'AppCore-badge--style-' + badgeStyle,\n    'AppCore-badge--size-' + size\n  ]\"\n>\n  <app-icon\n    *ngIf=\"showPrefixIcon\"\n    class=\"AppCore-badge__icon\"\n    [icon]=\"prefixIcon\"\n    [iconSet]=\"prefixIconSet\"\n    [src]=\"prefixIconSrc\"\n    size=\"sm\"\n  ></app-icon>\n\n  <span class=\"AppCore-badge__label\">{{ label }}</span>\n\n  <app-icon\n    *ngIf=\"showSuffixIcon\"\n    class=\"AppCore-badge__icon\"\n    [icon]=\"suffixIcon\"\n    [iconSet]=\"suffixIconSet\"\n    [src]=\"suffixIconSrc\"\n    size=\"sm\"\n  ></app-icon>\n</span>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "badgeStyle",
+                    "defaultValue": "'Outlined'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 48,
+                    "type": "BadgeStyle",
+                    "decorators": []
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "'Label'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 46,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "prefixIcon",
+                    "defaultValue": "'add'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 52,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "prefixIconSet",
+                    "defaultValue": "'material'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 53,
+                    "type": "\"material\" | \"asset\"",
+                    "decorators": []
+                },
+                {
+                    "name": "prefixIconSrc",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "showPrefixIcon",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 50,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showSuffixIcon",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 51,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "size",
+                    "defaultValue": "'S'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 49,
+                    "type": "BadgeSize",
+                    "decorators": []
+                },
+                {
+                    "name": "suffixIcon",
+                    "defaultValue": "'add'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 55,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "suffixIconSet",
+                    "defaultValue": "'material'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 56,
+                    "type": "\"material\" | \"asset\"",
+                    "decorators": []
+                },
+                {
+                    "name": "suffixIconSrc",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 57,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "'Default'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 47,
+                    "type": "BadgeType",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "IconComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\n\nexport type BadgeType = 'Default' | 'Error' | 'Success' | 'Warning' | 'Information';\nexport type BadgeStyle = 'Outlined' | 'Toned' | 'Highlighted';\nexport type BadgeSize = 'S' | 'M' | 'L';\n\n@Component({\n  selector: 'app-badge',\n  standalone: true,\n  imports: [CommonModule, IconComponent],\n  styleUrls: ['./badge.scss'],\n  template: `\n    <span\n      class=\"AppCore-badge\"\n      [ngClass]=\"[\n        'AppCore-badge--type-' + type,\n        'AppCore-badge--style-' + badgeStyle,\n        'AppCore-badge--size-' + size\n      ]\"\n    >\n      <app-icon\n        *ngIf=\"showPrefixIcon\"\n        class=\"AppCore-badge__icon\"\n        [icon]=\"prefixIcon\"\n        [iconSet]=\"prefixIconSet\"\n        [src]=\"prefixIconSrc\"\n        size=\"sm\"\n      ></app-icon>\n\n      <span class=\"AppCore-badge__label\">{{ label }}</span>\n\n      <app-icon\n        *ngIf=\"showSuffixIcon\"\n        class=\"AppCore-badge__icon\"\n        [icon]=\"suffixIcon\"\n        [iconSet]=\"suffixIconSet\"\n        [src]=\"suffixIconSrc\"\n        size=\"sm\"\n      ></app-icon>\n    </span>\n  `\n})\nexport class BadgeComponent {\n  @Input() label = 'Label';\n  @Input() type: BadgeType = 'Default';\n  @Input() badgeStyle: BadgeStyle = 'Outlined';\n  @Input() size: BadgeSize = 'S';\n  @Input() showPrefixIcon = false;\n  @Input() showSuffixIcon = false;\n  @Input() prefixIcon = 'add';\n  @Input() prefixIconSet: 'material' | 'asset' = 'material';\n  @Input() prefixIconSrc?: string;\n  @Input() suffixIcon = 'add';\n  @Input() suffixIconSet: 'material' | 'asset' = 'material';\n  @Input() suffixIconSrc?: string;\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n\n.AppCore-badge {\n  display: inline-flex;\n  align-items: center;\n  gap: 2px;\n  border-radius: 80px;\n  border: 1px solid transparent;\n  white-space: nowrap;\n  font-family: $font-inter;\n  font-weight: 400;\n\n  // ===== Sizes =====\n  &--size-S {\n    padding: 3px 6px;\n\n    .AppCore-badge__label {\n      font-size: 10px;\n      line-height: 14px;\n    }\n\n    .AppCore-badge__icon ::ng-deep .material-symbols-rounded,\n    .AppCore-badge__icon ::ng-deep img.icon {\n      font-size: 12px !important;\n      width: 12px !important;\n      height: 12px !important;\n    }\n  }\n\n  &--size-M {\n    padding: 4px 8px;\n\n    .AppCore-badge__label {\n      font-size: 12px;\n      line-height: 16px;\n    }\n\n    .AppCore-badge__icon ::ng-deep .material-symbols-rounded,\n    .AppCore-badge__icon ::ng-deep img.icon {\n      font-size: 14px !important;\n      width: 14px !important;\n      height: 14px !important;\n    }\n  }\n\n  &--size-L {\n    padding: 5px 10px;\n\n    .AppCore-badge__label {\n      font-size: 14px;\n      line-height: 18px;\n    }\n\n    .AppCore-badge__icon ::ng-deep .material-symbols-rounded,\n    .AppCore-badge__icon ::ng-deep img.icon {\n      font-size: 16px !important;\n      width: 16px !important;\n      height: 16px !important;\n    }\n  }\n\n  // ===== Default Type =====\n  &--type-Default {\n    &.AppCore-badge--style-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-neutral-light-stroke-divider;\n      color: $color-tokens-content-neutral-heading2-label2-body1;\n    }\n\n    &.AppCore-badge--style-Toned {\n      background-color: $color-tokens-surface-neutral-white-faded;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-heading2-label2-body1;\n    }\n\n    &.AppCore-badge--style-Highlighted {\n      background-color: $color-tokens-surface-neutral-black-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // ===== Error Type =====\n  &--type-Error {\n    &.AppCore-badge--style-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-surface-error-hover; // error-75 shade, no error-border-light token in project\n      color: $color-tokens-content-error-default;\n    }\n\n    &.AppCore-badge--style-Toned {\n      background-color: $color-tokens-surface-error-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-error-default;\n    }\n\n    &.AppCore-badge--style-Highlighted {\n      background-color: $color-tokens-surface-error-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // ===== Success Type =====\n  &--type-Success {\n    &.AppCore-badge--style-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-success-light;\n      color: $color-tokens-content-success-default;\n    }\n\n    &.AppCore-badge--style-Toned {\n      background-color: $color-tokens-surface-success-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-success-default;\n    }\n\n    &.AppCore-badge--style-Highlighted {\n      background-color: $color-tokens-surface-success-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // ===== Warning Type =====\n  &--type-Warning {\n    &.AppCore-badge--style-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-warning-light;\n      color: $color-tokens-content-warning-default;\n    }\n\n    &.AppCore-badge--style-Toned {\n      background-color: $color-tokens-surface-warning-background-dark;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-display-heading1-label1-selected;\n    }\n\n    &.AppCore-badge--style-Highlighted {\n      background-color: $color-tokens-surface-warning-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-display-heading1-label1-selected;\n    }\n  }\n\n  // ===== Information Type =====\n  &--type-Information {\n    &.AppCore-badge--style-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-primary-default;\n      color: $color-tokens-content-primary-default;\n    }\n\n    &.AppCore-badge--style-Toned {\n      background-color: $color-tokens-surface-primary-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-primary-default;\n    }\n\n    &.AppCore-badge--style-Highlighted {\n      background-color: $color-tokens-surface-primary-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // Icon inherits text color\n  &__icon ::ng-deep .material-symbols-rounded,\n  &__icon ::ng-deep img.icon {\n    color: inherit !important;\n  }\n\n  &__label {\n    display: inline;\n    font-family: inherit;\n    font-weight: inherit;\n    color: inherit;\n  }\n}\n",
+                    "styleUrl": "./badge.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": []
+        },
+        {
+            "name": "BadgeIndicatorComponent",
+            "id": "component-BadgeIndicatorComponent-f1e632e092e01f63f4330d15825959a42ed5cd3ea12bc688761a54c95a6aade892820e29495898f00d2903f66daf10ded454d783058a31da5366a2229fc8163a",
+            "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-badge-indicator",
+            "styleUrls": [
+                "./badge-indicator.scss"
+            ],
+            "styles": [],
+            "template": "<div\n  class=\"AppCore-badge-indicator\"\n  [ngClass]=\"[\n    'AppCore-badge-indicator--type-' + type,\n    'AppCore-badge-indicator--style-' + styleKey\n  ]\"\n>\n  <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n    class=\"AppCore-badge-indicator__dot\"\n  ></div>\n\n  <!-- Avatar (overlapping styles) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"material-symbols-rounded AppCore-badge-indicator__avatar\"\n  >account_circle</span>\n\n  <!-- Label (Dot - Inline only) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n    class=\"AppCore-badge-indicator__label\"\n  >{{ label }}</span>\n\n  <!-- Count pill (With Text and With Text - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"AppCore-badge-indicator__pill\"\n  >\n    <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n  </div>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "count",
+                    "defaultValue": "'+99'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 56,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "indicatorStyle",
+                    "defaultValue": "'Dot - Inline'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "BadgeIndicatorStyle",
+                    "decorators": []
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "'Label'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 55,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "'Default'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 53,
+                    "type": "BadgeIndicatorType",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nexport type BadgeIndicatorType = 'Default' | 'Error' | 'Success' | 'Warning' | 'Inactive';\nexport type BadgeIndicatorStyle =\n  | 'Dot - Inline'\n  | 'Dot - Overlapping'\n  | 'With Text'\n  | 'With Text - Overlapping';\n\n@Component({\n  selector: 'app-badge-indicator',\n  standalone: true,\n  imports: [CommonModule],\n  styleUrls: ['./badge-indicator.scss'],\n  template: `\n    <div\n      class=\"AppCore-badge-indicator\"\n      [ngClass]=\"[\n        'AppCore-badge-indicator--type-' + type,\n        'AppCore-badge-indicator--style-' + styleKey\n      ]\"\n    >\n      <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n        class=\"AppCore-badge-indicator__dot\"\n      ></div>\n\n      <!-- Avatar (overlapping styles) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"material-symbols-rounded AppCore-badge-indicator__avatar\"\n      >account_circle</span>\n\n      <!-- Label (Dot - Inline only) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n        class=\"AppCore-badge-indicator__label\"\n      >{{ label }}</span>\n\n      <!-- Count pill (With Text and With Text - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"AppCore-badge-indicator__pill\"\n      >\n        <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n      </div>\n    </div>\n  `,\n})\nexport class BadgeIndicatorComponent {\n  @Input() type: BadgeIndicatorType = 'Default';\n  @Input() indicatorStyle: BadgeIndicatorStyle = 'Dot - Inline';\n  @Input() label = 'Label';\n  @Input() count = '+99';\n\n  get styleKey(): string {\n    const map: Record<BadgeIndicatorStyle, string> = {\n      'Dot - Inline': 'dot-inline',\n      'Dot - Overlapping': 'dot-overlapping',\n      'With Text': 'text',\n      'With Text - Overlapping': 'text-overlapping',\n    };\n    return map[this.indicatorStyle];\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n\n.AppCore-badge-indicator {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n\n  // ===== Dot - Inline (default layout: flex row) =====\n  &--style-dot-inline {\n    // inherits default inline-flex + gap\n  }\n\n  // ===== Dot - Overlapping =====\n  &--style-dot-overlapping {\n    position: relative;\n    width: 24px;\n    height: 24px;\n    gap: 0;\n\n    .AppCore-badge-indicator__dot {\n      position: absolute;\n      top: 0;\n      right: 0;\n      z-index: 1;\n    }\n  }\n\n  // ===== With Text (standalone pill, no avatar) =====\n  &--style-text {\n    gap: 0;\n  }\n\n  // ===== With Text - Overlapping =====\n  &--style-text-overlapping {\n    position: relative;\n    width: 28px;\n    height: 28px;\n    gap: 0;\n\n    .AppCore-badge-indicator__avatar {\n      position: absolute;\n      top: 2px;\n      left: 2px;\n    }\n\n    .AppCore-badge-indicator__pill {\n      position: absolute;\n      top: 0;\n      left: 14px;\n    }\n  }\n\n  // ===== Dot =====\n  &__dot {\n    width: 8px;\n    height: 8px;\n    border-radius: 40px;\n    flex-shrink: 0;\n  }\n\n  // ===== Avatar placeholder =====\n  &__avatar {\n    font-size: 24px !important;\n    width: 24px !important;\n    height: 24px !important;\n    color: $color-tokens-content-neutral-disabled;\n    flex-shrink: 0;\n    user-select: none;\n  }\n\n  // ===== Label (Dot - Inline) =====\n  &__label {\n    font-family: $font-inter;\n    font-size: 12px;\n    line-height: 16px;\n    font-weight: 400;\n    color: $color-tokens-content-neutral-heading2-label2-body1;\n    white-space: nowrap;\n  }\n\n  // ===== Pill =====\n  &__pill {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    min-width: 18px;\n    padding: 2px 4px;\n    border-radius: 100px;\n  }\n\n  &__count {\n    font-family: $font-inter;\n    font-size: 10px;\n    line-height: 14px;\n    font-weight: 400;\n    white-space: nowrap;\n  }\n\n  // ===== Type: Default =====\n  &--type-Default {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-primary-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-primary-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Error =====\n  &--type-Error {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-error-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-error-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Success =====\n  &--type-Success {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-success-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-success-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Warning =====\n  &--type-Warning {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-warning-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-warning-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-hover;\n      }\n    }\n  }\n\n  // ===== Type: Inactive =====\n  &--type-Inactive {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-content-neutral-disabled;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-neutral-white-disabled;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-disabled;\n      }\n    }\n  }\n}\n",
+                    "styleUrl": "./badge-indicator.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "accessors": {
+                "styleKey": {
+                    "name": "styleKey",
+                    "getSignature": {
+                        "name": "styleKey",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 58
+                    }
+                }
+            }
         },
         {
             "name": "ButtonComponent",
@@ -971,6 +1224,26 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1038,6 +1311,56 @@
                 "defaultValue": "[\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n  { label: 'Button', leftIconName: 'add' },\n]"
             },
             {
+                "name": "DefaultHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "DefaultOutlinedL",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'L' },\n}"
+            },
+            {
+                "name": "DefaultOutlinedM",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "DefaultOutlinedS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'S' },\n}"
+            },
+            {
+                "name": "DefaultToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Toned', size: 'M' },\n}"
+            },
+            {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1048,6 +1371,106 @@
                 "defaultValue": "{\n  args: {\n    label: 'Button',\n    state: 'disabled',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
             },
             {
+                "name": "DotInlineDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'Dot - Inline' },\n}"
+            },
+            {
+                "name": "DotInlineError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'Dot - Inline' },\n}"
+            },
+            {
+                "name": "DotInlineInactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'Dot - Inline' },\n}"
+            },
+            {
+                "name": "DotInlineSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'Dot - Inline' },\n}"
+            },
+            {
+                "name": "DotInlineWarning",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'Dot - Inline' },\n}"
+            },
+            {
+                "name": "DotOverlappingDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'Dot - Overlapping' },\n}"
+            },
+            {
+                "name": "DotOverlappingError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'Dot - Overlapping' },\n}"
+            },
+            {
+                "name": "DotOverlappingInactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'Dot - Overlapping' },\n}"
+            },
+            {
+                "name": "DotOverlappingSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'Dot - Overlapping' },\n}"
+            },
+            {
+                "name": "DotOverlappingWarning",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'Dot - Overlapping' },\n}"
+            },
+            {
                 "name": "Error",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1056,6 +1479,66 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Error',\n    state: 'error',\n  },\n}"
+            },
+            {
+                "name": "ErrorHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "ErrorOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "ErrorToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Toned', size: 'M' },\n}"
+            },
+            {
+                "name": "InformationHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "InformationOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "InformationToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Toned', size: 'M' },\n}"
             },
             {
                 "name": "LargeSize",
@@ -1116,6 +1599,26 @@
                 "deprecationMessage": "",
                 "type": "Meta<ActionbarComponent>",
                 "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<BadgeIndicatorComponent>",
+                "defaultValue": "{\n  title: 'components/BadgeIndicator',\n  component: BadgeIndicatorComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeIndicatorComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Inactive'],\n    },\n    indicatorStyle: {\n      control: 'select',\n      options: ['Dot - Inline', 'Dot - Overlapping', 'With Text', 'With Text - Overlapping'],\n    },\n    label: { control: 'text' },\n    count: { control: 'text' },\n  },\n  args: {\n    type: 'Default',\n    indicatorStyle: 'Dot - Inline',\n    label: 'Label',\n    count: '+99',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<BadgeComponent>",
+                "defaultValue": "{\n  title: 'components/Badge',\n  component: BadgeComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Information'],\n    },\n    badgeStyle: {\n      control: 'select',\n      options: ['Outlined', 'Toned', 'Highlighted'],\n    },\n    size: {\n      control: 'select',\n      options: ['S', 'M', 'L'],\n    },\n    showPrefixIcon: { control: 'boolean' },\n    showSuffixIcon: { control: 'boolean' },\n    prefixIcon: { control: 'text' },\n    suffixIcon: { control: 'text' },\n    label: { control: 'text' },\n  },\n  args: {\n    label: 'Label',\n    type: 'Default',\n    badgeStyle: 'Outlined',\n    size: 'M',\n    showPrefixIcon: false,\n    showSuffixIcon: false,\n    prefixIcon: 'add',\n    suffixIcon: 'add',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1208,6 +1711,36 @@
                 "defaultValue": "{\n  args: {\n    label: 'Success',\n    state: 'success',\n  },\n}"
             },
             {
+                "name": "SuccessHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "SuccessOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "SuccessToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Toned', size: 'M' },\n}"
+            },
+            {
                 "name": "TextActionBarLarge",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1258,6 +1791,46 @@
                 "defaultValue": "{\n  args: {\n    label: 'Button',\n    type: 'toned',\n    showLeftIcon: false,\n    showRightIcon: true,\n  },\n}"
             },
             {
+                "name": "WarningHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "WarningOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "WarningToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Toned', size: 'M' },\n}"
+            },
+            {
+                "name": "WithBothIcons",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'Success',\n    badgeStyle: 'Toned',\n    size: 'M',\n    showPrefixIcon: true,\n    showSuffixIcon: true,\n    prefixIcon: 'check_circle',\n    suffixIcon: 'close',\n  },\n}"
+            },
+            {
                 "name": "WithIconsOnly",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1296,6 +1869,116 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { showSet3: false },\n}"
+            },
+            {
+                "name": "WithPrefixIcon",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'Information',\n    badgeStyle: 'Outlined',\n    size: 'M',\n    showPrefixIcon: true,\n    prefixIcon: 'info',\n  },\n}"
+            },
+            {
+                "name": "WithTextDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'With Text' },\n}"
+            },
+            {
+                "name": "WithTextError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'With Text' },\n}"
+            },
+            {
+                "name": "WithTextInactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'With Text' },\n}"
+            },
+            {
+                "name": "WithTextOverlappingDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'With Text - Overlapping' },\n}"
+            },
+            {
+                "name": "WithTextOverlappingError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'With Text - Overlapping' },\n}"
+            },
+            {
+                "name": "WithTextOverlappingInactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'With Text - Overlapping' },\n}"
+            },
+            {
+                "name": "WithTextOverlappingSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'With Text - Overlapping' },\n}"
+            },
+            {
+                "name": "WithTextOverlappingWarning",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text - Overlapping' },\n}"
+            },
+            {
+                "name": "WithTextSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'With Text' },\n}"
+            },
+            {
+                "name": "WithTextWarning",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text' },\n}"
             }
         ],
         "functions": [],
@@ -1323,11 +2006,88 @@
                 "kind": 193
             },
             {
+                "name": "BadgeIndicatorStyle",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Dot - Inline\" | \"Dot - Overlapping\" | \"With Text\" | \"With Text - Overlapping\"",
+                "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "BadgeIndicatorType",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Default\" | \"Error\" | \"Success\" | \"Warning\" | \"Inactive\"",
+                "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "BadgeSize",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"S\" | \"M\" | \"L\"",
+                "file": "src/stories/Badge/badge.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "BadgeStyle",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Outlined\" | \"Toned\" | \"Highlighted\"",
+                "file": "src/stories/Badge/badge.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "BadgeType",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Default\" | \"Error\" | \"Success\" | \"Warning\" | \"Information\"",
+                "file": "src/stories/Badge/badge.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj<ActionbarComponent>",
                 "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<BadgeIndicatorComponent>",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<BadgeComponent>",
+                "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1685,6 +2445,440 @@
                     "defaultValue": "{\n  args: { showSet3: false },\n}"
                 }
             ],
+            "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "DotInlineDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'Dot - Inline' },\n}"
+                },
+                {
+                    "name": "DotInlineError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'Dot - Inline' },\n}"
+                },
+                {
+                    "name": "DotInlineInactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'Dot - Inline' },\n}"
+                },
+                {
+                    "name": "DotInlineSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'Dot - Inline' },\n}"
+                },
+                {
+                    "name": "DotInlineWarning",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'Dot - Inline' },\n}"
+                },
+                {
+                    "name": "DotOverlappingDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'Dot - Overlapping' },\n}"
+                },
+                {
+                    "name": "DotOverlappingError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'Dot - Overlapping' },\n}"
+                },
+                {
+                    "name": "DotOverlappingInactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'Dot - Overlapping' },\n}"
+                },
+                {
+                    "name": "DotOverlappingSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'Dot - Overlapping' },\n}"
+                },
+                {
+                    "name": "DotOverlappingWarning",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'Dot - Overlapping' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<BadgeIndicatorComponent>",
+                    "defaultValue": "{\n  title: 'components/BadgeIndicator',\n  component: BadgeIndicatorComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeIndicatorComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Inactive'],\n    },\n    indicatorStyle: {\n      control: 'select',\n      options: ['Dot - Inline', 'Dot - Overlapping', 'With Text', 'With Text - Overlapping'],\n    },\n    label: { control: 'text' },\n    count: { control: 'text' },\n  },\n  args: {\n    type: 'Default',\n    indicatorStyle: 'Dot - Inline',\n    label: 'Label',\n    count: '+99',\n  },\n}"
+                },
+                {
+                    "name": "WithTextDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'With Text' },\n}"
+                },
+                {
+                    "name": "WithTextError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'With Text' },\n}"
+                },
+                {
+                    "name": "WithTextInactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'With Text' },\n}"
+                },
+                {
+                    "name": "WithTextOverlappingDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', indicatorStyle: 'With Text - Overlapping' },\n}"
+                },
+                {
+                    "name": "WithTextOverlappingError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', indicatorStyle: 'With Text - Overlapping' },\n}"
+                },
+                {
+                    "name": "WithTextOverlappingInactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Inactive', indicatorStyle: 'With Text - Overlapping' },\n}"
+                },
+                {
+                    "name": "WithTextOverlappingSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'With Text - Overlapping' },\n}"
+                },
+                {
+                    "name": "WithTextOverlappingWarning",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text - Overlapping' },\n}"
+                },
+                {
+                    "name": "WithTextSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', indicatorStyle: 'With Text' },\n}"
+                },
+                {
+                    "name": "WithTextWarning",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text' },\n}"
+                }
+            ],
+            "src/stories/Badge/badge.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "DefaultHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Highlighted', size: 'M' },\n}"
+                },
+                {
+                    "name": "DefaultOutlinedL",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'L' },\n}"
+                },
+                {
+                    "name": "DefaultOutlinedM",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'M' },\n}"
+                },
+                {
+                    "name": "DefaultOutlinedS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Outlined', size: 'S' },\n}"
+                },
+                {
+                    "name": "DefaultToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Default', badgeStyle: 'Toned', size: 'M' },\n}"
+                },
+                {
+                    "name": "ErrorHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Highlighted', size: 'M' },\n}"
+                },
+                {
+                    "name": "ErrorOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Outlined', size: 'M' },\n}"
+                },
+                {
+                    "name": "ErrorToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Toned', size: 'M' },\n}"
+                },
+                {
+                    "name": "InformationHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Highlighted', size: 'M' },\n}"
+                },
+                {
+                    "name": "InformationOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Outlined', size: 'M' },\n}"
+                },
+                {
+                    "name": "InformationToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Toned', size: 'M' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<BadgeComponent>",
+                    "defaultValue": "{\n  title: 'components/Badge',\n  component: BadgeComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Information'],\n    },\n    badgeStyle: {\n      control: 'select',\n      options: ['Outlined', 'Toned', 'Highlighted'],\n    },\n    size: {\n      control: 'select',\n      options: ['S', 'M', 'L'],\n    },\n    showPrefixIcon: { control: 'boolean' },\n    showSuffixIcon: { control: 'boolean' },\n    prefixIcon: { control: 'text' },\n    suffixIcon: { control: 'text' },\n    label: { control: 'text' },\n  },\n  args: {\n    label: 'Label',\n    type: 'Default',\n    badgeStyle: 'Outlined',\n    size: 'M',\n    showPrefixIcon: false,\n    showSuffixIcon: false,\n    prefixIcon: 'add',\n    suffixIcon: 'add',\n  },\n}"
+                },
+                {
+                    "name": "SuccessHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Highlighted', size: 'M' },\n}"
+                },
+                {
+                    "name": "SuccessOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Outlined', size: 'M' },\n}"
+                },
+                {
+                    "name": "SuccessToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Toned', size: 'M' },\n}"
+                },
+                {
+                    "name": "WarningHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Highlighted', size: 'M' },\n}"
+                },
+                {
+                    "name": "WarningOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Outlined', size: 'M' },\n}"
+                },
+                {
+                    "name": "WarningToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Toned', size: 'M' },\n}"
+                },
+                {
+                    "name": "WithBothIcons",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Success',\n    badgeStyle: 'Toned',\n    size: 'M',\n    showPrefixIcon: true,\n    showSuffixIcon: true,\n    prefixIcon: 'check_circle',\n    suffixIcon: 'close',\n  },\n}"
+                },
+                {
+                    "name": "WithPrefixIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    badgeStyle: 'Outlined',\n    size: 'M',\n    showPrefixIcon: true,\n    prefixIcon: 'info',\n  },\n}"
+                }
+            ],
             "src/stories/icon/icon.stories.ts": [
                 {
                     "name": "Default",
@@ -1841,6 +3035,65 @@
                     "kind": 193
                 }
             ],
+            "src/stories/BadgeIndicator/badge-indicator.component.ts": [
+                {
+                    "name": "BadgeIndicatorStyle",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Dot - Inline\" | \"Dot - Overlapping\" | \"With Text\" | \"With Text - Overlapping\"",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "BadgeIndicatorType",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Default\" | \"Error\" | \"Success\" | \"Warning\" | \"Inactive\"",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
+            "src/stories/Badge/badge.component.ts": [
+                {
+                    "name": "BadgeSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"S\" | \"M\" | \"L\"",
+                    "file": "src/stories/Badge/badge.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "BadgeStyle",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Outlined\" | \"Toned\" | \"Highlighted\"",
+                    "file": "src/stories/Badge/badge.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "BadgeType",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Default\" | \"Error\" | \"Success\" | \"Warning\" | \"Information\"",
+                    "file": "src/stories/Badge/badge.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
             "src/stories/Actionbar/actionbar.stories.ts": [
                 {
                     "name": "Story",
@@ -1848,6 +3101,32 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ActionbarComponent>",
                     "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<BadgeIndicatorComponent>",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "src/stories/Badge/badge.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<BadgeComponent>",
+                    "file": "src/stories/Badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1901,7 +3180,7 @@
         "children": []
     },
     "coverage": {
-        "count": 6,
+        "count": 3,
         "status": "low",
         "files": [
             {
@@ -2192,6 +3471,524 @@
             },
             {
                 "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BadgeComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/13",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "BadgeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "BadgeStyle",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "BadgeType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultOutlinedL",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultOutlinedM",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultOutlinedS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithBothIcons",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithPrefixIcon",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Badge/badge.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BadgeIndicatorComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "BadgeIndicatorStyle",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "BadgeIndicatorType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotInlineDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotInlineError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotInlineInactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotInlineSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotInlineWarning",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotOverlappingDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotOverlappingError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotOverlappingInactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotOverlappingSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DotOverlappingWarning",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextInactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextOverlappingDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextOverlappingError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextOverlappingInactive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextOverlappingSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextOverlappingWarning",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTextWarning",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

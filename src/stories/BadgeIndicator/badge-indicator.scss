@@ -1,0 +1,187 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-badge-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  // ===== Dot - Inline (default layout: flex row) =====
+  &--style-dot-inline {
+    // inherits default inline-flex + gap
+  }
+
+  // ===== Dot - Overlapping =====
+  &--style-dot-overlapping {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    gap: 0;
+
+    .AppCore-badge-indicator__dot {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+    }
+  }
+
+  // ===== With Text (standalone pill, no avatar) =====
+  &--style-text {
+    gap: 0;
+  }
+
+  // ===== With Text - Overlapping =====
+  &--style-text-overlapping {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    gap: 0;
+
+    .AppCore-badge-indicator__avatar {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+
+    .AppCore-badge-indicator__pill {
+      position: absolute;
+      top: 0;
+      left: 14px;
+    }
+  }
+
+  // ===== Dot =====
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 40px;
+    flex-shrink: 0;
+  }
+
+  // ===== Avatar placeholder =====
+  &__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: $color-tokens-surface-neutral-white-disabled;
+  }
+
+  &__avatar-icon {
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    color: $color-tokens-content-neutral-disabled;
+    user-select: none;
+  }
+
+  // ===== Label (Dot - Inline) =====
+  &__label {
+    font-family: $font-inter;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+    white-space: nowrap;
+  }
+
+  // ===== Pill =====
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    padding: 2px 4px;
+    border-radius: 100px;
+  }
+
+  &__count {
+    font-family: $font-inter;
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  // ===== Type: Default =====
+  &--type-Default {
+    .AppCore-badge-indicator__dot {
+      background-color: $color-tokens-surface-primary-default;
+    }
+
+    .AppCore-badge-indicator__pill {
+      background-color: $color-tokens-surface-primary-default;
+
+      .AppCore-badge-indicator__count {
+        color: $color-tokens-content-neutral-button-darkbg;
+      }
+    }
+  }
+
+  // ===== Type: Error =====
+  &--type-Error {
+    .AppCore-badge-indicator__dot {
+      background-color: $color-tokens-surface-error-default;
+    }
+
+    .AppCore-badge-indicator__pill {
+      background-color: $color-tokens-surface-error-default;
+
+      .AppCore-badge-indicator__count {
+        color: $color-tokens-content-neutral-button-darkbg;
+      }
+    }
+  }
+
+  // ===== Type: Success =====
+  &--type-Success {
+    .AppCore-badge-indicator__dot {
+      background-color: $color-tokens-surface-success-default;
+    }
+
+    .AppCore-badge-indicator__pill {
+      background-color: $color-tokens-surface-success-default;
+
+      .AppCore-badge-indicator__count {
+        color: $color-tokens-content-neutral-button-darkbg;
+      }
+    }
+  }
+
+  // ===== Type: Warning =====
+  &--type-Warning {
+    .AppCore-badge-indicator__dot {
+      background-color: $color-tokens-surface-warning-default;
+    }
+
+    .AppCore-badge-indicator__pill {
+      background-color: $color-tokens-surface-warning-default;
+
+      .AppCore-badge-indicator__count {
+        color: $color-tokens-content-neutral-hover;
+      }
+    }
+  }
+
+  // ===== Type: Inactive =====
+  &--type-Inactive {
+    .AppCore-badge-indicator__dot {
+      background-color: $color-tokens-content-neutral-disabled;
+    }
+
+    .AppCore-badge-indicator__pill {
+      background-color: $color-tokens-surface-neutral-white-disabled;
+
+      .AppCore-badge-indicator__count {
+        color: $color-tokens-content-neutral-disabled;
+      }
+    }
+  }
+}
