@@ -107,10 +107,14 @@
 }
 
 .AppCore-button--link {
-  background-color: $color-tokens-surface-neutral-white !important;
+  background-color: transparent !important;
   color: $color-tokens-content-primary-default !important;
-  border: 1px solid !important;
-  border-color: $color-tokens-border-primary-default !important;
+  border: none !important;
+
+  .AppCore-button__label,
+  .mdc-button__label {
+    text-decoration: underline !important;
+  }
 }
 
 /* ===== States ===== */
@@ -165,7 +169,7 @@
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
 
-.AppCore-button--onerror {
+.AppCore-button--error {
   background-color: $color-tokens-surface-error-default !important;
   color: $color-tokens-content-neutral-button-darkbg !important;
 }
