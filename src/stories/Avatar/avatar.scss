@@ -1,0 +1,255 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: visible;
+  flex-shrink: 0;
+  font-family: $font-inter;
+
+  // ===== Sizes =====
+  &--size-XS {
+    width: 24px;
+    height: 24px;
+
+    .AppCore-avatar__initials {
+      font-size: 9px;
+      line-height: 1;
+      font-weight: $font-weight-inter-1;
+    }
+
+    .AppCore-avatar__icon ::ng-deep .material-symbols-rounded {
+      font-size: 14px !important;
+      width: 14px !important;
+      height: 14px !important;
+    }
+
+    .AppCore-avatar__status {
+      width: 6px;
+      height: 6px;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &--size-S {
+    width: 32px;
+    height: 32px;
+
+    .AppCore-avatar__initials {
+      font-size: 12px;
+      line-height: 1;
+      font-weight: $font-weight-inter-1;
+    }
+
+    .AppCore-avatar__icon ::ng-deep .material-symbols-rounded {
+      font-size: 18px !important;
+      width: 18px !important;
+      height: 18px !important;
+    }
+
+    .AppCore-avatar__status {
+      width: 8px;
+      height: 8px;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &--size-M {
+    width: 40px;
+    height: 40px;
+
+    .AppCore-avatar__initials {
+      font-size: 14px;
+      line-height: 1;
+      font-weight: $font-weight-inter-1;
+    }
+
+    .AppCore-avatar__icon ::ng-deep .material-symbols-rounded {
+      font-size: 22px !important;
+      width: 22px !important;
+      height: 22px !important;
+    }
+
+    .AppCore-avatar__status {
+      width: 10px;
+      height: 10px;
+      bottom: 1px;
+      right: 1px;
+    }
+  }
+
+  &--size-L {
+    width: 48px;
+    height: 48px;
+
+    .AppCore-avatar__initials {
+      font-size: 16px;
+      line-height: 1;
+      font-weight: $font-weight-inter-1;
+    }
+
+    .AppCore-avatar__icon ::ng-deep .material-symbols-rounded {
+      font-size: 26px !important;
+      width: 26px !important;
+      height: 26px !important;
+    }
+
+    .AppCore-avatar__status {
+      width: 12px;
+      height: 12px;
+      bottom: 1px;
+      right: 1px;
+    }
+  }
+
+  &--size-XL {
+    width: 56px;
+    height: 56px;
+
+    .AppCore-avatar__initials {
+      font-size: 20px;
+      line-height: 1;
+      font-weight: $font-weight-inter-1;
+    }
+
+    .AppCore-avatar__icon ::ng-deep .material-symbols-rounded {
+      font-size: 32px !important;
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .AppCore-avatar__status {
+      width: 14px;
+      height: 14px;
+      bottom: 2px;
+      right: 2px;
+    }
+  }
+
+  // ===== Types =====
+  &--type-image {
+    background-color: $color-tokens-surface-neutral-white-faded;
+  }
+
+  &--type-placeholder {
+    background-color: $color-tokens-surface-neutral-white-faded;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+
+  &--type-icon {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+  }
+
+  &--type-initials {
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  // ===== Initials Color Variants =====
+  &--color-blue {
+    background-color: $color-tokens-surface-primary-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-green {
+    background-color: $color-tokens-surface-success-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-orange {
+    background-color: $color-tokens-surface-secondary-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-pink {
+    background-color: $primitives-colors-others-pink-dark;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-purple {
+    background-color: $primitives-colors-others-purple-dark;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-turquoise {
+    background-color: $primitives-colors-others-turquoise-dark;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  &--color-yellow {
+    background-color: $color-tokens-surface-warning-default;
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  }
+
+  &--color-default {
+    background-color: $color-tokens-surface-neutral-black-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+  }
+
+  // ===== Image =====
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  // ===== Initials =====
+  &__initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    user-select: none;
+    letter-spacing: 0.01em;
+  }
+
+  // ===== Icon =====
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+
+    ::ng-deep .material-symbols-rounded {
+      color: inherit !important;
+    }
+
+    &--placeholder {
+      color: $color-tokens-content-neutral-heading2-label2-body1;
+    }
+  }
+
+  // ===== Status Dot =====
+  &__status {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid $color-tokens-surface-neutral-white;
+    box-sizing: border-box;
+
+    &--online {
+      background-color: $color-tokens-surface-success-default;
+    }
+
+    &--offline {
+      background-color: $color-tokens-surface-neutral-white-disabled;
+    }
+
+    &--away {
+      background-color: $color-tokens-surface-warning-default;
+    }
+
+    &--busy {
+      background-color: $color-tokens-surface-error-default;
+    }
+  }
+}

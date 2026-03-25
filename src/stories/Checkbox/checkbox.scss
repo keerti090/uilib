@@ -1,0 +1,293 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+// ─── Checkbox ─────────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <label .AppCore-checkbox>
+//     <span .AppCore-checkbox__control>          ← sized relative container
+//       <input .AppCore-checkbox__input>         ← invisible, z-index 1, fills control
+//       <span .AppCore-checkbox__box>            ← visual box + ::after for marks
+//     </span>
+//     <span .AppCore-checkbox__content>
+//       <span .AppCore-checkbox__label>
+//       <span .AppCore-checkbox__description>
+//     </span>
+//   </label>
+//
+// State selectors use the adjacent sibling pattern:
+//   input:<state> + .AppCore-checkbox__box { … }
+// This avoids relying on ::after on <input> (not cross-browser safe).
+
+// ─── Root label ───────────────────────────────────────────────────────────────
+
+.AppCore-checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: $number-tokens-spacing-3; // 8px
+  cursor: pointer;
+  font-family: $font-inter;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+
+    .AppCore-checkbox__label,
+    .AppCore-checkbox__description {
+      color: $color-tokens-content-neutral-disabled;
+    }
+
+    .AppCore-checkbox__control {
+      opacity: 0.4;
+    }
+  }
+}
+
+// ─── Control (sized container) ────────────────────────────────────────────────
+
+.AppCore-checkbox__control {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  // Align box to cap-height of the label's first line
+  margin-top: 2px;
+}
+
+// ─── Hidden native input ──────────────────────────────────────────────────────
+
+.AppCore-checkbox__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// ─── Visual box ───────────────────────────────────────────────────────────────
+
+.AppCore-checkbox__box {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-2; // 4px
+  background-color: $color-tokens-surface-neutral-white;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  pointer-events: none;
+}
+
+// ─── Hover (unchecked, non-indeterminate) ─────────────────────────────────────
+
+.AppCore-checkbox:hover:not(.AppCore-checkbox--disabled)
+  .AppCore-checkbox__input:not(:checked):not(:indeterminate)
+  + .AppCore-checkbox__box {
+  border-color: $color-tokens-border-primary-default;
+}
+
+// ─── Focus ring ───────────────────────────────────────────────────────────────
+
+.AppCore-checkbox__input:focus-visible + .AppCore-checkbox__box {
+  box-shadow: 0 0 0 2px $primitives-colors-focus-blue-outline;
+}
+
+// ─── Checked ──────────────────────────────────────────────────────────────────
+
+.AppCore-checkbox__input:checked + .AppCore-checkbox__box {
+  background-color: $color-tokens-surface-primary-default;
+  border-color: $color-tokens-surface-primary-default;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1.5px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid $color-tokens-surface-neutral-white;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+}
+
+// ─── Indeterminate ────────────────────────────────────────────────────────────
+
+.AppCore-checkbox__input:indeterminate + .AppCore-checkbox__box {
+  background-color: $color-tokens-surface-primary-default;
+  border-color: $color-tokens-surface-primary-default;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 2px;
+    background-color: $color-tokens-surface-neutral-white;
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// ─── Error (unchecked / indeterminate only) ───────────────────────────────────
+
+.AppCore-checkbox--error
+  .AppCore-checkbox__input:not(:checked):not(:disabled)
+  + .AppCore-checkbox__box {
+  border-color: $color-tokens-content-error-default;
+}
+
+// ─── Text content ─────────────────────────────────────────────────────────────
+
+.AppCore-checkbox__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.AppCore-checkbox__label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+}
+
+.AppCore-checkbox__description {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-body2;
+}
+
+// ─── Size: sm (14px) ──────────────────────────────────────────────────────────
+
+.AppCore-checkbox--size-sm {
+  gap: $number-tokens-spacing-2; // 4px
+
+  .AppCore-checkbox__control {
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+  }
+
+  .AppCore-checkbox__input:checked + .AppCore-checkbox__box::after {
+    left: 3px;
+    top: 1px;
+    width: 4px;
+    height: 7px;
+  }
+
+  .AppCore-checkbox__label {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+
+  .AppCore-checkbox__description {
+    font-family: $font-inter;
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: $font-weight-inter-2;
+    color: $color-tokens-content-neutral-body2;
+  }
+}
+
+// ─── Size: md (16px, default) — only typography overrides needed ──────────────
+
+.AppCore-checkbox--size-md {
+  // __label and __description use the base styles defined above
+}
+
+// ─── Size: lg (18px) ──────────────────────────────────────────────────────────
+
+.AppCore-checkbox--size-lg {
+  .AppCore-checkbox__control {
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+  }
+
+  .AppCore-checkbox__box {
+    border-radius: 3px;
+  }
+
+  .AppCore-checkbox__input:checked + .AppCore-checkbox__box::after {
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+  }
+
+  .AppCore-checkbox__input:indeterminate + .AppCore-checkbox__box::after {
+    width: 10px;
+  }
+
+  .AppCore-checkbox__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+
+  .AppCore-checkbox__description {
+    @include apply-typography($typography-label-sm);
+    font-family: $font-inter;
+    color: $color-tokens-content-neutral-body2;
+  }
+}
+
+// ─── Checkbox Group ───────────────────────────────────────────────────────────
+
+.AppCore-checkbox-group {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-3; // 8px
+  font-family: $font-inter;
+}
+
+.AppCore-checkbox-group__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.AppCore-checkbox-group__label {
+  @include apply-typography($typography-label-md);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-0; // 600
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+}
+
+.AppCore-checkbox-group__description {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-2;
+  color: $color-tokens-content-neutral-body2;
+}
+
+.AppCore-checkbox-group__divider {
+  height: 1px;
+  background-color: $color-tokens-border-neutral-light-stroke-divider;
+}
+
+.AppCore-checkbox-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-3; // 8px
+
+  &--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $number-tokens-spacing-5; // 16px
+  }
+}
+
+.AppCore-checkbox-group__error {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-error-default;
+}

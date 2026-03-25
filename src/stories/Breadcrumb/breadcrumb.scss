@@ -1,0 +1,98 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+}
+
+.AppCore-breadcrumb__list {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.AppCore-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.AppCore-breadcrumb__separator {
+  display: inline-flex;
+  align-items: center;
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+  margin: 0 2px;
+
+  .material-symbols-rounded {
+    font-size: 16px !important;
+    line-height: 1 !important;
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+.AppCore-breadcrumb__link {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-primary-default;
+  text-decoration: none;
+  border-radius: $number-tokens-corner-radius-1;
+  padding: 0 2px;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $color-tokens-content-primary-hover;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: $color-tokens-content-primary-pressed;
+  }
+}
+
+.AppCore-breadcrumb__label--current {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  padding: 0 2px;
+}
+
+/* ===== Sizes ===== */
+.AppCore-breadcrumb--size-S {
+  .AppCore-breadcrumb__link,
+  .AppCore-breadcrumb__label--current {
+    @include apply-typography($typography-label-xs);
+  }
+
+  .AppCore-breadcrumb__separator .material-symbols-rounded {
+    font-size: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+.AppCore-breadcrumb--size-M {
+  .AppCore-breadcrumb__link,
+  .AppCore-breadcrumb__label--current {
+    @include apply-typography($typography-label-sm);
+  }
+}
+
+.AppCore-breadcrumb--size-L {
+  .AppCore-breadcrumb__link,
+  .AppCore-breadcrumb__label--current {
+    @include apply-typography($typography-label-md);
+  }
+
+  .AppCore-breadcrumb__separator .material-symbols-rounded {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+}

@@ -1,0 +1,460 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+// ─── Root panel ───────────────────────────────────────────────────────────────
+
+.AppCore-column-manager {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  max-height: 600px;
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  overflow: hidden;
+  font-family: $font-inter;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $number-tokens-padding-6 $number-tokens-padding-6 $number-tokens-padding-5;
+  border-bottom: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  flex-shrink: 0;
+}
+
+.AppCore-column-manager__title {
+  font-size: $font-size-6;
+  font-weight: $font-weight-inter-0;
+  line-height: $line-height-6;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+}
+
+// ─── Icon buttons ─────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $number-tokens-padding-2;
+  border: none;
+  border-radius: $number-tokens-corner-radius-2;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: $color-tokens-surface-neutral-white-hover;
+  }
+
+  &:active {
+    background-color: $color-tokens-surface-neutral-white-pressed;
+  }
+
+  &--sm {
+    padding: $number-tokens-padding-1;
+  }
+}
+
+// ─── Search ───────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__search {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  padding: $number-tokens-padding-3 $number-tokens-padding-5;
+  border-bottom: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  flex-shrink: 0;
+}
+
+.AppCore-column-manager__search-icon {
+  color: $color-tokens-content-neutral-disabled;
+  flex-shrink: 0;
+}
+
+.AppCore-column-manager__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: $font-inter;
+  font-size: $font-size-6;
+  line-height: $line-height-6;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  background: transparent;
+  min-width: 0;
+
+  &::placeholder {
+    color: $color-tokens-content-neutral-disabled;
+  }
+}
+
+// ─── Select-all row ───────────────────────────────────────────────────────────
+
+.AppCore-column-manager__select-all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $number-tokens-padding-3 $number-tokens-padding-5 $number-tokens-padding-3 $number-tokens-padding-4;
+  border-bottom: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  flex-shrink: 0;
+}
+
+// ─── Shared row layout ────────────────────────────────────────────────────────
+
+.AppCore-column-manager__row-left {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  min-width: 0;
+  flex: 1;
+}
+
+// ─── Badge (visible/total count) ─────────────────────────────────────────────
+
+.AppCore-column-manager__badge {
+  font-size: $font-size-14;
+  font-weight: $font-weight-inter-2;
+  color: $color-tokens-content-neutral-disabled;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// ─── Checkbox ─────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border: 1.5px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-1;
+  background-color: $color-tokens-surface-neutral-white;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  flex-shrink: 0;
+
+  &:checked {
+    background-color: $color-tokens-surface-primary-default;
+    border-color: $color-tokens-surface-primary-default;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1.5px;
+      width: 5px;
+      height: 9px;
+      border: 2px solid $color-tokens-surface-neutral-white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+  }
+
+  &:indeterminate {
+    background-color: $color-tokens-surface-primary-default;
+    border-color: $color-tokens-surface-primary-default;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 6px;
+      width: 8px;
+      height: 2px;
+      background-color: $color-tokens-surface-neutral-white;
+      border-radius: 1px;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled):not(:checked):not(:indeterminate) {
+    border-color: $color-tokens-surface-primary-default;
+  }
+}
+
+// ─── Checkbox label wrapper ───────────────────────────────────────────────────
+
+.AppCore-column-manager__check-label {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  cursor: pointer;
+  min-width: 0;
+}
+
+// ─── Labels ───────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__label {
+  font-size: $font-size-6;
+  font-weight: $font-weight-inter-2;
+  line-height: $line-height-6;
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &--bold {
+    font-weight: $font-weight-inter-1;
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  }
+}
+
+// ─── Drag handle ──────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: $color-tokens-content-neutral-disabled;
+  cursor: grab;
+  border-radius: $number-tokens-corner-radius-1;
+  transition: color 0.15s ease, opacity 0.15s ease;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &--hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+.AppCore-column-manager__drag-handle-spacer {
+  display: inline-flex;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+// ─── Groups scrollable area ───────────────────────────────────────────────────
+
+.AppCore-column-manager__groups {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-tokens-border-neutral-light-stroke-divider;
+    border-radius: 2px;
+  }
+}
+
+// ─── Group ────────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__group {
+  border-bottom: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// CDK drag preview
+.AppCore-column-manager__group.cdk-drag-preview {
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  opacity: 0.95;
+}
+
+// CDK animating
+.AppCore-column-manager__group.cdk-drag-animating {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// ─── Group header ─────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $number-tokens-padding-3 $number-tokens-padding-5 $number-tokens-padding-3 $number-tokens-padding-4;
+  background-color: $color-tokens-surface-neutral-white-faded;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: $color-tokens-surface-neutral-white-hover;
+  }
+}
+
+// ─── Group toggle button ──────────────────────────────────────────────────────
+
+.AppCore-column-manager__group-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  min-width: 0;
+  flex: 1;
+}
+
+.AppCore-column-manager__group-label {
+  font-size: $font-size-6;
+  font-weight: $font-weight-inter-1;
+  line-height: $line-height-6;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+// ─── Columns list ─────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__columns {
+  // Empty state: CDK needs min height to accept drops
+  min-height: 4px;
+}
+
+// ─── Column row ───────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $number-tokens-padding-3 $number-tokens-padding-5 $number-tokens-padding-3 $number-tokens-padding-4;
+  background-color: $color-tokens-surface-neutral-white;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: $color-tokens-surface-neutral-white-faded;
+  }
+}
+
+// CDK drag preview for column
+.AppCore-column-manager__column.cdk-drag-preview {
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.AppCore-column-manager__column.cdk-drag-animating {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// ─── Drop placeholder ─────────────────────────────────────────────────────────
+
+.AppCore-column-manager__drop-placeholder {
+  background-color: $color-tokens-surface-primary-background-light;
+  border: 1px dashed $color-tokens-border-primary-default;
+  border-radius: $number-tokens-corner-radius-2;
+  min-height: 36px;
+  margin: $number-tokens-spacing-1;
+  transition: all 200ms ease;
+
+  &--column {
+    min-height: 32px;
+  }
+}
+
+// CDK drop list during active drag
+.AppCore-column-manager__groups.cdk-drop-list-dragging
+  .AppCore-column-manager__group:not(.cdk-drag-placeholder) {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.AppCore-column-manager__columns.cdk-drop-list-dragging
+  .AppCore-column-manager__column:not(.cdk-drag-placeholder) {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// ─── Lock icon ────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__lock-icon {
+  color: $color-tokens-content-neutral-disabled;
+  flex-shrink: 0;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.AppCore-column-manager__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $number-tokens-spacing-3;
+  padding: $number-tokens-padding-4 $number-tokens-padding-6;
+  border-top: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  flex-shrink: 0;
+}
+
+// ─── Footer buttons ───────────────────────────────────────────────────────────
+
+.AppCore-column-manager__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $number-tokens-padding-3 $number-tokens-padding-6;
+  border-radius: $number-tokens-corner-radius-3;
+  font-family: $font-inter;
+  font-size: $font-size-6;
+  font-weight: $font-weight-inter-1;
+  line-height: $line-height-6;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+
+  &--primary {
+    background-color: $color-tokens-surface-primary-default;
+    border: 1.5px solid $color-tokens-surface-primary-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+
+    &:hover {
+      background-color: $color-tokens-surface-primary-hover;
+      border-color: $color-tokens-surface-primary-hover;
+    }
+
+    &:active {
+      background-color: $color-tokens-surface-primary-pressed;
+      border-color: $color-tokens-surface-primary-pressed;
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border: 1.5px solid $color-tokens-border-neutral-light-stroke-divider;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+
+    &:hover {
+      background-color: $color-tokens-surface-neutral-white-faded;
+      border-color: $color-tokens-border-neutral-dark-stroke-divider;
+    }
+
+    &:active {
+      background-color: $color-tokens-surface-neutral-white-hover;
+    }
+  }
+}

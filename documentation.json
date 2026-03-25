@@ -294,6 +294,132 @@
             }
         },
         {
+            "name": "AlertComponent",
+            "id": "component-AlertComponent-40a5773232b8f3a20d104f0fb562ccabfe52a44e6d62763a931bfd7b5bfdeebae9808b6161ef83d4467ed90ce1d48ed7b087a964a6eb389c763da2f4518c236b",
+            "file": "src/stories/Alert/alert.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "AppCore-alert",
+            "styleUrls": [
+                "./alert.scss"
+            ],
+            "styles": [],
+            "template": "<div\n  class=\"AppCore-alert\"\n  [ngClass]=\"[\n    'AppCore-alert--type-' + type,\n    'AppCore-alert--variant-' + variant\n  ]\"\n  role=\"alert\"\n>\n  <app-icon\n    *ngIf=\"showIcon\"\n    class=\"AppCore-alert__icon\"\n    [icon]=\"iconName\"\n    iconSet=\"material\"\n    size=\"md\"\n  ></app-icon>\n\n  <div class=\"AppCore-alert__content\">\n    <span *ngIf=\"title\" class=\"AppCore-alert__title\">{{ title }}</span>\n    <span *ngIf=\"description\" class=\"AppCore-alert__description\">{{ description }}</span>\n  </div>\n\n  <button\n    *ngIf=\"dismissible\"\n    type=\"button\"\n    class=\"AppCore-alert__close\"\n    (click)=\"dismiss.emit()\"\n    aria-label=\"Close\"\n  >\n    <app-icon icon=\"close\" iconSet=\"material\" size=\"sm\"></app-icon>\n  </button>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "description",
+                    "defaultValue": "'Alert description text goes here.'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 51,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "dismissible",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 53,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showIcon",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 52,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 50,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "'Information'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 48,
+                    "type": "AlertType",
+                    "decorators": []
+                },
+                {
+                    "name": "variant",
+                    "defaultValue": "'Toned'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 49,
+                    "type": "AlertVariant",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "dismiss",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "IconComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from '../icon/icon.component';\n\nexport type AlertType = 'Information' | 'Success' | 'Warning' | 'Error';\nexport type AlertVariant = 'Toned' | 'Outlined' | 'Highlighted';\n\n@Component({\n  selector: 'AppCore-alert',\n  standalone: true,\n  imports: [CommonModule, IconComponent],\n  styleUrls: ['./alert.scss'],\n  template: `\n    <div\n      class=\"AppCore-alert\"\n      [ngClass]=\"[\n        'AppCore-alert--type-' + type,\n        'AppCore-alert--variant-' + variant\n      ]\"\n      role=\"alert\"\n    >\n      <app-icon\n        *ngIf=\"showIcon\"\n        class=\"AppCore-alert__icon\"\n        [icon]=\"iconName\"\n        iconSet=\"material\"\n        size=\"md\"\n      ></app-icon>\n\n      <div class=\"AppCore-alert__content\">\n        <span *ngIf=\"title\" class=\"AppCore-alert__title\">{{ title }}</span>\n        <span *ngIf=\"description\" class=\"AppCore-alert__description\">{{ description }}</span>\n      </div>\n\n      <button\n        *ngIf=\"dismissible\"\n        type=\"button\"\n        class=\"AppCore-alert__close\"\n        (click)=\"dismiss.emit()\"\n        aria-label=\"Close\"\n      >\n        <app-icon icon=\"close\" iconSet=\"material\" size=\"sm\"></app-icon>\n      </button>\n    </div>\n  `,\n})\nexport class AlertComponent {\n  @Input() type: AlertType = 'Information';\n  @Input() variant: AlertVariant = 'Toned';\n  @Input() title = '';\n  @Input() description = 'Alert description text goes here.';\n  @Input() showIcon = true;\n  @Input() dismissible = false;\n  @Output() dismiss = new EventEmitter<void>();\n\n  get iconName(): string {\n    switch (this.type) {\n      case 'Success': return 'check_circle';\n      case 'Warning': return 'warning';\n      case 'Error': return 'error';\n      case 'Information':\n      default: return 'info';\n    }\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n\n.AppCore-alert {\n  display: flex;\n  align-items: flex-start;\n  gap: $number-tokens-spacing-3;\n  padding: $number-tokens-padding-6;\n  border-radius: $number-tokens-corner-radius-3;\n  border: 1px solid transparent;\n  font-family: $font-inter;\n  width: 100%;\n  box-sizing: border-box;\n\n  // ===== Icon =====\n  &__icon {\n    flex-shrink: 0;\n    margin-top: 1px;\n\n    ::ng-deep .material-symbols-rounded {\n      color: inherit !important;\n    }\n  }\n\n  // ===== Content =====\n  &__content {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    gap: $number-tokens-spacing-2;\n  }\n\n  &__title {\n    font-size: $font-size-6;\n    line-height: $line-height-6;\n    font-weight: $font-weight-inter-1;\n    color: inherit;\n  }\n\n  &__description {\n    font-size: $font-size-7;\n    line-height: $line-height-7;\n    font-weight: $font-weight-inter-2;\n    color: inherit;\n  }\n\n  // ===== Close button =====\n  &__close {\n    flex-shrink: 0;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    padding: $number-tokens-padding-1;\n    border: none;\n    background: transparent;\n    cursor: pointer;\n    border-radius: $number-tokens-corner-radius-2;\n    color: inherit;\n    opacity: 0.7;\n    transition: opacity 0.15s ease;\n\n    &:hover {\n      opacity: 1;\n    }\n\n    ::ng-deep .material-symbols-rounded {\n      color: inherit !important;\n    }\n  }\n\n  // ===== Information Type =====\n  &--type-Information {\n    &.AppCore-alert--variant-Toned {\n      background-color: $color-tokens-surface-primary-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-primary-default;\n    }\n\n    &.AppCore-alert--variant-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-primary-default;\n      color: $color-tokens-content-primary-default;\n    }\n\n    &.AppCore-alert--variant-Highlighted {\n      background-color: $color-tokens-surface-primary-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // ===== Success Type =====\n  &--type-Success {\n    &.AppCore-alert--variant-Toned {\n      background-color: $color-tokens-surface-success-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-success-default;\n    }\n\n    &.AppCore-alert--variant-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-success-default;\n      color: $color-tokens-content-success-default;\n    }\n\n    &.AppCore-alert--variant-Highlighted {\n      background-color: $color-tokens-surface-success-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n\n  // ===== Warning Type =====\n  &--type-Warning {\n    &.AppCore-alert--variant-Toned {\n      background-color: $color-tokens-surface-warning-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-display-heading1-label1-selected;\n    }\n\n    &.AppCore-alert--variant-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-border-warning-default;\n      color: $color-tokens-content-neutral-display-heading1-label1-selected;\n    }\n\n    &.AppCore-alert--variant-Highlighted {\n      background-color: $color-tokens-surface-warning-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-display-heading1-label1-selected;\n    }\n  }\n\n  // ===== Error Type =====\n  &--type-Error {\n    &.AppCore-alert--variant-Toned {\n      background-color: $color-tokens-surface-error-background-light;\n      border-color: transparent;\n      color: $color-tokens-content-error-default;\n    }\n\n    &.AppCore-alert--variant-Outlined {\n      background-color: $color-tokens-surface-neutral-white;\n      border-color: $color-tokens-surface-error-hover; // no error-border-light token in project\n      color: $color-tokens-content-error-default;\n    }\n\n    &.AppCore-alert--variant-Highlighted {\n      background-color: $color-tokens-surface-error-default;\n      border-color: transparent;\n      color: $color-tokens-content-neutral-button-darkbg;\n    }\n  }\n}\n",
+                    "styleUrl": "./alert.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "accessors": {
+                "iconName": {
+                    "name": "iconName",
+                    "getSignature": {
+                        "name": "iconName",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 56
+                    }
+                }
+            }
+        },
+        {
             "name": "AppComponent",
             "id": "component-AppComponent-d0d0b7b411ef7634d3cb7de9c8a798c249a53fcf9c7c599688cff5a7c443c711eb3f2d15ac1117eeaa8952fb8da092d327699300eded814d7518473b506dcd15",
             "file": "src/app/app.component.ts",
@@ -508,7 +634,7 @@
         },
         {
             "name": "BadgeIndicatorComponent",
-            "id": "component-BadgeIndicatorComponent-f1e632e092e01f63f4330d15825959a42ed5cd3ea12bc688761a54c95a6aade892820e29495898f00d2903f66daf10ded454d783058a31da5366a2229fc8163a",
+            "id": "component-BadgeIndicatorComponent-3a595f811c509ef5afe43664cf826ad27b5cad4ed0ff3b3bf57df8d35cdeb0a69389c764c06e710c469e164f0e3f980e9648ec6879eb3c26bca3c49026d651c4",
             "file": "src/stories/BadgeIndicator/badge-indicator.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -520,7 +646,7 @@
                 "./badge-indicator.scss"
             ],
             "styles": [],
-            "template": "<div\n  class=\"AppCore-badge-indicator\"\n  [ngClass]=\"[\n    'AppCore-badge-indicator--type-' + type,\n    'AppCore-badge-indicator--style-' + styleKey\n  ]\"\n>\n  <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n    class=\"AppCore-badge-indicator__dot\"\n  ></div>\n\n  <!-- Avatar (overlapping styles) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"material-symbols-rounded AppCore-badge-indicator__avatar\"\n  >account_circle</span>\n\n  <!-- Label (Dot - Inline only) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n    class=\"AppCore-badge-indicator__label\"\n  >{{ label }}</span>\n\n  <!-- Count pill (With Text and With Text - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"AppCore-badge-indicator__pill\"\n  >\n    <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n  </div>\n</div>\n",
+            "template": "<div\n  class=\"AppCore-badge-indicator\"\n  [ngClass]=\"[\n    'AppCore-badge-indicator--type-' + type,\n    'AppCore-badge-indicator--style-' + styleKey\n  ]\"\n>\n  <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n    class=\"AppCore-badge-indicator__dot\"\n  ></div>\n\n  <!-- Avatar (overlapping styles) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"AppCore-badge-indicator__avatar\"\n  >\n    <span class=\"material-symbols-rounded AppCore-badge-indicator__avatar-icon\">person</span>\n  </span>\n\n  <!-- Label (Dot - Inline only) -->\n  <span\n    *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n    class=\"AppCore-badge-indicator__label\"\n  >{{ label }}</span>\n\n  <!-- Count pill (With Text and With Text - Overlapping) -->\n  <div\n    *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n    class=\"AppCore-badge-indicator__pill\"\n  >\n    <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -530,7 +656,7 @@
                     "defaultValue": "'+99'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 56,
+                    "line": 58,
                     "type": "string",
                     "decorators": []
                 },
@@ -539,7 +665,7 @@
                     "defaultValue": "'Dot - Inline'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 54,
+                    "line": 56,
                     "type": "BadgeIndicatorStyle",
                     "decorators": []
                 },
@@ -548,7 +674,7 @@
                     "defaultValue": "'Label'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 55,
+                    "line": 57,
                     "type": "string",
                     "decorators": []
                 },
@@ -557,7 +683,7 @@
                     "defaultValue": "'Default'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 53,
+                    "line": 55,
                     "type": "BadgeIndicatorType",
                     "decorators": []
                 }
@@ -579,11 +705,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nexport type BadgeIndicatorType = 'Default' | 'Error' | 'Success' | 'Warning' | 'Inactive';\nexport type BadgeIndicatorStyle =\n  | 'Dot - Inline'\n  | 'Dot - Overlapping'\n  | 'With Text'\n  | 'With Text - Overlapping';\n\n@Component({\n  selector: 'app-badge-indicator',\n  standalone: true,\n  imports: [CommonModule],\n  styleUrls: ['./badge-indicator.scss'],\n  template: `\n    <div\n      class=\"AppCore-badge-indicator\"\n      [ngClass]=\"[\n        'AppCore-badge-indicator--type-' + type,\n        'AppCore-badge-indicator--style-' + styleKey\n      ]\"\n    >\n      <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n        class=\"AppCore-badge-indicator__dot\"\n      ></div>\n\n      <!-- Avatar (overlapping styles) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"material-symbols-rounded AppCore-badge-indicator__avatar\"\n      >account_circle</span>\n\n      <!-- Label (Dot - Inline only) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n        class=\"AppCore-badge-indicator__label\"\n      >{{ label }}</span>\n\n      <!-- Count pill (With Text and With Text - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"AppCore-badge-indicator__pill\"\n      >\n        <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n      </div>\n    </div>\n  `,\n})\nexport class BadgeIndicatorComponent {\n  @Input() type: BadgeIndicatorType = 'Default';\n  @Input() indicatorStyle: BadgeIndicatorStyle = 'Dot - Inline';\n  @Input() label = 'Label';\n  @Input() count = '+99';\n\n  get styleKey(): string {\n    const map: Record<BadgeIndicatorStyle, string> = {\n      'Dot - Inline': 'dot-inline',\n      'Dot - Overlapping': 'dot-overlapping',\n      'With Text': 'text',\n      'With Text - Overlapping': 'text-overlapping',\n    };\n    return map[this.indicatorStyle];\n  }\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nexport type BadgeIndicatorType = 'Default' | 'Error' | 'Success' | 'Warning' | 'Inactive';\nexport type BadgeIndicatorStyle =\n  | 'Dot - Inline'\n  | 'Dot - Overlapping'\n  | 'With Text'\n  | 'With Text - Overlapping';\n\n@Component({\n  selector: 'app-badge-indicator',\n  standalone: true,\n  imports: [CommonModule],\n  styleUrls: ['./badge-indicator.scss'],\n  template: `\n    <div\n      class=\"AppCore-badge-indicator\"\n      [ngClass]=\"[\n        'AppCore-badge-indicator--type-' + type,\n        'AppCore-badge-indicator--style-' + styleKey\n      ]\"\n    >\n      <!-- Dot (Dot - Inline and Dot - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'Dot - Inline' || indicatorStyle === 'Dot - Overlapping'\"\n        class=\"AppCore-badge-indicator__dot\"\n      ></div>\n\n      <!-- Avatar (overlapping styles) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Overlapping' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"AppCore-badge-indicator__avatar\"\n      >\n        <span class=\"material-symbols-rounded AppCore-badge-indicator__avatar-icon\">person</span>\n      </span>\n\n      <!-- Label (Dot - Inline only) -->\n      <span\n        *ngIf=\"indicatorStyle === 'Dot - Inline'\"\n        class=\"AppCore-badge-indicator__label\"\n      >{{ label }}</span>\n\n      <!-- Count pill (With Text and With Text - Overlapping) -->\n      <div\n        *ngIf=\"indicatorStyle === 'With Text' || indicatorStyle === 'With Text - Overlapping'\"\n        class=\"AppCore-badge-indicator__pill\"\n      >\n        <span class=\"AppCore-badge-indicator__count\">{{ count }}</span>\n      </div>\n    </div>\n  `,\n})\nexport class BadgeIndicatorComponent {\n  @Input() type: BadgeIndicatorType = 'Default';\n  @Input() indicatorStyle: BadgeIndicatorStyle = 'Dot - Inline';\n  @Input() label = 'Label';\n  @Input() count = '+99';\n\n  get styleKey(): string {\n    const map: Record<BadgeIndicatorStyle, string> = {\n      'Dot - Inline': 'dot-inline',\n      'Dot - Overlapping': 'dot-overlapping',\n      'With Text': 'text',\n      'With Text - Overlapping': 'text-overlapping',\n    };\n    return map[this.indicatorStyle];\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n\n.AppCore-badge-indicator {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n\n  // ===== Dot - Inline (default layout: flex row) =====\n  &--style-dot-inline {\n    // inherits default inline-flex + gap\n  }\n\n  // ===== Dot - Overlapping =====\n  &--style-dot-overlapping {\n    position: relative;\n    width: 24px;\n    height: 24px;\n    gap: 0;\n\n    .AppCore-badge-indicator__dot {\n      position: absolute;\n      top: 0;\n      right: 0;\n      z-index: 1;\n    }\n  }\n\n  // ===== With Text (standalone pill, no avatar) =====\n  &--style-text {\n    gap: 0;\n  }\n\n  // ===== With Text - Overlapping =====\n  &--style-text-overlapping {\n    position: relative;\n    width: 28px;\n    height: 28px;\n    gap: 0;\n\n    .AppCore-badge-indicator__avatar {\n      position: absolute;\n      top: 2px;\n      left: 2px;\n    }\n\n    .AppCore-badge-indicator__pill {\n      position: absolute;\n      top: 0;\n      left: 14px;\n    }\n  }\n\n  // ===== Dot =====\n  &__dot {\n    width: 8px;\n    height: 8px;\n    border-radius: 40px;\n    flex-shrink: 0;\n  }\n\n  // ===== Avatar placeholder =====\n  &__avatar {\n    font-size: 24px !important;\n    width: 24px !important;\n    height: 24px !important;\n    color: $color-tokens-content-neutral-disabled;\n    flex-shrink: 0;\n    user-select: none;\n  }\n\n  // ===== Label (Dot - Inline) =====\n  &__label {\n    font-family: $font-inter;\n    font-size: 12px;\n    line-height: 16px;\n    font-weight: 400;\n    color: $color-tokens-content-neutral-heading2-label2-body1;\n    white-space: nowrap;\n  }\n\n  // ===== Pill =====\n  &__pill {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    min-width: 18px;\n    padding: 2px 4px;\n    border-radius: 100px;\n  }\n\n  &__count {\n    font-family: $font-inter;\n    font-size: 10px;\n    line-height: 14px;\n    font-weight: 400;\n    white-space: nowrap;\n  }\n\n  // ===== Type: Default =====\n  &--type-Default {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-primary-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-primary-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Error =====\n  &--type-Error {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-error-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-error-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Success =====\n  &--type-Success {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-success-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-success-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Warning =====\n  &--type-Warning {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-warning-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-warning-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-hover;\n      }\n    }\n  }\n\n  // ===== Type: Inactive =====\n  &--type-Inactive {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-content-neutral-disabled;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-neutral-white-disabled;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-disabled;\n      }\n    }\n  }\n}\n",
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n\n.AppCore-badge-indicator {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n\n  // ===== Dot - Inline (default layout: flex row) =====\n  &--style-dot-inline {\n    // inherits default inline-flex + gap\n  }\n\n  // ===== Dot - Overlapping =====\n  &--style-dot-overlapping {\n    position: relative;\n    width: 24px;\n    height: 24px;\n    gap: 0;\n\n    .AppCore-badge-indicator__dot {\n      position: absolute;\n      top: 0;\n      right: 0;\n      z-index: 1;\n    }\n  }\n\n  // ===== With Text (standalone pill, no avatar) =====\n  &--style-text {\n    gap: 0;\n  }\n\n  // ===== With Text - Overlapping =====\n  &--style-text-overlapping {\n    position: relative;\n    width: 28px;\n    height: 28px;\n    gap: 0;\n\n    .AppCore-badge-indicator__avatar {\n      position: absolute;\n      top: 2px;\n      left: 2px;\n    }\n\n    .AppCore-badge-indicator__pill {\n      position: absolute;\n      top: 0;\n      left: 14px;\n    }\n  }\n\n  // ===== Dot =====\n  &__dot {\n    width: 8px;\n    height: 8px;\n    border-radius: 40px;\n    flex-shrink: 0;\n  }\n\n  // ===== Avatar placeholder =====\n  &__avatar {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 24px;\n    height: 24px;\n    border-radius: 50%;\n    overflow: hidden;\n    flex-shrink: 0;\n    background-color: $color-tokens-surface-neutral-white-disabled;\n  }\n\n  &__avatar-icon {\n    font-size: 16px !important;\n    width: 16px !important;\n    height: 16px !important;\n    color: $color-tokens-content-neutral-disabled;\n    user-select: none;\n  }\n\n  // ===== Label (Dot - Inline) =====\n  &__label {\n    font-family: $font-inter;\n    font-size: 12px;\n    line-height: 16px;\n    font-weight: 400;\n    color: $color-tokens-content-neutral-heading2-label2-body1;\n    white-space: nowrap;\n  }\n\n  // ===== Pill =====\n  &__pill {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    min-width: 18px;\n    padding: 2px 4px;\n    border-radius: 100px;\n  }\n\n  &__count {\n    font-family: $font-inter;\n    font-size: 10px;\n    line-height: 14px;\n    font-weight: 400;\n    white-space: nowrap;\n  }\n\n  // ===== Type: Default =====\n  &--type-Default {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-primary-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-primary-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Error =====\n  &--type-Error {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-error-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-error-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Success =====\n  &--type-Success {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-success-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-success-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-button-darkbg;\n      }\n    }\n  }\n\n  // ===== Type: Warning =====\n  &--type-Warning {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-surface-warning-default;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-warning-default;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-hover;\n      }\n    }\n  }\n\n  // ===== Type: Inactive =====\n  &--type-Inactive {\n    .AppCore-badge-indicator__dot {\n      background-color: $color-tokens-content-neutral-disabled;\n    }\n\n    .AppCore-badge-indicator__pill {\n      background-color: $color-tokens-surface-neutral-white-disabled;\n\n      .AppCore-badge-indicator__count {\n        color: $color-tokens-content-neutral-disabled;\n      }\n    }\n  }\n}\n",
                     "styleUrl": "./badge-indicator.scss"
                 }
             ],
@@ -596,7 +722,7 @@
                         "name": "styleKey",
                         "type": "string",
                         "returnType": "string",
-                        "line": 58
+                        "line": 60
                     }
                 }
             }
@@ -899,7 +1025,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.AppCore-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Inner row: keeps icon + label + icon in one horizontal, vertically centered row */\n.AppCore-button__inner {\n  display: inline-flex !important;\n  align-items: center !important;\n  flex-direction: row !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Material wraps content in .mdc-button__label – keep it a row so our __inner layout wins */\n.AppCore-button .mdc-button__label {\n  display: inline-flex !important;\n  align-items: center !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Label – inherits color from button type so primary/secondary/toned etc. each control text */\n.AppCore-button__label {\n  display: inline;\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: inherit;\n}\n\n\n/* Icon */\n.AppCore-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* Icon color matches button text color */\n.AppCore-button ::ng-deep .icon,\n.AppCore-button ::ng-deep .material-symbols-rounded {\n  color: inherit !important;\n}\n\n/* Custom icon img: use currentColor so SVGs can inherit button text color */\n.AppCore-button ::ng-deep .icon img {\n  color: inherit !important;\n}\n\n/* Material Icons Rounded */\n.AppCore-button mat-icon.material-symbols-rounded {\n  font-family: 'Material Symbols Rounded' !important;\n  font-weight: normal;\n  font-style: normal;\n  font-size: 1.25rem !important;\n  line-height: 1 !important;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-smoothing: antialiased;\n  height: 1.25rem !important;\n  width: 1.25rem !important;\n}\n\n/* ===== Button Types (Default State) ===== */\n.AppCore-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.AppCore-button--tertiary {\n  background-color: transparent !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--link {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n/* ===== States ===== */\n.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-hover !important;\n}\n\n/* Secondary: no hover state – keep same appearance on hover */\n.AppCore-button--secondary.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Tertiary: text only – no background on hover or pressed */\n.AppCore-button--tertiary.AppCore-button--hover:hover,\n.AppCore-button--tertiary.AppCore-button--pressed {\n  background-color: transparent !important;\n}\n\n/* Toned: no hover state – keep same appearance on hover */\n.AppCore-button--toned.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Link: same as secondary – no hover state */\n.AppCore-button--link.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.AppCore-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.AppCore-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--onerror {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.AppCore-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.AppCore-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.AppCore-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
+                    "data": "/* Base styles */\n@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n@use '../../styles/typography' as *;\n@use '../../styles/colors' as *;\n@use 'sass:map';\n\n/* Override Material UI button styles with custom styles */\n.AppCore-button {\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  padding: 0.625rem $number-tokens-spacing-3 !important;\n  border-radius: $number-tokens-corner-radius-3 !important;\n  position: relative;\n  cursor: pointer;\n  border: none;\n  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;\n  \n  /* Reset Material UI defaults */\n  min-width: auto !important;\n  line-height: inherit !important;\n  letter-spacing: inherit !important;\n  text-transform: none !important;\n}\n\n/* Inner row: keeps icon + label + icon in one horizontal, vertically centered row */\n.AppCore-button__inner {\n  display: inline-flex !important;\n  align-items: center !important;\n  flex-direction: row !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Material wraps content in .mdc-button__label – keep it a row so our __inner layout wins */\n.AppCore-button .mdc-button__label {\n  display: inline-flex !important;\n  align-items: center !important;\n  gap: $number-tokens-spacing-3 !important;\n}\n\n/* Label – inherits color from button type so primary/secondary/toned etc. each control text */\n.AppCore-button__label {\n  display: inline;\n  @include apply-typography($typography-label-sm);\n  font-family: $font-inter;\n  color: inherit;\n}\n\n\n/* Icon */\n.AppCore-button__icon {\n  height: 1.25rem;\n  width: 1.25rem;\n}\n\n/* Icon color matches button text color */\n.AppCore-button ::ng-deep .icon,\n.AppCore-button ::ng-deep .material-symbols-rounded {\n  color: inherit !important;\n}\n\n/* Custom icon img: use currentColor so SVGs can inherit button text color */\n.AppCore-button ::ng-deep .icon img {\n  color: inherit !important;\n}\n\n/* Material Icons Rounded */\n.AppCore-button mat-icon.material-symbols-rounded {\n  font-family: 'Material Symbols Rounded' !important;\n  font-weight: normal;\n  font-style: normal;\n  font-size: 1.25rem !important;\n  line-height: 1 !important;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-smoothing: antialiased;\n  height: 1.25rem !important;\n  width: 1.25rem !important;\n}\n\n/* ===== Button Types (Default State) ===== */\n.AppCore-button--primary {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--secondary {\n  background-color: $color-tokens-surface-neutral-white !important;\n  color: $color-tokens-content-primary-default !important;\n  border: 1px solid !important;\n  border-color: $color-tokens-border-primary-default !important;\n}\n\n.AppCore-button--tertiary {\n  background-color: transparent !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--toned {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--link {\n  background-color: transparent !important;\n  color: $color-tokens-content-primary-default !important;\n  border: none !important;\n\n  .AppCore-button__label,\n  .mdc-button__label {\n    text-decoration: underline !important;\n  }\n}\n\n/* ===== States ===== */\n.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-hover !important;\n}\n\n/* Secondary: no hover state – keep same appearance on hover */\n.AppCore-button--secondary.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Tertiary: text only – no background on hover or pressed */\n.AppCore-button--tertiary.AppCore-button--hover:hover,\n.AppCore-button--tertiary.AppCore-button--pressed {\n  background-color: transparent !important;\n}\n\n/* Toned: no hover state – keep same appearance on hover */\n.AppCore-button--toned.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-primary-background-light !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n/* Link: same as secondary – no hover state */\n.AppCore-button--link.AppCore-button--hover:hover {\n  background-color: $color-tokens-surface-neutral-white !important;\n  border-color: $color-tokens-border-primary-default !important;\n  color: $color-tokens-content-primary-default !important;\n}\n\n.AppCore-button--pressed {\n  background-color: $color-tokens-surface-primary-pressed !important;\n}\n\n.AppCore-button--disabled {\n  background-color: $color-tokens-surface-neutral-white-disabled !important;\n  color: $color-tokens-content-neutral-disabled !important;\n  cursor: not-allowed !important;\n  pointer-events: none !important;\n}\n\n.AppCore-button--loading {\n  background-color: $color-tokens-surface-primary-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--success {\n  background-color: $color-tokens-surface-success-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n.AppCore-button--error {\n  background-color: $color-tokens-surface-error-default !important;\n  color: $color-tokens-content-neutral-button-darkbg !important;\n}\n\n/* ===== Sizes ===== */\n.AppCore-button--small {\n  padding: 0.25rem $number-tokens-spacing-2 !important;\n  font-size: $font-size-16 !important;\n}\n\n.AppCore-button--medium {\n  padding: 0.5rem $number-tokens-spacing-3 !important;\n  font-size: $font-size-8 !important;\n}\n\n.AppCore-button--large {\n  padding: 0.75rem $number-tokens-spacing-4 !important;\n  font-size: $font-size-8 !important;\n}",
                     "styleUrl": "./button.scss"
                 }
             ],
@@ -1214,7 +1340,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "file": "src/stories/Alert/alert.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -1245,6 +1371,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -1371,6 +1507,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Button',\n    state: 'disabled',\n    showLeftIcon: true,\n    showRightIcon: true,\n  },\n}"
             },
             {
+                "name": "Dismissible",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'Warning',\n    variant: 'Toned',\n    title: 'Warning',\n    description: 'This alert can be dismissed.',\n    dismissible: true,\n  },\n}"
+            },
+            {
                 "name": "DotInlineDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1484,11 +1630,31 @@
                 "name": "ErrorHighlighted",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', variant: 'Highlighted' },\n}"
+            },
+            {
+                "name": "ErrorHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Highlighted', size: 'M' },\n}"
+            },
+            {
+                "name": "ErrorOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', variant: 'Outlined' },\n}"
             },
             {
                 "name": "ErrorOutlined",
@@ -1504,11 +1670,31 @@
                 "name": "ErrorToned",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Error', variant: 'Toned' },\n}"
+            },
+            {
+                "name": "ErrorToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Error', badgeStyle: 'Toned', size: 'M' },\n}"
+            },
+            {
+                "name": "InformationHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', variant: 'Highlighted' },\n}"
             },
             {
                 "name": "InformationHighlighted",
@@ -1524,11 +1710,31 @@
                 "name": "InformationOutlined",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', variant: 'Outlined' },\n}"
+            },
+            {
+                "name": "InformationOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Information', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "InformationToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Information', variant: 'Toned' },\n}"
             },
             {
                 "name": "InformationToned",
@@ -1594,11 +1800,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "file": "src/stories/Alert/alert.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<ActionbarComponent>",
-                "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
+                "type": "Meta<AlertComponent>",
+                "defaultValue": "{\n  title: 'components/Alert',\n  component: AlertComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [AlertComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    variant: {\n      control: 'select',\n      options: ['Toned', 'Outlined', 'Highlighted'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    dismiss: { action: 'dismissed' },\n  },\n  args: {\n    type: 'Information',\n    variant: 'Toned',\n    title: '',\n    description: 'Alert description text goes here.',\n    showIcon: true,\n    dismissible: false,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Buttons/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ButtonComponent>",
+                "defaultValue": "{\n  title: 'components/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n    showLeftIcon: {\n      control: 'boolean',\n    },\n    showRightIcon: {\n      control: 'boolean',\n    },\n    leftIconName: {\n      control: 'text',\n    },\n    rightIconName: {\n      control: 'text',\n    },\n    leftIconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    rightIconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    leftIconSrc: {\n      control: 'text',\n      description: 'Custom left icon URL (overrides leftIconName/leftIconSet)',\n    },\n    rightIconSrc: {\n      control: 'text',\n      description: 'Custom right icon URL (overrides rightIconName/rightIconSet)',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n    leftIconName: 'add',\n    rightIconName: 'add',\n    leftIconSet: 'material',\n    rightIconSet: 'material',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1624,16 +1840,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Buttons/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<ButtonComponent>",
-                "defaultValue": "{\n  title: 'components/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [IconComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['primary', 'secondary', 'tertiary', 'toned', 'link'],\n    },\n    state: {\n      control: 'select',\n      options: ['default', 'disabled', 'pressed', 'error', 'success', 'loading'],\n    },\n    size: {\n      control: 'select',\n      options: ['large', 'medium', 'small'],\n    },\n    buttonText: {\n      control: 'boolean',\n    },\n    showLeftIcon: {\n      control: 'boolean',\n    },\n    showRightIcon: {\n      control: 'boolean',\n    },\n    leftIconName: {\n      control: 'text',\n    },\n    rightIconName: {\n      control: 'text',\n    },\n    leftIconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    rightIconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    leftIconSrc: {\n      control: 'text',\n      description: 'Custom left icon URL (overrides leftIconName/leftIconSet)',\n    },\n    rightIconSrc: {\n      control: 'text',\n      description: 'Custom right icon URL (overrides rightIconName/rightIconSet)',\n    },\n  },\n  args: {\n    label: 'Button',\n    type: 'primary',\n    state: 'default',\n    size: 'large',\n    buttonText: true,\n    showLeftIcon: false,\n    showRightIcon: false,\n    leftIconName: 'add',\n    rightIconName: 'add',\n    leftIconSet: 'material',\n    rightIconSet: 'material',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/Header/header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1649,6 +1855,26 @@
                 "deprecationMessage": "",
                 "type": "Meta<IconComponent>",
                 "defaultValue": "{\n  title: 'components/Icon',\n  component: IconComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    icon: { control: 'text' },\n    iconSet: {\n      control: 'select',\n      options: ['material', 'asset'],\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    alt: { control: 'text' },\n  },\n  args: {\n    icon: 'search',\n    iconSet: 'material',\n    size: 'md',\n    alt: 'Search',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ActionbarComponent>",
+                "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
+            },
+            {
+                "name": "NoIcon",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'Error',\n    variant: 'Outlined',\n    title: 'Error',\n    description: 'This alert has no leading icon.',\n    showIcon: false,\n  },\n}"
             },
             {
                 "name": "NoIcons",
@@ -1714,6 +1940,16 @@
                 "name": "SuccessHighlighted",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', variant: 'Highlighted' },\n}"
+            },
+            {
+                "name": "SuccessHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1724,11 +1960,31 @@
                 "name": "SuccessOutlined",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', variant: 'Outlined' },\n}"
+            },
+            {
+                "name": "SuccessOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Success', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "SuccessToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Success', variant: 'Toned' },\n}"
             },
             {
                 "name": "SuccessToned",
@@ -1794,6 +2050,16 @@
                 "name": "WarningHighlighted",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', variant: 'Highlighted' },\n}"
+            },
+            {
+                "name": "WarningHighlighted",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1804,11 +2070,31 @@
                 "name": "WarningOutlined",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', variant: 'Outlined' },\n}"
+            },
+            {
+                "name": "WarningOutlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Warning', badgeStyle: 'Outlined', size: 'M' },\n}"
+            },
+            {
+                "name": "WarningToned",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { type: 'Warning', variant: 'Toned' },\n}"
             },
             {
                 "name": "WarningToned",
@@ -1979,6 +2265,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text' },\n}"
+            },
+            {
+                "name": "WithTitle",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'Information',\n    variant: 'Toned',\n    title: 'Alert Title',\n    description: 'Additional context or detail about the alert message.',\n  },\n}"
             }
         ],
         "functions": [],
@@ -2000,6 +2296,28 @@
                 "subtype": "typealias",
                 "rawtype": "\"icon\" | \"text\"",
                 "file": "src/stories/Actionbar/actionbar.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "AlertType",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Information\" | \"Success\" | \"Warning\" | \"Error\"",
+                "file": "src/stories/Alert/alert.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "AlertVariant",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"Toned\" | \"Outlined\" | \"Highlighted\"",
+                "file": "src/stories/Alert/alert.component.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2064,8 +2382,19 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<ActionbarComponent>",
-                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "rawtype": "StoryObj<AlertComponent>",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ButtonComponent>",
+                "file": "src/stories/Buttons/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2097,17 +2426,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<ButtonComponent>",
-                "file": "src/stories/Buttons/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<HeaderComponent>",
                 "file": "src/stories/Header/header.stories.ts",
                 "deprecated": false,
@@ -2121,6 +2439,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<IconComponent>",
                 "file": "src/stories/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ActionbarComponent>",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2443,6 +2772,178 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: { showSet3: false },\n}"
+                }
+            ],
+            "src/stories/Alert/alert.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "Dismissible",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Warning',\n    variant: 'Toned',\n    title: 'Warning',\n    description: 'This alert can be dismissed.',\n    dismissible: true,\n  },\n}"
+                },
+                {
+                    "name": "ErrorHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', variant: 'Highlighted' },\n}"
+                },
+                {
+                    "name": "ErrorOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', variant: 'Outlined' },\n}"
+                },
+                {
+                    "name": "ErrorToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error', variant: 'Toned' },\n}"
+                },
+                {
+                    "name": "InformationHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', variant: 'Highlighted' },\n}"
+                },
+                {
+                    "name": "InformationOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', variant: 'Outlined' },\n}"
+                },
+                {
+                    "name": "InformationToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information', variant: 'Toned' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AlertComponent>",
+                    "defaultValue": "{\n  title: 'components/Alert',\n  component: AlertComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [AlertComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    variant: {\n      control: 'select',\n      options: ['Toned', 'Outlined', 'Highlighted'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    dismiss: { action: 'dismissed' },\n  },\n  args: {\n    type: 'Information',\n    variant: 'Toned',\n    title: '',\n    description: 'Alert description text goes here.',\n    showIcon: true,\n    dismissible: false,\n  },\n}"
+                },
+                {
+                    "name": "NoIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Error',\n    variant: 'Outlined',\n    title: 'Error',\n    description: 'This alert has no leading icon.',\n    showIcon: false,\n  },\n}"
+                },
+                {
+                    "name": "SuccessHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', variant: 'Highlighted' },\n}"
+                },
+                {
+                    "name": "SuccessOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', variant: 'Outlined' },\n}"
+                },
+                {
+                    "name": "SuccessToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success', variant: 'Toned' },\n}"
+                },
+                {
+                    "name": "WarningHighlighted",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', variant: 'Highlighted' },\n}"
+                },
+                {
+                    "name": "WarningOutlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', variant: 'Outlined' },\n}"
+                },
+                {
+                    "name": "WarningToned",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning', variant: 'Toned' },\n}"
+                },
+                {
+                    "name": "WithTitle",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    variant: 'Toned',\n    title: 'Alert Title',\n    description: 'Additional context or detail about the alert message.',\n  },\n}"
                 }
             ],
             "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
@@ -3035,6 +3536,30 @@
                     "kind": 193
                 }
             ],
+            "src/stories/Alert/alert.component.ts": [
+                {
+                    "name": "AlertType",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Information\" | \"Success\" | \"Warning\" | \"Error\"",
+                    "file": "src/stories/Alert/alert.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "AlertVariant",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"Toned\" | \"Outlined\" | \"Highlighted\"",
+                    "file": "src/stories/Alert/alert.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
             "src/stories/BadgeIndicator/badge-indicator.component.ts": [
                 {
                     "name": "BadgeIndicatorStyle",
@@ -3094,13 +3619,26 @@
                     "kind": 193
                 }
             ],
-            "src/stories/Actionbar/actionbar.stories.ts": [
+            "src/stories/Alert/alert.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<ActionbarComponent>",
-                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "rawtype": "StoryObj<AlertComponent>",
+                    "file": "src/stories/Alert/alert.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "src/stories/Buttons/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ButtonComponent>",
+                    "file": "src/stories/Buttons/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3133,19 +3671,6 @@
                     "kind": 184
                 }
             ],
-            "src/stories/Buttons/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<ButtonComponent>",
-                    "file": "src/stories/Buttons/button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "src/stories/Header/header.stories.ts": [
                 {
                     "name": "Story",
@@ -3171,6 +3696,19 @@
                     "description": "",
                     "kind": 184
                 }
+            ],
+            "src/stories/Actionbar/actionbar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ActionbarComponent>",
+                    "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
             ]
         }
     },
@@ -3180,7 +3718,7 @@
         "children": []
     },
     "coverage": {
-        "count": 3,
+        "count": 2,
         "status": "low",
         "files": [
             {
@@ -3471,6 +4009,215 @@
             },
             {
                 "filePath": "src/stories/Actionbar/actionbar.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AlertComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AlertType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.component.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AlertVariant",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Dismissible",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InformationToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "NoIcon",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SuccessToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningHighlighted",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningOutlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WarningToned",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithTitle",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Alert/alert.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

@@ -1,0 +1,105 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+// Overlap map: how much each avatar slides under the previous one
+$stack-overlap: (
+  'XS': -6px,
+  'S':  -8px,
+  'M':  -10px,
+  'L':  -12px,
+  'XL': -16px,
+);
+
+// Avatar sizes map (must match avatar.scss)
+$avatar-sizes: (
+  'XS': 24px,
+  'S':  32px,
+  'M':  40px,
+  'L':  48px,
+  'XL': 56px,
+);
+
+// Overflow font size map
+$overflow-font-sizes: (
+  'XS': 9px,
+  'S':  11px,
+  'M':  13px,
+  'L':  14px,
+  'XL': 16px,
+);
+
+.AppCore-avatar-group {
+  display: inline-flex;
+  align-items: center;
+
+  // ===== Stack Variant =====
+  &--stack {
+    flex-direction: row;
+
+    .AppCore-avatar-group__item {
+      border-radius: 50%;
+      border: 2px solid $color-tokens-surface-neutral-white;
+      box-sizing: content-box;
+      transition: transform 0.15s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    @each $size, $overlap in $stack-overlap {
+      &.AppCore-avatar-group--size-#{$size} {
+        .AppCore-avatar-group__item + .AppCore-avatar-group__item {
+          margin-left: $overlap;
+        }
+
+        .AppCore-avatar-group__overflow {
+          margin-left: $overlap;
+        }
+      }
+    }
+  }
+
+  // ===== Block Variant =====
+  &--block {
+    flex-direction: row;
+    gap: $number-tokens-spacing-6; // 8px
+
+    .AppCore-avatar-group__item {
+      border-radius: 50%;
+    }
+  }
+
+  // ===== Overflow Badge =====
+  &__overflow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $color-tokens-surface-neutral-white-faded;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+    font-family: $font-inter;
+    font-weight: $font-weight-inter-1;
+    border: 2px solid $color-tokens-surface-neutral-white;
+    box-sizing: content-box;
+    flex-shrink: 0;
+    user-select: none;
+
+    @each $size, $dim in $avatar-sizes {
+      &--size-#{$size} {
+        width: $dim;
+        height: $dim;
+        font-size: map-get($overflow-font-sizes, $size);
+        line-height: 1;
+      }
+    }
+  }
+
+  // Block variant: no border on overflow badge
+  &--block &__overflow {
+    border: none;
+    background-color: $color-tokens-surface-neutral-white-faded;
+  }
+}
