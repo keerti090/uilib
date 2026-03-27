@@ -1,0 +1,357 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use 'sass:map';
+
+// ─── DatePicker ───────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <div .AppCore-datepicker>
+//     <label  .AppCore-datepicker__label>
+//     <div    .AppCore-datepicker__control>
+//       <span   .AppCore-datepicker__value>
+//       <button .AppCore-datepicker__clear>       ← visible only when value set
+//       <span   .AppCore-datepicker__icon>        ← calendar icon
+//     </div>
+//     <div    .AppCore-datepicker__calendar>
+//       <div  .AppCore-datepicker__cal-header>
+//       <div  .AppCore-datepicker__weekdays>
+//       <div  .AppCore-datepicker__days>
+//         <button .AppCore-datepicker__day>
+//     <span   .AppCore-datepicker__helper-text | .AppCore-datepicker__error-text>
+//   </div>
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+
+.AppCore-datepicker {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-2;
+  font-family: $font-inter;
+  position: relative;
+  width: 100%;
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+
+.AppCore-datepicker__label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1;
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+}
+
+// ─── Control (trigger row) ────────────────────────────────────────────────────
+
+.AppCore-datepicker__control {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  padding: 0 $number-tokens-padding-4;
+  height: 40px; // md default
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  background-color: $color-tokens-surface-neutral-white;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus-within {
+    border-color: $color-tokens-border-primary-default;
+    box-shadow: 0 0 0 2px $primitives-colors-focus-blue-outline;
+    outline: none;
+  }
+}
+
+.AppCore-datepicker--open .AppCore-datepicker__control {
+  border-color: $color-tokens-border-primary-default;
+}
+
+// ─── Value / placeholder text ─────────────────────────────────────────────────
+
+.AppCore-datepicker__value {
+  flex: 1;
+  min-width: 0;
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+
+  &--placeholder {
+    color: $color-tokens-content-neutral-disabled;
+    font-weight: $font-weight-inter-2;
+  }
+}
+
+// ─── Clear button ─────────────────────────────────────────────────────────────
+
+.AppCore-datepicker__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-disabled;
+  flex-shrink: 0;
+  line-height: 1;
+
+  &:hover {
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  }
+}
+
+// ─── Calendar icon ────────────────────────────────────────────────────────────
+
+.AppCore-datepicker__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-tokens-content-neutral-body2;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+// ─── Calendar panel ───────────────────────────────────────────────────────────
+
+.AppCore-datepicker__calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 280px;
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: $number-tokens-padding-4;
+}
+
+// ─── Calendar header (month/year + nav) ──────────────────────────────────────
+
+.AppCore-datepicker__cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $number-tokens-spacing-3;
+}
+
+.AppCore-datepicker__cal-title {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  flex: 1;
+  text-align: center;
+}
+
+.AppCore-datepicker__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: $number-tokens-corner-radius-2;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-body2;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primitives-colors-focus-blue-outline;
+    outline-offset: 1px;
+  }
+}
+
+// ─── Weekday labels ───────────────────────────────────────────────────────────
+
+.AppCore-datepicker__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: $number-tokens-spacing-1;
+}
+
+.AppCore-datepicker__weekday {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1;
+  color: $color-tokens-content-neutral-disabled;
+  text-align: center;
+  padding: $number-tokens-padding-1 0;
+}
+
+// ─── Day grid ─────────────────────────────────────────────────────────────────
+
+.AppCore-datepicker__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.AppCore-datepicker__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: $number-tokens-corner-radius-2;
+  background: transparent;
+  cursor: pointer;
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  transition: background-color 0.1s ease, color 0.1s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primitives-colors-focus-blue-outline;
+    outline-offset: 1px;
+  }
+
+  // Outside current month
+  &--outside {
+    color: $color-tokens-content-neutral-disabled;
+  }
+
+  // Today indicator
+  &--today:not(&--selected) {
+    color: $color-tokens-content-primary-default;
+    font-weight: $font-weight-inter-1;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-tokens-surface-primary-default;
+    }
+  }
+
+  // Selected day
+  &--selected {
+    background-color: $color-tokens-surface-primary-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+    font-weight: $font-weight-inter-1;
+
+    &:hover {
+      background-color: $color-tokens-surface-primary-hover;
+    }
+  }
+
+  // Disabled day
+  &--disabled {
+    color: $color-tokens-content-neutral-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ─── Helper & error text ──────────────────────────────────────────────────────
+
+.AppCore-datepicker__helper-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-body2;
+}
+
+.AppCore-datepicker__error-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-error-default;
+}
+
+// ─── State: error ─────────────────────────────────────────────────────────────
+
+.AppCore-datepicker--error {
+  .AppCore-datepicker__control {
+    border-color: $color-tokens-content-error-default;
+
+    &:focus-within {
+      border-color: $color-tokens-content-error-default;
+      box-shadow: 0 0 0 2px rgba(210, 34, 45, 0.25);
+    }
+  }
+}
+
+// ─── State: disabled ──────────────────────────────────────────────────────────
+
+.AppCore-datepicker--disabled {
+  .AppCore-datepicker__label {
+    color: $color-tokens-content-neutral-disabled;
+  }
+
+  .AppCore-datepicker__control {
+    background-color: $color-tokens-surface-neutral-white-disabled;
+    border-color: $color-tokens-border-neutral-light-stroke-divider;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .AppCore-datepicker__value {
+    color: $color-tokens-content-neutral-disabled;
+  }
+}
+
+// ─── Size: sm ─────────────────────────────────────────────────────────────────
+
+.AppCore-datepicker--sm {
+  .AppCore-datepicker__label {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+
+  .AppCore-datepicker__control {
+    height: 32px;
+    padding: 0 $number-tokens-padding-3;
+  }
+
+  .AppCore-datepicker__value {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+}
+
+// ─── Size: md (default — no overrides needed) ─────────────────────────────────
+
+// ─── Size: lg ─────────────────────────────────────────────────────────────────
+
+.AppCore-datepicker--lg {
+  .AppCore-datepicker__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+
+  .AppCore-datepicker__control {
+    height: 48px;
+    padding: 0 $number-tokens-padding-5;
+  }
+
+  .AppCore-datepicker__value {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+}

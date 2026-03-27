@@ -1,76 +1,108 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IconComponent } from '../icon/icon.component';
 
-import { ButtonComponent } from '../Buttons/button.component';
-import type { User } from '../user';
+export type HeaderType = 'H1' | 'H2' | 'H3' | 'H4' | 'H5';
 
 @Component({
   selector: 'AppCore-header',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
-  template: `<header>
-  <div class="AppCore-header">
-    <div>
-      <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" fillRule="evenodd">
-          <path
-            d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-            fill="#FFF"
-          />
-          <path
-            d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-            fill="#555AB9"
-          />
-          <path d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z" fill="#91BAF8" />
-        </g>
-      </svg>
-      <h1>Acme</h1>
-    </div>
-    <!-- <div>
-      <div *ngIf="user">
-        <span class="welcome">
-          Welcome, <b>{{ user.name }}</b
-          >!
-        </span>
-        <AppCore-button
-          *ngIf="user"
-          size="small"
-          (onClick)="onLogout.emit($event)"
-          label="Log out"
-        ></AppCore-button>
-      </div>
-      <div *ngIf="!user">
-        <AppCore-button
-          *ngIf="!user"
-          size="small"
-          class="margin-left"
-          (onClick)="onLogin.emit($event)"
-          label="Log in"
-        ></AppCore-button>
-        <AppCore-button
-          *ngIf="!user"
-          size="small"
-          [primary]="true"
-          class="margin-left"
-          (onClick)="onCreateAccount.emit($event)"
-          label="Sign up"
-        ></AppCore-button>
-      </div>
-    </div> -->
-  </div>
-</header>`,
+  imports: [CommonModule, IconComponent],
   styleUrls: ['./header.scss'],
+  template: `
+    <div class="AppCore-header" [ngClass]="'AppCore-header--' + type.toLowerCase()">
+
+      <!-- Back Icon -->
+      <button *ngIf="showBackIcon" class="AppCore-header__back-btn" aria-label="Back">
+        <app-icon icon="chevron_left" iconSet="material" size="sm"></app-icon>
+      </button>
+
+      <!-- Logo slot -->
+      <div *ngIf="showLogo" class="AppCore-header__logo">
+        <ng-content select="[logo]"></ng-content>
+      </div>
+
+      <!-- Image slot -->
+      <div *ngIf="showImage" class="AppCore-header__image">
+        <ng-content select="[image]"></ng-content>
+      </div>
+
+      <!-- Main: Breadcrumb OR Title+Subtitle -->
+      <div class="AppCore-header__main">
+        <div *ngIf="showBreadcrumb" class="AppCore-header__breadcrumb">
+          <ng-content select="[breadcrumb]"></ng-content>
+        </div>
+        <div *ngIf="showText" class="AppCore-header__text">
+          <div class="AppCore-header__title-wrap">
+            <span class="AppCore-header__title">{{ title }}</span>
+          </div>
+          <span *ngIf="subtitle" class="AppCore-header__subtitle">{{ subtitle }}</span>
+        </div>
+      </div>
+
+      <!-- Right-side actions -->
+      <div class="AppCore-header__actions">
+        <div *ngIf="showBadge1" class="AppCore-header__slot">
+          <ng-content select="[badge1]"></ng-content>
+        </div>
+        <div *ngIf="showBadge2" class="AppCore-header__slot">
+          <ng-content select="[badge2]"></ng-content>
+        </div>
+        <div *ngIf="showBadge3" class="AppCore-header__slot">
+          <ng-content select="[badge3]"></ng-content>
+        </div>
+        <div *ngIf="showBadge4" class="AppCore-header__slot">
+          <ng-content select="[badge4]"></ng-content>
+        </div>
+        <div *ngIf="showSearch" class="AppCore-header__slot">
+          <ng-content select="[search]"></ng-content>
+        </div>
+        <div *ngIf="showButtonSet" class="AppCore-header__slot">
+          <ng-content select="[buttonSet]"></ng-content>
+        </div>
+        <div *ngIf="showComboButton" class="AppCore-header__slot">
+          <ng-content select="[comboButton]"></ng-content>
+        </div>
+        <div *ngIf="showActionBar" class="AppCore-header__slot">
+          <ng-content select="[actionBar]"></ng-content>
+        </div>
+        <div *ngIf="showIconButton1" class="AppCore-header__slot">
+          <ng-content select="[iconButton1]"></ng-content>
+        </div>
+        <div *ngIf="showIconButton2" class="AppCore-header__slot">
+          <ng-content select="[iconButton2]"></ng-content>
+        </div>
+        <div *ngIf="showIconButton3" class="AppCore-header__slot">
+          <ng-content select="[iconButton3]"></ng-content>
+        </div>
+        <div *ngIf="showAvatar" class="AppCore-header__slot">
+          <ng-content select="[avatar]"></ng-content>
+        </div>
+      </div>
+
+    </div>
+  `,
 })
 export class HeaderComponent {
-  @Input()
-  user: User | null = null;
+  @Input() type: HeaderType = 'H1';
+  @Input() title = 'Header Label';
+  @Input() subtitle = 'Text';
 
-  @Output()
-  onLogin = new EventEmitter<Event>();
-
-  @Output()
-  onLogout = new EventEmitter<Event>();
-
-  @Output()
-  onCreateAccount = new EventEmitter<Event>();
+  @Input() showBreadcrumb = false;
+  @Input() showImage = false;
+  @Input() showBackIcon = true;
+  @Input() showLogo = false;
+  @Input() showText = true;
+  @Input() showBadge1 = false;
+  @Input() showBadge2 = false;
+  @Input() showBadge3 = false;
+  @Input() showBadge4 = false;
+  @Input() showSearch = false;
+  @Input() showButtonSet = false;
+  @Input() showComboButton = false;
+  @Input() showActionBar = false;
+  @Input() showIconButton1 = false;
+  @Input() showIconButton2 = false;
+  @Input() showIconButton3 = false;
+  @Input() showAvatar = false;
 }

@@ -1,0 +1,220 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-description-item {
+  display: flex;
+  align-items: center;
+  font-family: $font-inter;
+  box-sizing: border-box;
+
+  // ===== Body =====
+  // Wraps label + content; direction changes per type
+  &__body {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+  }
+
+  // ===== Label wrapper =====
+  &__label-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $number-tokens-spacing-2; // 4px
+    flex-shrink: 0;
+  }
+
+  // ===== Label text =====
+  &__label {
+    color: $color-tokens-content-neutral-body2; // #525252
+    font-weight: $font-weight-inter-2; // 400 Regular
+    white-space: nowrap;
+  }
+
+  // ===== Content row =====
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $number-tokens-spacing-2; // 4px
+    flex: 1;
+    min-width: 0;
+  }
+
+  // ===== Value text =====
+  &__value {
+    color: $color-tokens-content-neutral-display-heading1-label1-selected; // #3D3D3D
+    font-weight: $font-weight-inter-1; // 500 Medium
+  }
+
+  // ===== Icon =====
+  &__icon {
+    flex-shrink: 0;
+    color: $color-tokens-content-neutral-body2;
+  }
+
+  // ===== Avatars =====
+  &__avatar {
+    border-radius: 50%;
+    background: $color-tokens-surface-neutral-white-faded;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: $font-size-label-xs;
+    font-weight: $font-weight-inter-1;
+    color: $color-tokens-content-neutral-body2;
+    font-family: $font-inter;
+
+    &--prefix,
+    &--suffix {
+      width: 2.5rem;  // 40px
+      height: 2.5rem;
+    }
+
+    &--content {
+      width: 1.5rem;  // 24px
+      height: 1.5rem;
+      font-size: 0.625rem;
+    }
+  }
+
+  // =========================================
+  // Type: Horizontal
+  // Label and content side by side in a row
+  // =========================================
+  &--type-Horizontal {
+    flex-direction: row;
+    gap: $number-tokens-spacing-2; // 4px
+
+    .AppCore-description-item__body {
+      flex-direction: row;
+      align-items: center;
+      gap: $number-tokens-spacing-2; // 4px
+    }
+  }
+
+  // =========================================
+  // Type: Vertical
+  // Label above content in a column
+  // =========================================
+  &--type-Vertical {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .AppCore-description-item__body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $number-tokens-spacing-2; // 4px
+      width: 100%;
+    }
+  }
+
+  // =========================================
+  // Type: 2 Column
+  // Avatar (40x40) + stacked label/content
+  // =========================================
+  &--type-2Column {
+    flex-direction: row;
+    align-items: center;
+    gap: $number-tokens-spacing-3; // 8px
+
+    .AppCore-description-item__body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.125rem; // 2px
+    }
+  }
+
+  // =========================================
+  // Type: Display
+  // Avatar (stretch height) + stacked label/value (display typography)
+  // =========================================
+  &--type-Display {
+    flex-direction: row;
+    align-items: stretch;
+    gap: $number-tokens-spacing-3; // 8px
+
+    .AppCore-description-item__body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $number-tokens-spacing-2; // 4px
+      flex: 1;
+    }
+
+    .AppCore-description-item__avatar--prefix {
+      width: 2.5rem; // 40px
+      height: auto;
+      align-self: stretch;
+    }
+  }
+
+  // =========================================
+  // Size: S  — 12px label + value
+  // =========================================
+  &--size-S {
+    .AppCore-description-item__label {
+      font-size: $font-size-label-xs; // 12px
+      line-height: 1rem;
+    }
+
+    .AppCore-description-item__value {
+      font-size: $font-size-label-xs; // 12px
+      line-height: 1rem;
+    }
+  }
+
+  // =========================================
+  // Size: M  — 14px label + value
+  // =========================================
+  &--size-M {
+    .AppCore-description-item__label {
+      font-size: $font-size-label-sm; // 14px
+      line-height: 1.125rem;
+    }
+
+    .AppCore-description-item__value {
+      font-size: $font-size-label-sm; // 14px
+      line-height: 1.125rem;
+    }
+  }
+
+  // =========================================
+  // Size: L  — 16px label + value
+  // =========================================
+  &--size-L {
+    .AppCore-description-item__label {
+      font-size: $font-size-label-md; // 16px
+      line-height: 1.25rem;
+    }
+
+    .AppCore-description-item__value {
+      font-size: $font-size-label-md; // 16px
+      line-height: 1.25rem;
+    }
+  }
+
+  // =========================================
+  // Display type overrides: value uses display typography
+  // =========================================
+  &--type-Display {
+    &.AppCore-description-item--size-S {
+      .AppCore-description-item__value {
+        font-size: $font-size-heading-sm; // 24px — Display/Medium-SB
+        font-weight: $font-weight-inter-0; // 600
+        line-height: 2rem;
+      }
+    }
+
+    &.AppCore-description-item--size-M,
+    &.AppCore-description-item--size-L {
+      .AppCore-description-item__value {
+        font-size: $font-size-heading-lg; // 32px — Display/Large-SB
+        font-weight: $font-weight-inter-0; // 600
+        line-height: 2.5rem;
+      }
+    }
+  }
+}

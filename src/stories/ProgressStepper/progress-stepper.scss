@@ -1,0 +1,196 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+// ── Indicator size from Figma: 32×32 ──────────────────────────────────────────
+$stepper-indicator-size: 32px;
+$stepper-connector-color: $primitives-colors-neutral-gray-50; // #CCCCCC
+$stepper-connector-thickness: 1px;
+$stepper-h-connector-width: 100px;
+$stepper-v-connector-height: 44px;
+
+// ── Stepper container ─────────────────────────────────────────────────────────
+.stepper {
+  display: inline-flex;
+
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &--vertical {
+    flex-direction: column;
+  }
+}
+
+// ── Step ──────────────────────────────────────────────────────────────────────
+.stepper__step {
+  display: flex;
+  align-items: center;
+
+  .stepper--horizontal & {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .stepper--vertical & {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+// ── Horizontal: indicator + label side-by-side ────────────────────────────────
+.stepper__step-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+// ── Vertical: left column — indicator stacked above connector ─────────────────
+.stepper__track-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+// ── Indicator circle ──────────────────────────────────────────────────────────
+.stepper__indicator {
+  width: $stepper-indicator-size;
+  height: $stepper-indicator-size;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  // Not Done — gray border, gray content
+  &--not-done {
+    border: 2px solid $primitives-colors-neutral-gray-60;
+    background: transparent;
+
+    .stepper__number,
+    .stepper__icon {
+      color: $primitives-colors-neutral-gray-60;
+    }
+  }
+
+  // Current — blue fill + border
+  &--current {
+    background: $color-tokens-surface-primary-default;
+    border: 2px solid $color-tokens-surface-primary-default;
+
+    .stepper__number,
+    .stepper__icon {
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // Done — green circle with checkmark
+  &--done {
+    background: $color-tokens-surface-success-default;
+    border: 2px solid $color-tokens-surface-success-default;
+
+    .stepper__icon {
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // Partially Done — yellow border, yellow content
+  &--partially-done {
+    border: 2px solid $color-tokens-surface-warning-default;
+    background: transparent;
+
+    .stepper__number,
+    .stepper__icon {
+      color: $color-tokens-surface-warning-default;
+    }
+  }
+
+  // Error — red circle with × icon
+  &--error {
+    background: $color-tokens-surface-error-default;
+    border: 2px solid $color-tokens-surface-error-default;
+
+    .stepper__icon {
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+}
+
+// ── Number label inside indicator ─────────────────────────────────────────────
+.stepper__number {
+  font-family: Inter, sans-serif;
+  font-size: $font-size-label-md; // 16px
+  font-weight: 500;
+  line-height: 1;
+}
+
+// ── Mat-icon inside indicator ─────────────────────────────────────────────────
+.stepper__icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 1 !important;
+}
+
+// ── Connector lines ───────────────────────────────────────────────────────────
+.stepper__connector {
+  background: $stepper-connector-color;
+  flex-shrink: 0;
+
+  &--horizontal {
+    width: $stepper-h-connector-width;
+    height: $stepper-connector-thickness;
+  }
+
+  &--vertical {
+    width: $stepper-connector-thickness;
+    height: $stepper-v-connector-height;
+  }
+}
+
+// ── Step label text ───────────────────────────────────────────────────────────
+.stepper__label {
+  font-family: Inter, sans-serif;
+  font-size: $font-size-label-md; // 16px
+  line-height: 1.25;
+
+  .stepper--vertical & {
+    padding-top: 6px; // align baseline with indicator center
+  }
+
+  // Current — medium weight, body color
+  &--current {
+    font-weight: 500;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+
+  // Not Done — regular weight, muted
+  &--not-done {
+    font-weight: 400;
+    color: $color-tokens-content-neutral-disabled;
+  }
+
+  // Done — medium weight, body color
+  &--done {
+    font-weight: 500;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+
+  // Partially Done — warning color
+  &--partially-done {
+    font-weight: 400;
+    color: $color-tokens-surface-warning-default;
+  }
+
+  // Error — error color
+  &--error {
+    font-weight: 400;
+    color: $color-tokens-content-error-default;
+  }
+}

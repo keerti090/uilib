@@ -1,0 +1,199 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-dialogue-box {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  &--visible {
+    display: block;
+  }
+
+  // ===== Overlay =====
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(17, 17, 17, 0.6);
+  }
+
+  // ===== Modal =====
+  &__modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 640px;
+    background-color: $color-tokens-surface-neutral-white;
+    border-radius: $number-tokens-corner-radius-3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &--S  { height: 200px; }
+    &--M  { height: 360px; }
+    &--L  { height: 480px; }
+    &--XL { height: 640px; }
+  }
+
+  // ===== Content area =====
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: $number-tokens-spacing-3;
+    padding: $number-tokens-padding-6;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  // ===== Header =====
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  // ===== Title row =====
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: $number-tokens-spacing-6;
+    flex: 1;
+  }
+
+  // ===== Avatar / State icon =====
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-tokens-surface-primary-background-light;
+
+    ::ng-deep .material-symbols-rounded {
+      font-size: 20px;
+    }
+
+    &--Default {
+      background-color: $color-tokens-surface-primary-background-light;
+    }
+
+    &--Success {
+      background-color: $color-tokens-surface-success-background-light;
+
+      ::ng-deep .material-symbols-rounded {
+        color: $color-tokens-surface-success-default;
+      }
+    }
+
+    &--Warning {
+      background-color: $color-tokens-surface-warning-background-light;
+
+      ::ng-deep .material-symbols-rounded {
+        color: $color-tokens-surface-warning-default;
+      }
+    }
+
+    &--Error {
+      background-color: $color-tokens-surface-error-background-light;
+
+      ::ng-deep .material-symbols-rounded {
+        color: $color-tokens-surface-error-default;
+      }
+    }
+  }
+
+  // ===== Title content (label + description) =====
+  &__title-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: $number-tokens-spacing-9;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $number-tokens-spacing-2;
+  }
+
+  &__label {
+    font-family: $font-inter;
+    font-size: $font-size-5;
+    font-weight: $font-weight-inter-1;
+    line-height: 1.25em;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+
+  &__description {
+    font-family: $font-inter;
+    font-size: $font-size-6;
+    font-weight: $font-weight-inter-2;
+    line-height: 1.4285em;
+    color: $color-tokens-content-neutral-heading2-label2-body1;
+  }
+
+  // ===== Close button =====
+  &__close {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    border-radius: $number-tokens-corner-radius-2;
+    color: $color-tokens-content-neutral-body2;
+
+    &:hover {
+      background-color: $color-tokens-surface-neutral-white-hover;
+    }
+
+    ::ng-deep .material-symbols-rounded {
+      font-size: 16px;
+      color: $color-tokens-content-neutral-body2 !important;
+    }
+  }
+
+  // ===== Body slot =====
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  // ===== CTAs footer =====
+  &__ctas {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: $number-tokens-padding-6 $number-tokens-padding-5;
+    gap: $number-tokens-spacing-9;
+    border-top: 1px solid $primitives-colors-neutral-gray-50;
+    background-color: $color-tokens-surface-neutral-white;
+    border-radius: 0 0 $number-tokens-corner-radius-3 $number-tokens-corner-radius-3;
+  }
+
+  &__button-set {
+    display: flex;
+    flex-direction: row;
+    gap: $number-tokens-spacing-3;
+
+    ::ng-deep .AppCore-button {
+      width: 120px;
+      min-width: 120px;
+    }
+  }
+}

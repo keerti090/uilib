@@ -1,0 +1,87 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-description-list {
+  display: flex;
+  flex-direction: column;
+  font-family: $font-inter;
+  box-sizing: border-box;
+  padding: $number-tokens-padding-8; // 24px
+
+  // ===== Title =====
+  &__title {
+    display: block;
+    font-weight: $font-weight-inter-1;
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+    margin-bottom: $number-tokens-spacing-8; // 40px gap to items
+  }
+
+  // ===== Items container =====
+  &__items {
+    display: flex;
+  }
+
+  // ===== Single item wrapper =====
+  // Handles divider borders; does not affect item internals
+  &__item {
+    display: flex;
+  }
+
+  // ===== Layout: Vertical =====
+  // Items stacked in a column
+  &--layout-vertical {
+    .AppCore-description-list__items {
+      flex-direction: column;
+      gap: $number-tokens-spacing-3; // 8px
+    }
+  }
+
+  // ===== Layout: Horizontal =====
+  // Items arranged in a row
+  &--layout-horizontal {
+    .AppCore-description-list__items {
+      flex-direction: row;
+      align-items: center;
+      gap: $number-tokens-padding-8; // 24px
+    }
+  }
+
+  // ===== Divider modifier =====
+  &--divider {
+    .AppCore-description-list__item {
+      padding-bottom: $number-tokens-spacing-3; // 8px
+      border-bottom: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+
+      &:first-child {
+        border-top: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+        padding-top: $number-tokens-spacing-3;
+      }
+    }
+  }
+
+  // ===== Size: S — title typography =====
+  &--size-S {
+    .AppCore-description-list__title {
+      font-size: $font-size-label-sm; // 14px
+      line-height: 1.4;
+    }
+  }
+
+  // ===== Size: M — title typography =====
+  &--size-M {
+    .AppCore-description-list__title {
+      font-size: $font-size-label-md; // 16px
+      line-height: 1.5;
+    }
+  }
+
+  // ===== Size: L — title typography =====
+  &--size-L {
+    .AppCore-description-list__title {
+      font-size: $font-size-label-lg; // 18px
+      line-height: 1.5;
+    }
+  }
+}

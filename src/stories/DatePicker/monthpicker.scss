@@ -1,0 +1,336 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use 'sass:map';
+
+// ─── MonthPicker ──────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <div .AppCore-monthpicker>
+//     <label  .AppCore-monthpicker__label>
+//     <div    .AppCore-monthpicker__control>
+//       <span   .AppCore-monthpicker__value>
+//       <button .AppCore-monthpicker__clear>       ← visible only when value set
+//       <span   .AppCore-monthpicker__icon>        ← calendar icon
+//     </div>
+//     <div    .AppCore-monthpicker__panel>
+//       <div  .AppCore-monthpicker__header>
+//         <button .AppCore-monthpicker__nav-btn>
+//         <span   .AppCore-monthpicker__year-label>
+//         <button .AppCore-monthpicker__nav-btn>
+//       </div>
+//       <div  .AppCore-monthpicker__grid>
+//         <button .AppCore-monthpicker__month>
+//     <span   .AppCore-monthpicker__helper-text | .AppCore-monthpicker__error-text>
+//   </div>
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-2;
+  font-family: $font-inter;
+  position: relative;
+  width: 100%;
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker__label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1;
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+}
+
+// ─── Control (trigger row) ────────────────────────────────────────────────────
+
+.AppCore-monthpicker__control {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  padding: 0 $number-tokens-padding-4;
+  height: 40px; // md default
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  background-color: $color-tokens-surface-neutral-white;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus-within {
+    border-color: $color-tokens-border-primary-default;
+    box-shadow: 0 0 0 2px $primitives-colors-focus-blue-outline;
+    outline: none;
+  }
+}
+
+.AppCore-monthpicker--open .AppCore-monthpicker__control {
+  border-color: $color-tokens-border-primary-default;
+}
+
+// ─── Value / placeholder text ─────────────────────────────────────────────────
+
+.AppCore-monthpicker__value {
+  flex: 1;
+  min-width: 0;
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+
+  &--placeholder {
+    color: $color-tokens-content-neutral-disabled;
+    font-weight: $font-weight-inter-2;
+  }
+}
+
+// ─── Clear button ─────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-disabled;
+  flex-shrink: 0;
+  line-height: 1;
+
+  &:hover {
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  }
+}
+
+// ─── Calendar icon ────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-tokens-content-neutral-body2;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+// ─── Panel (dropdown) ─────────────────────────────────────────────────────────
+
+.AppCore-monthpicker__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 256px;
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: $number-tokens-padding-4;
+}
+
+// ─── Year navigation header ───────────────────────────────────────────────────
+
+.AppCore-monthpicker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $number-tokens-spacing-3;
+}
+
+.AppCore-monthpicker__year-label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  flex: 1;
+  text-align: center;
+}
+
+.AppCore-monthpicker__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: $number-tokens-corner-radius-2;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-body2;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primitives-colors-focus-blue-outline;
+    outline-offset: 1px;
+  }
+}
+
+// ─── Month grid (4 × 3) ───────────────────────────────────────────────────────
+
+.AppCore-monthpicker__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.AppCore-monthpicker__month {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: $number-tokens-corner-radius-2;
+  background: transparent;
+  cursor: pointer;
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  transition: background-color 0.1s ease, color 0.1s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primitives-colors-focus-blue-outline;
+    outline-offset: 1px;
+  }
+
+  // Current month indicator
+  &--current:not(&--selected) {
+    color: $color-tokens-content-primary-default;
+    font-weight: $font-weight-inter-1;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-tokens-surface-primary-default;
+    }
+  }
+
+  // Selected month
+  &--selected {
+    background-color: $color-tokens-surface-primary-default;
+    color: $color-tokens-content-neutral-button-darkbg;
+    font-weight: $font-weight-inter-1;
+
+    &:hover {
+      background-color: $color-tokens-surface-primary-hover;
+    }
+  }
+
+  // Disabled month
+  &--disabled {
+    color: $color-tokens-content-neutral-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ─── Helper & error text ──────────────────────────────────────────────────────
+
+.AppCore-monthpicker__helper-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-body2;
+}
+
+.AppCore-monthpicker__error-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-error-default;
+}
+
+// ─── State: error ─────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker--error {
+  .AppCore-monthpicker__control {
+    border-color: $color-tokens-content-error-default;
+
+    &:focus-within {
+      border-color: $color-tokens-content-error-default;
+      box-shadow: 0 0 0 2px rgba(210, 34, 45, 0.25);
+    }
+  }
+}
+
+// ─── State: disabled ──────────────────────────────────────────────────────────
+
+.AppCore-monthpicker--disabled {
+  .AppCore-monthpicker__label {
+    color: $color-tokens-content-neutral-disabled;
+  }
+
+  .AppCore-monthpicker__control {
+    background-color: $color-tokens-surface-neutral-white-disabled;
+    border-color: $color-tokens-border-neutral-light-stroke-divider;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .AppCore-monthpicker__value {
+    color: $color-tokens-content-neutral-disabled;
+  }
+}
+
+// ─── Size: sm ─────────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker--sm {
+  .AppCore-monthpicker__label {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+
+  .AppCore-monthpicker__control {
+    height: 32px;
+    padding: 0 $number-tokens-padding-3;
+  }
+
+  .AppCore-monthpicker__value {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+}
+
+// ─── Size: md (default — no overrides needed) ─────────────────────────────────
+
+// ─── Size: lg ─────────────────────────────────────────────────────────────────
+
+.AppCore-monthpicker--lg {
+  .AppCore-monthpicker__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+
+  .AppCore-monthpicker__control {
+    height: 48px;
+    padding: 0 $number-tokens-padding-5;
+  }
+
+  .AppCore-monthpicker__value {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+}

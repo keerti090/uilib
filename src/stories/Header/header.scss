@@ -1,32 +1,157 @@
 .AppCore-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 15px 20px;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  gap: 12px;
+  width: 100%;
+  background: #ffffff;
+  font-family: Inter, sans-serif;
 }
 
-.AppCore-header svg {
-  display: inline-block;
-  vertical-align: top;
+// Back button
+.AppCore-header__back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3d3d3d;
 }
 
-.AppCore-header h1 {
-  display: inline-block;
-  vertical-align: top;
-  margin: 6px 0 6px 10px;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1;
+// Logo / Image slots
+.AppCore-header__logo,
+.AppCore-header__image {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.AppCore-header button + button {
-  margin-left: 10px;
+// Main content — grows to fill available space
+.AppCore-header__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
 }
 
-.AppCore-header .welcome {
-  margin-right: 10px;
-  color: #333;
-  font-size: 14px;
+.AppCore-header__breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.AppCore-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.AppCore-header__title-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.AppCore-header__title {
+  color: #3d3d3d;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.AppCore-header__subtitle {
+  color: #525252;
+  font-weight: 400;
+}
+
+// Right-side actions
+.AppCore-header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.AppCore-header__slot {
+  display: flex;
+  align-items: center;
+}
+
+// ─── Type variants ────────────────────────────────────────────────────────────
+
+// H1 — Display/Medium-SB (24px/600) + Label/Medium-R (14px/400)
+.AppCore-header--h1 {
+  .AppCore-header__title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.333em;
+  }
+
+  .AppCore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H2 — Heading/Large-SB (20px/600) + Label/Medium-R (14px/400)
+.AppCore-header--h2 {
+  .AppCore-header__title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4em;
+  }
+
+  .AppCore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H3 — Heading/Medium-SB (16px/600) + Label/Medium-R (14px/400)
+.AppCore-header--h3 {
+  .AppCore-header__title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5em;
+  }
+
+  .AppCore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H4 — Heading/Small-SB (14px/600) + Label/Small-R (12px/400)
+.AppCore-header--h4 {
+  .AppCore-header__title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.429em;
+  }
+
+  .AppCore-header__subtitle {
+    font-size: 12px;
+    line-height: 1.333em;
+  }
+}
+
+// H5 — Label/Small-M (12px/500) + Body/Medium-R (12px/400)
+.AppCore-header--h5 {
+  .AppCore-header__title {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.333em;
+  }
+
+  .AppCore-header__subtitle {
+    font-size: 12px;
+    line-height: 1.333em;
+  }
 }
