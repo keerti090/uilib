@@ -1,0 +1,286 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+// ─── Numeric Stepper ──────────────────────────────────────────────────────────
+//
+// Two variants:
+//   --left-input   : [value fills] [- +]   (left-aligned input, actions right)
+//   --center-input : [-] [value centered] [+]  (controls flank the value)
+//
+// Label positions (center-input only):
+//   default (vertical)  : label above the control
+//   --center-horizontal : label beside the control (row layout)
+
+// ─── Design tokens (mapped from Figma) ────────────────────────────────────────
+
+$stepper-label-color:         #3D3D3D;
+$stepper-label-hover-color:   #252525;
+$stepper-label-disabled-color:#A3A3A3;
+$stepper-required-color:      #D2222D;
+
+$stepper-text-color:          #3D3D3D;
+$stepper-text-hover-color:    #252525;
+$stepper-text-disabled-color: #A3A3A3;
+
+$stepper-bg:                  #FFFFFF;
+$stepper-bg-disabled:         #F5F5F5;
+
+$stepper-border:              #7A7A7A;
+$stepper-border-disabled:     #CCCCCC;
+$stepper-border-error:        #D2222D;
+$stepper-border-focused:      $primitives-colors-primary-blue-60-primary-color;
+
+$stepper-action-color:        #3D3D3D;
+$stepper-action-disabled-color: #A3A3A3;
+$stepper-action-decrement-color: #D2222D;
+$stepper-action-increment-color: #238823;
+
+$stepper-cursor-color:        #CCCCCC;
+
+$stepper-font-family:         'Inter', sans-serif;
+$stepper-font-size:           14px;
+$stepper-line-height:         20px; // Body/Large-R: 1.4285 * 14px ≈ 20px
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: $stepper-font-family;
+
+  // Left-input: fixed 160px width
+  &--left-input {
+    width: 160px;
+  }
+
+  // Center-input vertical: hug width
+  &--center-input {
+    width: fit-content;
+  }
+
+  // Center-input horizontal: row layout, fixed 160px
+  &--center-horizontal {
+    flex-direction: row;
+    align-items: center;
+    width: 160px;
+  }
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper__label-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: fit-content;
+
+  &--horizontal {
+    // In horizontal mode, label wrapper occupies its natural width
+    padding-right: 0;
+  }
+}
+
+.AppCore-numeric-stepper__label {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+// Horizontal label wrapper gets a right-padding per Figma (12px)
+.AppCore-numeric-stepper--center-horizontal .AppCore-numeric-stepper__label-wrapper--horizontal {
+  .AppCore-numeric-stepper__label {
+    padding-right: 12px;
+  }
+}
+
+.AppCore-numeric-stepper__label-text {
+  font-family: $stepper-font-family;
+  font-size: $stepper-font-size;
+  font-weight: 400;
+  line-height: 1.2857em; // Label/Medium-R
+  color: $stepper-label-color;
+}
+
+.AppCore-numeric-stepper__required {
+  font-family: $stepper-font-family;
+  font-size: $stepper-font-size;
+  font-weight: 400;
+  line-height: 1.2857em;
+  color: $stepper-required-color;
+}
+
+// ─── Container ────────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background-color: $stepper-bg;
+  border: 1px solid $stepper-border;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &--focused {
+    border-color: $stepper-border-focused;
+    box-shadow: 0 0 0 2px rgba($primitives-colors-primary-blue-60-primary-color, 0.2);
+  }
+
+  // Center variant: space-between to push - and + to edges
+  &--center {
+    justify-content: space-between;
+  }
+}
+
+// ─── Input ────────────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: $stepper-font-family;
+  font-size: $stepper-font-size;
+  font-weight: 400;
+  line-height: $stepper-line-height;
+  color: $stepper-text-color;
+  text-align: left;
+  cursor: text;
+  padding: 0;
+
+  // Remove native number input arrows
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+
+  &--centered {
+    flex: 0 0 40px;
+    width: 40px;
+    text-align: center;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $stepper-text-disabled-color;
+    background: transparent;
+  }
+}
+
+// ─── Hover state ──────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper:not(.AppCore-numeric-stepper--disabled):not(.AppCore-numeric-stepper--error) {
+  .AppCore-numeric-stepper__container:hover:not(.AppCore-numeric-stepper__container--focused) {
+    border-color: darken(#7A7A7A, 10%);
+  }
+
+  .AppCore-numeric-stepper__container:hover .AppCore-numeric-stepper__input {
+    color: $stepper-text-hover-color;
+  }
+
+  .AppCore-numeric-stepper__container:hover .AppCore-numeric-stepper__label-text {
+    color: $stepper-label-hover-color;
+  }
+}
+
+// ─── Action buttons ───────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.AppCore-numeric-stepper__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+
+  &--decrement {
+    color: $stepper-action-decrement-color;
+  }
+
+  &--increment {
+    color: $stepper-action-increment-color;
+  }
+
+  // In left-input, both action buttons share the same default color
+  .AppCore-numeric-stepper--left-input & {
+    color: $stepper-action-color;
+
+    &:hover:not(:disabled) {
+      color: $stepper-text-hover-color;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primitives-colors-focus-blue-outline;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// ─── Disabled state ───────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper--disabled {
+  cursor: not-allowed;
+
+  .AppCore-numeric-stepper__label-text,
+  .AppCore-numeric-stepper__required {
+    color: $stepper-label-disabled-color;
+  }
+
+  .AppCore-numeric-stepper__container {
+    background-color: $stepper-bg-disabled;
+    border-color: $stepper-border-disabled;
+    pointer-events: none;
+  }
+
+  .AppCore-numeric-stepper__input {
+    color: $stepper-text-disabled-color;
+  }
+
+  .AppCore-numeric-stepper__action-btn {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+// ─── Error state ──────────────────────────────────────────────────────────────
+
+.AppCore-numeric-stepper--error {
+  .AppCore-numeric-stepper__container {
+    border-color: $stepper-border-error;
+  }
+
+  .AppCore-numeric-stepper__container--focused {
+    box-shadow: 0 0 0 2px rgba(#D2222D, 0.2);
+  }
+}

@@ -1,0 +1,13 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/colors' as *;
+
+.AppCore-segmented-control {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $primitives-colors-neutral-gray-50;
+  border-radius: 8px;
+}

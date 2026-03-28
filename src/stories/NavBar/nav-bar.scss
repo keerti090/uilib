@@ -1,0 +1,357 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/numbers' as *;
+
+// Local tokens
+$nav-blue: #0C558C;
+$nav-dark: #252525;
+$nav-light-bg: #E7EEF3;
+$nav-text-dark: #3D3D3D;
+$nav-text-muted: #A3A3A3;
+$nav-border: #7A7A7A;
+$nav-mp-logo-blue: #3674B2;
+
+.nav-bar {
+  font-family: $font-inter;
+  width: 100%;
+  box-shadow: 0px 8px 24px 2px rgba(0, 0, 0, 0.08);
+
+  // ===== TOP BAR =====
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 90px;
+    padding: 16px 24px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &--blue {
+      background-color: $nav-blue;
+      color: #FFFFFF;
+    }
+
+    &--white {
+      background-color: #FFFFFF;
+      color: $nav-text-dark;
+    }
+
+    &--compact {
+      padding: 4px 24px;
+      gap: 90px;
+    }
+  }
+
+  // ===== LOGO =====
+  &__logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__logo-wordmark {
+    font-family: $font-inter;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+
+    &--color {
+      background: linear-gradient(135deg, $nav-blue 0%, $nav-mp-logo-blue 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  // ===== LEFT SECTION (WLMP) =====
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 32px;
+    background-color: #7A7A7A;
+    flex-shrink: 0;
+  }
+
+  &__mp-name {
+    font-family: 'Roboto', $font-inter;
+    font-weight: 400;
+    font-size: 18px;
+    color: #111111;
+    white-space: nowrap;
+  }
+
+  // ===== ACTIONS =====
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    &--wide {
+      gap: 24px;
+    }
+  }
+
+  // ===== SEARCH =====
+  &__search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    width: 400px;
+    height: 32px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &--filled {
+      background-color: #E7EEF3;
+    }
+
+    &--outlined {
+      background-color: #FFFFFF;
+      border: 1px solid $nav-border;
+    }
+  }
+
+  &__search-icon {
+    font-size: 16px;
+    color: $nav-text-muted;
+    flex-shrink: 0;
+
+    &--dark {
+      color: $nav-text-dark;
+    }
+  }
+
+  &__search-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: $nav-text-muted;
+    flex: 1;
+
+    &--dark {
+      color: $nav-text-dark;
+    }
+  }
+
+  // ===== ICON BUTTONS =====
+  &__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #FFFFFF;
+    padding: 0;
+
+    &--dark {
+      color: $nav-text-dark;
+    }
+
+    .material-symbols-rounded {
+      font-size: 24px;
+    }
+  }
+
+  &__flag-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__flag-emoji {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  // ===== DROPDOWN BUTTONS (user, language) =====
+  &__dropdown-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    &--compact {
+      gap: 4px;
+    }
+  }
+
+  &__dropdown-label {
+    font-family: $font-inter;
+    font-size: 14px;
+    font-weight: 400;
+    color: $nav-text-dark;
+    white-space: nowrap;
+  }
+
+  &__chevron {
+    font-size: 18px;
+    color: $nav-text-dark;
+  }
+
+  &__country {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  // ===== BOTTOM NAV BAR =====
+  &__bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 24px;
+    box-sizing: border-box;
+    width: 100%;
+
+    &--white {
+      background-color: #FFFFFF;
+      gap: 64px;
+    }
+
+    &--dark {
+      background-color: $nav-dark;
+      justify-content: space-between;
+    }
+  }
+
+  &__bottom-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+  }
+
+  // ===== NAV ITEMS =====
+  &__nav-item {
+    font-family: $font-inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.286em;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: $nav-text-dark;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s, border-color 0.15s;
+
+    &:hover {
+      color: $nav-blue;
+      border-bottom-color: $nav-blue;
+    }
+
+    &--active {
+      color: $nav-blue;
+      font-weight: 600;
+      border-bottom-color: $nav-blue;
+    }
+
+    &--light {
+      color: #FFFFFF;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+        border-bottom-color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    &--active-light {
+      color: #FFFFFF;
+      font-weight: 600;
+      border-bottom-color: #FFFFFF;
+    }
+  }
+
+  // ===== CART BUTTON =====
+  &__cart-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px 10px 16px;
+    background-color: $nav-blue;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: $font-inter;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: darken($nav-blue, 8%);
+    }
+  }
+
+  &__cart-icon {
+    font-size: 20px;
+  }
+
+  &__cart-label {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.286em;
+  }
+
+  // ===== CBOT STYLES =====
+  &__cbot-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__cbot-icon {
+    font-size: 28px;
+    color: #FFFFFF;
+  }
+
+  &__cbot-wordmark {
+    font-family: $font-inter;
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+  }
+
+  &__user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__user-icon {
+    font-size: 24px;
+    color: #FFFFFF;
+  }
+
+  &__user-name {
+    font-family: $font-inter;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.286em;
+  }
+}

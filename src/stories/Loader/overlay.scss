@@ -1,0 +1,20 @@
+@use '../../styles/primitives' as *;
+
+.AppCore-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+
+  &--visible {
+    display: block;
+  }
+
+  &--Light {
+    background-color: rgba(17, 17, 17, 0.4);
+  }
+
+  &--Dark {
+    background-color: rgba(17, 17, 17, 0.7);
+  }
+}

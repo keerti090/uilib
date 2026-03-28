@@ -1,0 +1,158 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/numbers' as *;
+
+$footer-blue: #0C558C;
+$footer-blue-light: #3674B2;
+$footer-light-bg: #F5F5F5;
+$footer-text-dark: #3D3D3D;
+$footer-white: #FFFFFF;
+
+.footer {
+  font-family: $font-inter;
+  width: 100%;
+  box-sizing: border-box;
+
+  // ===== T&C VARIANT =====
+  &--tc {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 11px 24px;
+    background-color: $footer-light-bg;
+  }
+
+  &__tc-brand {
+    font-size: 14px;
+    font-weight: 400;
+    color: $footer-blue;
+    white-space: nowrap;
+  }
+
+  &__separator {
+    font-size: 14px;
+    font-weight: 400;
+    color: $footer-blue;
+  }
+
+  &__tc-link {
+    font-size: 14px;
+    font-weight: 400;
+    color: $footer-blue;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ===== WLMP VARIANT =====
+  &--wlmp {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding-bottom: 8px;
+    background-color: $footer-white;
+  }
+
+  &__wlmp-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 32px 24px;
+    background-color: $footer-blue-light;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__wlmp-top-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 32px;
+  }
+
+  &__wlmp-logo {
+    flex-shrink: 0;
+  }
+
+  &__logo-wordmark {
+    font-family: $font-inter;
+    font-size: 18px;
+    font-weight: 700;
+    color: $footer-white;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+
+  &__tagline {
+    font-size: 14px;
+    font-weight: 500;
+    color: $footer-white;
+    line-height: 1.286em;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__contact-icon {
+    font-size: 32px;
+    color: $footer-white;
+  }
+
+  &__contact-email {
+    font-size: 14px;
+    font-weight: 400;
+    color: $footer-white;
+    line-height: 1.286em;
+  }
+
+  &__wlmp-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__wlmp-menu-link {
+    font-size: 14px;
+    font-weight: 400;
+    color: $footer-white;
+    text-decoration: none;
+    line-height: 1.286em;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__copyright {
+    font-size: 12px;
+    font-weight: 400;
+    color: $footer-text-dark;
+    line-height: 1.333em;
+    text-align: center;
+    margin: 0;
+    padding: 0 24px;
+  }
+}

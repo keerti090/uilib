@@ -1,0 +1,168 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+// ─── Toggle ───────────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <label .AppCore-toggle>
+//     <span .AppCore-toggle__label>        ← optional text label
+//     <span .AppCore-toggle__track>        ← pill-shaped track
+//       <span .AppCore-toggle__knob>       ← circular sliding knob
+//     </span>
+//     <input .AppCore-toggle__input>       ← hidden native checkbox
+//   </label>
+
+// ─── Root label ───────────────────────────────────────────────────────────────
+
+.AppCore-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $number-tokens-spacing-3; // 8px
+  cursor: pointer;
+  font-family: $font-inter;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+
+    .AppCore-toggle__label {
+      color: $color-tokens-content-neutral-disabled; // #A3A3A3
+    }
+  }
+}
+
+// ─── Hidden native input ──────────────────────────────────────────────────────
+
+.AppCore-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+// ─── Label text ───────────────────────────────────────────────────────────────
+
+.AppCore-toggle__label {
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-2; // 400
+  color: $color-tokens-content-neutral-heading2-label2-body1; // #3D3D3D
+}
+
+// ─── Track ────────────────────────────────────────────────────────────────────
+
+.AppCore-toggle__track {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background-color: $color-tokens-surface-neutral-white-disabled; // #F5F5F5
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider; // #CCCCCC
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+// ─── Knob ─────────────────────────────────────────────────────────────────────
+
+.AppCore-toggle__knob {
+  position: absolute;
+  border-radius: 50%;
+  background-color: $color-tokens-surface-neutral-white; // #FFFFFF
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// ─── On state ─────────────────────────────────────────────────────────────────
+
+.AppCore-toggle--on:not(.AppCore-toggle--disabled) .AppCore-toggle__track {
+  background-color: $color-tokens-surface-primary-default; // #0C558C
+  border-color: $color-tokens-surface-primary-default;
+}
+
+// ─── Focus ring ───────────────────────────────────────────────────────────────
+
+.AppCore-toggle:focus-within .AppCore-toggle__track {
+  outline: 2px solid $primitives-colors-focus-blue-outline;
+  outline-offset: 2px;
+}
+
+// ─── Size: sm ─────────────────────────────────────────────────────────────────
+// Track: 28 × 18 px, knob: 14 × 14 px
+
+.AppCore-toggle--size-sm {
+  .AppCore-toggle__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .AppCore-toggle__track {
+    width: 28px;
+    height: 18px;
+  }
+
+  .AppCore-toggle__knob {
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    transform: translateX(0) translateY(-50%);
+  }
+
+  &.AppCore-toggle--on .AppCore-toggle__knob {
+    transform: translateX(10px) translateY(-50%);
+  }
+}
+
+// ─── Size: md ─────────────────────────────────────────────────────────────────
+// Track: 40 × 24 px, knob: 20 × 20 px
+
+.AppCore-toggle--size-md {
+  .AppCore-toggle__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .AppCore-toggle__track {
+    width: 40px;
+    height: 24px;
+  }
+
+  .AppCore-toggle__knob {
+    width: 20px;
+    height: 20px;
+    left: 2px;
+    transform: translateX(0) translateY(-50%);
+  }
+
+  &.AppCore-toggle--on .AppCore-toggle__knob {
+    transform: translateX(16px) translateY(-50%);
+  }
+}
+
+// ─── Size: lg ─────────────────────────────────────────────────────────────────
+// Track: 56 × 32 px (Figma exact), knob: 28 × 28 px
+
+.AppCore-toggle--size-lg {
+  .AppCore-toggle__label {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .AppCore-toggle__track {
+    width: 56px;
+    height: 32px;
+  }
+
+  .AppCore-toggle__knob {
+    width: 28px;
+    height: 28px;
+    left: 2px;
+    transform: translateX(0) translateY(-50%);
+  }
+
+  &.AppCore-toggle--on .AppCore-toggle__knob {
+    transform: translateX(24px) translateY(-50%);
+  }
+}

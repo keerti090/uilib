@@ -1,0 +1,113 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+.AppCore-segment-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: $font-inter;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+
+  // Size S
+  &--size-S {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 16px;
+
+    .AppCore-segment-item__label {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+
+  // Size M
+  &--size-M {
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 16px;
+
+    .AppCore-segment-item__label {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+
+  // Size L
+  &--size-L {
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 18px;
+
+    .AppCore-segment-item__label {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  // State: Default
+  &--state-default {
+    background-color: $color-tokens-surface-neutral-white;
+    color: $primitives-colors-neutral-gray-90;
+    font-weight: 400;
+  }
+
+  // State: Hover
+  &--state-hover {
+    background-color: $primitives-colors-neutral-gray-30;
+    color: $primitives-colors-neutral-gray-100;
+    font-weight: 400;
+  }
+
+  // State: Selected
+  &--state-selected {
+    background-color: $primitives-colors-primary-blue-20;
+    color: $color-tokens-content-primary-default;
+    font-weight: 500;
+  }
+
+  // State: Disabled
+  &--state-disabled {
+    background-color: $color-tokens-surface-neutral-white;
+    color: $color-tokens-content-neutral-disabled;
+    font-weight: 400;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // State: Disabled Selected
+  &--state-disabled-selected {
+    background-color: $primitives-colors-neutral-gray-30;
+    color: $color-tokens-content-neutral-disabled;
+    font-weight: 500;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep .icon,
+    ::ng-deep .material-symbols-rounded {
+      color: inherit !important;
+      font-size: 16px !important;
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
+
+  &__label {
+    font-family: $font-inter;
+    font-weight: inherit;
+    color: inherit;
+  }
+}

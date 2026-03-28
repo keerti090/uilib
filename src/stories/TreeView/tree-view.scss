@@ -1,0 +1,25 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+
+.AppCore-tree-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 220px;
+  border-radius: $number-tokens-corner-radius-2;
+
+  &__item {
+    display: block;
+    width: 100%;
+  }
+
+  app-tree-view-item {
+    display: block;
+    width: 100%;
+
+    .AppCore-tree-view-item {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@use '../../styles/primitives' as *;
+
+.AppCore-inline-loader-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  &__label {
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $primitives-colors-neutral-gray-90;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+
+    .material-symbols-rounded {
+      font-size: 24px;
+    }
+
+    &--success .material-symbols-rounded {
+      color: #238823;
+    }
+
+    &--error .material-symbols-rounded {
+      color: #D2222D;
+    }
+  }
+}

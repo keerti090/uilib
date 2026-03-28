@@ -1,0 +1,248 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+
+// ─── Radio Button ──────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <label .AppCore-radio>
+//     <span .AppCore-radio__control>          ← sized relative container
+//       <input .AppCore-radio__input>         ← invisible, z-index 1, fills control
+//       <span .AppCore-radio__circle>         ← visual ring + ::after for inner dot
+//     </span>
+//     <span .AppCore-radio__label>
+//   </label>
+//
+// State selectors use the adjacent sibling pattern:
+//   input:<state> + .AppCore-radio__circle { … }
+
+// ─── Root label ───────────────────────────────────────────────────────────────
+
+.AppCore-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2; // 4px
+  cursor: pointer;
+  font-family: $font-inter;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+
+    .AppCore-radio__label {
+      color: $color-tokens-content-neutral-disabled;
+    }
+
+    .AppCore-radio__control {
+      opacity: 0.5;
+    }
+  }
+}
+
+// ─── Control (sized container) ────────────────────────────────────────────────
+
+.AppCore-radio__control {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+// ─── Hidden native input ──────────────────────────────────────────────────────
+
+.AppCore-radio__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// ─── Visual circle ────────────────────────────────────────────────────────────
+
+.AppCore-radio__circle {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid $color-tokens-content-neutral-body2; // #525252
+  border-radius: 50%;
+  background-color: $color-tokens-surface-neutral-white;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  pointer-events: none;
+}
+
+// ─── Hover (unselected) ───────────────────────────────────────────────────────
+
+.AppCore-radio:hover:not(.AppCore-radio--disabled)
+  .AppCore-radio__input:not(:checked)
+  + .AppCore-radio__circle {
+  border-color: $color-tokens-surface-primary-default;
+}
+
+// ─── Focus ring ───────────────────────────────────────────────────────────────
+
+.AppCore-radio__input:focus-visible + .AppCore-radio__circle {
+  box-shadow: 0 0 0 2px $primitives-colors-focus-blue-outline;
+}
+
+// ─── Checked ──────────────────────────────────────────────────────────────────
+
+.AppCore-radio__input:checked + .AppCore-radio__circle {
+  background-color: $color-tokens-surface-primary-default; // #0C558C
+  border-color: $color-tokens-surface-primary-default;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $color-tokens-surface-neutral-white;
+  }
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+
+.AppCore-radio__label {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  font-weight: 400;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+}
+
+// ─── Size: sm (16px icon, 12px label) — default size ─────────────────────────
+
+.AppCore-radio--size-sm {
+  // control and label already at default 16px / 12px
+}
+
+// ─── Size: md (16px icon, 14px label) ────────────────────────────────────────
+
+.AppCore-radio--size-md {
+  .AppCore-radio__label {
+    @include apply-typography($typography-label-sm);
+    font-family: $font-inter;
+    font-weight: 400;
+  }
+}
+
+// ─── Size: lg (20px icon, 16px label) ────────────────────────────────────────
+
+.AppCore-radio--size-lg {
+  .AppCore-radio__control {
+    width: 20px;
+    height: 20px;
+  }
+
+  .AppCore-radio__input:checked + .AppCore-radio__circle::after {
+    width: 8px;
+    height: 8px;
+  }
+
+  .AppCore-radio__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+    font-weight: 400;
+  }
+}
+
+// ─── Radio Button Group ───────────────────────────────────────────────────────
+
+.AppCore-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-3; // 8px
+  font-family: $font-inter;
+
+  &--horizontal {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: $number-tokens-spacing-8; // 24px
+
+    .AppCore-radio-group__items {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: $number-tokens-spacing-5; // 16px
+    }
+  }
+
+  &--horizontal-next-row {
+    flex-direction: column;
+
+    .AppCore-radio-group__items {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: $number-tokens-spacing-5; // 16px
+    }
+  }
+
+  &--vertical {
+    flex-direction: column;
+  }
+}
+
+.AppCore-radio-group__header {
+  display: flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-2; // 4px
+}
+
+.AppCore-radio-group__label {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  font-weight: 500;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+}
+
+.AppCore-radio-group__description {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  font-weight: 400;
+  color: $color-tokens-content-neutral-body2;
+}
+
+.AppCore-radio-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-4; // 12px
+}
+
+// ─── Size-specific group label typography ─────────────────────────────────────
+
+.AppCore-radio-group--size-md {
+  .AppCore-radio-group__label {
+    @include apply-typography($typography-label-sm);
+    font-family: $font-inter;
+    font-weight: 500;
+  }
+
+  .AppCore-radio-group__description {
+    @include apply-typography($typography-label-sm);
+    font-family: $font-inter;
+    font-weight: 400;
+  }
+}
+
+.AppCore-radio-group--size-lg {
+  .AppCore-radio-group__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+    font-weight: 500;
+  }
+
+  .AppCore-radio-group__description {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+    font-weight: 400;
+  }
+}
