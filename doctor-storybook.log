@@ -1,0 +1,28 @@
+🩺 The doctor is checking the health of your Storybook..
+╭ Incompatible packages found ───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                    │
+│   The following packages are incompatible with Storybook 8.6.15 as they depend on different major versions of Storybook            │
+│   packages:                                                                                                                        │
+│   - @storybook/addon-a11y@8.6.18                                                                                                   │
+│   Repo: https://github.com/storybookjs/storybook/tree/next/code/addons/a11y                                                        │
+│   - @storybook/addon-essentials@8.6.14 (8.6.15 available!)                                                                         │
+│   Repo: https://github.com/storybookjs/storybook/tree/next/code/addons/essentials                                                  │
+│   - @storybook/addon-interactions@8.6.14 (8.6.15 available!)                                                                       │
+│   Repo: https://github.com/storybookjs/storybook/tree/next/code/addons/interactions                                                │
+│   - @storybook/test@8.6.18                                                                                                         │
+│   Repo: https://github.com/storybookjs/storybook/tree/next/code/lib/test                                                           │
+│   - storybook@8.6.18                                                                                                               │
+│   Repo: https://github.com/storybookjs/storybook/tree/next/code/lib/cli                                                            │
+│                                                                                                                                    │
+│                                                                                                                                    │
+│   Please consider updating your packages or contacting the maintainers for compatibility details.                                  │
+│   For more on Storybook 8 compatibility, see the linked GitHub issue:                                                              │
+│   https://github.com/storybookjs/storybook/issues/26031                                                                            │
+│                                                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+You can always recheck the health of your project by running:
+npx storybook doctor
+
+Full logs are available in /Users/keertihegde/POC Projects/Karl/uilib/doctor-storybook.log
+

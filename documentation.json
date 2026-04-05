@@ -10277,7 +10277,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "StorybookConfig",
-                "defaultValue": "{\n  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  addons: [\n    '@storybook/addon-essentials',\n  ],\n  framework: {\n    name: '@storybook/angular',\n    options: {},\n  },\n}"
+                "defaultValue": "{\n  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],\n  framework: {\n    name: '@storybook/angular',\n    options: {},\n  },\n}"
             },
             {
                 "name": "config",
@@ -10375,7 +10375,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "file": "src/stories/Banner/banner.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -10385,7 +10385,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Banner/banner.stories.ts",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -11891,21 +11891,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<BadgeIndicatorComponent>",
-                "defaultValue": "{\n  title: 'components/BadgeIndicator',\n  component: BadgeIndicatorComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeIndicatorComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Inactive'],\n    },\n    indicatorStyle: {\n      control: 'select',\n      options: ['Dot - Inline', 'Dot - Overlapping', 'With Text', 'With Text - Overlapping'],\n    },\n    label: { control: 'text' },\n    count: { control: 'text' },\n  },\n  args: {\n    type: 'Default',\n    indicatorStyle: 'Dot - Inline',\n    label: 'Label',\n    count: '+99',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/Banner/banner.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<BannerComponent>",
                 "defaultValue": "{\n  title: 'components/Banner',\n  component: BannerComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BannerComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    actionLabel: { control: 'text' },\n    dismiss: { action: 'dismissed' },\n    action: { action: 'action clicked' },\n  },\n  args: {\n    type: 'Information',\n    title: '',\n    description: 'Banner message goes here.',\n    showIcon: true,\n    dismissible: false,\n    actionLabel: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<BadgeIndicatorComponent>",
+                "defaultValue": "{\n  title: 'components/BadgeIndicator',\n  component: BadgeIndicatorComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BadgeIndicatorComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Default', 'Error', 'Success', 'Warning', 'Inactive'],\n    },\n    indicatorStyle: {\n      control: 'select',\n      options: ['Dot - Inline', 'Dot - Overlapping', 'With Text', 'With Text - Overlapping'],\n    },\n    label: { control: 'text' },\n    count: { control: 'text' },\n  },\n  args: {\n    type: 'Default',\n    indicatorStyle: 'Dot - Inline',\n    label: 'Label',\n    count: '+99',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -14566,8 +14566,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<BadgeIndicatorComponent>",
-                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
+                "rawtype": "StoryObj<BannerComponent>",
+                "file": "src/stories/Banner/banner.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -14577,8 +14577,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<BannerComponent>",
-                "file": "src/stories/Banner/banner.stories.ts",
+                "rawtype": "StoryObj<BadgeIndicatorComponent>",
+                "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -16992,7 +16992,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "StorybookConfig",
-                    "defaultValue": "{\n  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  addons: [\n    '@storybook/addon-essentials',\n  ],\n  framework: {\n    name: '@storybook/angular',\n    options: {},\n  },\n}"
+                    "defaultValue": "{\n  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],\n  framework: {\n    name: '@storybook/angular',\n    options: {},\n  },\n}"
                 }
             ],
             "src/app/app.config.server.ts": [
@@ -17647,6 +17647,118 @@
                     "defaultValue": "{\n  args: {\n    type: 'Information',\n    badgeStyle: 'Outlined',\n    size: 'M',\n    showPrefixIcon: true,\n    prefixIcon: 'info',\n  },\n}"
                 }
             ],
+            "src/stories/Banner/banner.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "Dismissible",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Warning',\n    title: 'Warning',\n    description: 'This banner can be dismissed.',\n    dismissible: true,\n  },\n}"
+                },
+                {
+                    "name": "Error",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Error' },\n}"
+                },
+                {
+                    "name": "Information",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Information' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<BannerComponent>",
+                    "defaultValue": "{\n  title: 'components/Banner',\n  component: BannerComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BannerComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    actionLabel: { control: 'text' },\n    dismiss: { action: 'dismissed' },\n    action: { action: 'action clicked' },\n  },\n  args: {\n    type: 'Information',\n    title: '',\n    description: 'Banner message goes here.',\n    showIcon: true,\n    dismissible: false,\n    actionLabel: '',\n  },\n}"
+                },
+                {
+                    "name": "NoIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Success',\n    description: 'This banner has no leading icon.',\n    showIcon: false,\n  },\n}"
+                },
+                {
+                    "name": "Success",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Success' },\n}"
+                },
+                {
+                    "name": "Warning",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'Warning' },\n}"
+                },
+                {
+                    "name": "WithAction",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    title: 'Action Required',\n    description: 'There is something that needs your attention.',\n    actionLabel: 'Take Action',\n  },\n}"
+                },
+                {
+                    "name": "WithActionAndDismiss",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Error',\n    title: 'Error Occurred',\n    description: 'Something went wrong. Please try again or contact support.',\n    actionLabel: 'Retry',\n    dismissible: true,\n  },\n}"
+                },
+                {
+                    "name": "WithTitle",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    title: 'Banner Title',\n    description: 'Additional context or detail about the banner message.',\n  },\n}"
+                }
+            ],
             "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
                 {
                     "name": "Default",
@@ -17867,118 +17979,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: { type: 'Warning', indicatorStyle: 'With Text' },\n}"
-                }
-            ],
-            "src/stories/Banner/banner.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{}"
-                },
-                {
-                    "name": "Dismissible",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'Warning',\n    title: 'Warning',\n    description: 'This banner can be dismissed.',\n    dismissible: true,\n  },\n}"
-                },
-                {
-                    "name": "Error",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { type: 'Error' },\n}"
-                },
-                {
-                    "name": "Information",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { type: 'Information' },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<BannerComponent>",
-                    "defaultValue": "{\n  title: 'components/Banner',\n  component: BannerComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [BannerComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    actionLabel: { control: 'text' },\n    dismiss: { action: 'dismissed' },\n    action: { action: 'action clicked' },\n  },\n  args: {\n    type: 'Information',\n    title: '',\n    description: 'Banner message goes here.',\n    showIcon: true,\n    dismissible: false,\n    actionLabel: '',\n  },\n}"
-                },
-                {
-                    "name": "NoIcon",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'Success',\n    description: 'This banner has no leading icon.',\n    showIcon: false,\n  },\n}"
-                },
-                {
-                    "name": "Success",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { type: 'Success' },\n}"
-                },
-                {
-                    "name": "Warning",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { type: 'Warning' },\n}"
-                },
-                {
-                    "name": "WithAction",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    title: 'Action Required',\n    description: 'There is something that needs your attention.',\n    actionLabel: 'Take Action',\n  },\n}"
-                },
-                {
-                    "name": "WithActionAndDismiss",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'Error',\n    title: 'Error Occurred',\n    description: 'Something went wrong. Please try again or contact support.',\n    actionLabel: 'Retry',\n    dismissible: true,\n  },\n}"
-                },
-                {
-                    "name": "WithTitle",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Banner/banner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'Information',\n    title: 'Banner Title',\n    description: 'Additional context or detail about the banner message.',\n  },\n}"
                 }
             ],
             "src/stories/Breadcrumb/breadcrumb.stories.ts": [
@@ -19799,19 +19799,6 @@
                     "kind": 184
                 }
             ],
-            "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<BadgeIndicatorComponent>",
-                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "src/stories/Banner/banner.stories.ts": [
                 {
                     "name": "Story",
@@ -19819,6 +19806,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<BannerComponent>",
                     "file": "src/stories/Banner/banner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "src/stories/BadgeIndicator/badge-indicator.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<BadgeIndicatorComponent>",
+                    "file": "src/stories/BadgeIndicator/badge-indicator.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
