@@ -9,7 +9,8 @@
     "test": "ng test",
     "serve:ssr:storybook-apptium": "node dist/storybook-apptium/server/server.mjs",
     "storybook": "ng run storybook-apptium:storybook",
-    "build-storybook": "ng run storybook-apptium:build-storybook"
+    "build-storybook": "ng run storybook-apptium:build-storybook",
+    "chromatic": "npx chromatic --project-token=chpt_3c110c20dc54088"
   },
   "private": true,
   "dependencies": {

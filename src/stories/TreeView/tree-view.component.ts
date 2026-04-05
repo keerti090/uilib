@@ -7,144 +7,187 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import {
+  MatTreeModule,
+  MatTreeFlatDataSource,
+  MatTreeFlattener,
+} from '@angular/material/tree';
 import { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';
 
+// ── Public types the consumer imports ────────────────────────────────────────
+
 export interface TreeViewNode {
-  id: string;
   label: string;
   icon?: string;
-  children?: TreeViewNode[];
   disabled?: boolean;
+  children?: TreeViewNode[];
+  /** Any extra data the consumer wants to carry through. */
+  data?: unknown;
 }
 
-interface FlatNode {
-  node: TreeViewNode;
-  level: 1 | 2 | 3 | 4;
-  expanded: boolean;
-  hasChildren: boolean;
-  visible: boolean;
+/** Flat node produced by MatTreeFlattener — internal use only. */
+export interface TreeViewFlatNode {
+  label: string;
+  icon?: string;
+  disabled?: boolean;
+  data?: unknown;
+  level: number;
+  expandable: boolean;
+  /** Reference back to the source node for selection tracking. */
+  _source: TreeViewNode;
 }
+
+// ── Default demo data ─────────────────────────────────────────────────────────
 
 const DEFAULT_NODES: TreeViewNode[] = [
   {
-    id: '1',
     label: 'Parent Item',
     children: [
       {
-        id: '1-1',
         label: 'Child Item',
         children: [
-          { id: '1-1-1', label: 'Grandchild Item' },
-          { id: '1-1-2', label: 'Grandchild Item' },
+          { label: 'Grandchild Item' },
+          { label: 'Grandchild Item' },
         ],
       },
-      { id: '1-2', label: 'Child Item' },
-      { id: '1-3', label: 'Child Item' },
+      { label: 'Child Item' },
+      { label: 'Child Item' },
     ],
   },
-  { id: '2', label: 'Parent Item' },
-  { id: '3', label: 'Parent Item' },
+  { label: 'Parent Item' },
+  { label: 'Parent Item' },
 ];
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 @Component({
   selector: 'app-tree-view',
   standalone: true,
-  imports: [CommonModule, TreeViewItemComponent],
+  imports: [CommonModule, MatTreeModule, TreeViewItemComponent],
   styleUrls: ['./tree-view.scss'],
   template: `
-    <div class="AppCore-tree-view" role="tree">
-      @for (flat of flatNodes; track flat.node.id) {
-        @if (flat.visible) {
-          <app-tree-view-item
-            class="AppCore-tree-view__item"
-            [label]="flat.node.label"
-            [level]="flat.level"
-            [type]="type"
-            [state]="getItemState(flat)"
-            [expanded]="flat.expanded"
-            [hasChildren]="flat.hasChildren"
-            [showPrefixIcon]="showIcons"
-            [prefixIcon]="flat.node.icon || 'add'"
-            (itemClick)="onItemClick(flat)"
-            (expandToggle)="onExpandToggle(flat)"
-            role="treeitem"
-          ></app-tree-view-item>
-        }
-      }
-    </div>
+    <mat-tree
+      class="AppCore-tree-view"
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      role="tree"
+    >
+      <mat-tree-node
+        *matTreeNodeDef="let flat"
+        class="AppCore-tree-view__node"
+        matTreeNodePadding
+        [matTreeNodePaddingIndent]="0"
+      >
+        <app-tree-view-item
+          [label]="flat.label"
+          [level]="clampLevel(flat.level + 1)"
+          [type]="type"
+          [state]="stateOf(flat)"
+          [hasChildren]="false"
+          [showPrefixIcon]="showIcons"
+          [prefixIcon]="flat.icon || 'add'"
+          (itemClick)="onSelect(flat)"
+        ></app-tree-view-item>
+      </mat-tree-node>
+
+      <mat-tree-node
+        *matTreeNodeDef="let flat; when: hasChild"
+        class="AppCore-tree-view__node"
+        matTreeNodePadding
+        [matTreeNodePaddingIndent]="0"
+      >
+        <app-tree-view-item
+          [label]="flat.label"
+          [level]="clampLevel(flat.level + 1)"
+          [type]="type"
+          [state]="stateOf(flat)"
+          [hasChildren]="true"
+          [expanded]="treeControl.isExpanded(flat)"
+          [showPrefixIcon]="showIcons"
+          [prefixIcon]="flat.icon || 'add'"
+          (itemClick)="onSelect(flat)"
+          (expandToggle)="treeControl.toggle(flat)"
+        ></app-tree-view-item>
+      </mat-tree-node>
+    </mat-tree>
   `,
 })
 export class TreeViewComponent implements OnChanges {
+  /**
+   * Hierarchical node data. Provide your own `TreeViewNode[]`
+   * — the component handles flattening and expansion internally.
+   */
   @Input() nodes: TreeViewNode[] = DEFAULT_NODES;
+
+  /** Visual theme: 'global' (blue-tinted bg) or 'local' (white bg). */
   @Input() type: TreeViewType = 'global';
+
+  /** Show the leading icon on every row. */
   @Input() showIcons: boolean = true;
-  @Input() selectedId: string | null = null;
 
+  /** ID of the currently selected node (matched on object reference via `_source`). */
+  @Input() selectedNode: TreeViewNode | null = null;
+
+  /** Emits when the user clicks a non-disabled node. */
   @Output() nodeSelect = new EventEmitter<TreeViewNode>();
-  @Output() nodeExpand = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();
 
-  flatNodes: FlatNode[] = [];
-  private expandedIds = new Set<string>();
+  /** Emits when a parent node is expanded or collapsed. */
+  @Output() nodeToggle = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();
+
+  // ── Material tree plumbing ─────────────────────────────────────────────────
+
+  private transformer = (node: TreeViewNode, level: number): TreeViewFlatNode => ({
+    label: node.label,
+    icon: node.icon,
+    disabled: node.disabled,
+    data: node.data,
+    level,
+    expandable: !!(node.children && node.children.length > 0),
+    _source: node,
+  });
+
+  treeControl = new FlatTreeControl<TreeViewFlatNode>(
+    flat => flat.level,
+    flat => flat.expandable,
+  );
+
+  private flattener = new MatTreeFlattener<TreeViewNode, TreeViewFlatNode>(
+    this.transformer,
+    flat => flat.level,
+    flat => flat.expandable,
+    node => node.children ?? [],
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.flattener);
+
+  // ── Lifecycle ──────────────────────────────────────────────────────────────
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['nodes']) {
-      this.flatNodes = this.flatten(this.nodes, 1);
+      this.dataSource.data = this.nodes;
     }
-    this.updateVisibility();
   }
 
-  getItemState(flat: FlatNode): 'default' | 'disabled' | 'selected' {
-    if (flat.node.disabled) return 'disabled';
-    if (flat.node.id === this.selectedId) return 'selected';
+  // ── Template helpers ───────────────────────────────────────────────────────
+
+  hasChild = (_: number, flat: TreeViewFlatNode): boolean => flat.expandable;
+
+  clampLevel(level: number): 1 | 2 | 3 | 4 {
+    return Math.min(Math.max(level, 1), 4) as 1 | 2 | 3 | 4;
+  }
+
+  stateOf(flat: TreeViewFlatNode): 'default' | 'selected' | 'disabled' {
+    if (flat.disabled) return 'disabled';
+    if (flat._source === this.selectedNode) return 'selected';
     return 'default';
   }
 
-  onItemClick(flat: FlatNode): void {
-    if (flat.node.disabled) return;
-    this.selectedId = flat.node.id;
-    this.nodeSelect.emit(flat.node);
-  }
+  // ── Event handlers ─────────────────────────────────────────────────────────
 
-  onExpandToggle(flat: FlatNode): void {
-    if (flat.expanded) {
-      this.expandedIds.delete(flat.node.id);
-    } else {
-      this.expandedIds.add(flat.node.id);
-    }
-    flat.expanded = !flat.expanded;
-    this.updateVisibility();
-    this.nodeExpand.emit({ node: flat.node, expanded: flat.expanded });
-  }
-
-  private flatten(
-    nodes: TreeViewNode[],
-    level: number,
-    parentVisible = true
-  ): FlatNode[] {
-    const result: FlatNode[] = [];
-    const clampedLevel = Math.min(level, 4) as 1 | 2 | 3 | 4;
-
-    for (const node of nodes) {
-      const hasChildren = !!(node.children && node.children.length > 0);
-      const expanded = this.expandedIds.has(node.id);
-      const flat: FlatNode = {
-        node,
-        level: clampedLevel,
-        expanded,
-        hasChildren,
-        visible: parentVisible,
-      };
-      result.push(flat);
-
-      if (hasChildren) {
-        const childFlats = this.flatten(node.children!, level + 1, parentVisible && expanded);
-        result.push(...childFlats);
-      }
-    }
-    return result;
-  }
-
-  private updateVisibility(): void {
-    this.flatNodes = this.flatten(this.nodes, 1);
+  onSelect(flat: TreeViewFlatNode): void {
+    if (flat.disabled) return;
+    this.selectedNode = flat._source;
+    this.nodeSelect.emit(flat._source);
   }
 }

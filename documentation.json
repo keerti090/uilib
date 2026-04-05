@@ -805,71 +805,6 @@
             "extends": []
         },
         {
-            "name": "FlatNode",
-            "id": "interface-FlatNode-19b64302e0f8222f38f1441ea4799bf5c8ca2614417870b6fa8a82bd2ad11843353ef45b1101bf6f474846a4f543a4be1b2a0916efacb3d393728e349ab085ad",
-            "file": "src/stories/TreeView/tree-view.component.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\nexport interface TreeViewNode {\n  id: string;\n  label: string;\n  icon?: string;\n  children?: TreeViewNode[];\n  disabled?: boolean;\n}\n\ninterface FlatNode {\n  node: TreeViewNode;\n  level: 1 | 2 | 3 | 4;\n  expanded: boolean;\n  hasChildren: boolean;\n  visible: boolean;\n}\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    id: '1',\n    label: 'Parent Item',\n    children: [\n      {\n        id: '1-1',\n        label: 'Child Item',\n        children: [\n          { id: '1-1-1', label: 'Grandchild Item' },\n          { id: '1-1-2', label: 'Grandchild Item' },\n        ],\n      },\n      { id: '1-2', label: 'Child Item' },\n      { id: '1-3', label: 'Child Item' },\n    ],\n  },\n  { id: '2', label: 'Parent Item' },\n  { id: '3', label: 'Parent Item' },\n];\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <div class=\"AppCore-tree-view\" role=\"tree\">\n      @for (flat of flatNodes; track flat.node.id) {\n        @if (flat.visible) {\n          <app-tree-view-item\n            class=\"AppCore-tree-view__item\"\n            [label]=\"flat.node.label\"\n            [level]=\"flat.level\"\n            [type]=\"type\"\n            [state]=\"getItemState(flat)\"\n            [expanded]=\"flat.expanded\"\n            [hasChildren]=\"flat.hasChildren\"\n            [showPrefixIcon]=\"showIcons\"\n            [prefixIcon]=\"flat.node.icon || 'add'\"\n            (itemClick)=\"onItemClick(flat)\"\n            (expandToggle)=\"onExpandToggle(flat)\"\n            role=\"treeitem\"\n          ></app-tree-view-item>\n        }\n      }\n    </div>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n  @Input() type: TreeViewType = 'global';\n  @Input() showIcons: boolean = true;\n  @Input() selectedId: string | null = null;\n\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n  @Output() nodeExpand = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  flatNodes: FlatNode[] = [];\n  private expandedIds = new Set<string>();\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.flatNodes = this.flatten(this.nodes, 1);\n    }\n    this.updateVisibility();\n  }\n\n  getItemState(flat: FlatNode): 'default' | 'disabled' | 'selected' {\n    if (flat.node.disabled) return 'disabled';\n    if (flat.node.id === this.selectedId) return 'selected';\n    return 'default';\n  }\n\n  onItemClick(flat: FlatNode): void {\n    if (flat.node.disabled) return;\n    this.selectedId = flat.node.id;\n    this.nodeSelect.emit(flat.node);\n  }\n\n  onExpandToggle(flat: FlatNode): void {\n    if (flat.expanded) {\n      this.expandedIds.delete(flat.node.id);\n    } else {\n      this.expandedIds.add(flat.node.id);\n    }\n    flat.expanded = !flat.expanded;\n    this.updateVisibility();\n    this.nodeExpand.emit({ node: flat.node, expanded: flat.expanded });\n  }\n\n  private flatten(\n    nodes: TreeViewNode[],\n    level: number,\n    parentVisible = true\n  ): FlatNode[] {\n    const result: FlatNode[] = [];\n    const clampedLevel = Math.min(level, 4) as 1 | 2 | 3 | 4;\n\n    for (const node of nodes) {\n      const hasChildren = !!(node.children && node.children.length > 0);\n      const expanded = this.expandedIds.has(node.id);\n      const flat: FlatNode = {\n        node,\n        level: clampedLevel,\n        expanded,\n        hasChildren,\n        visible: parentVisible,\n      };\n      result.push(flat);\n\n      if (hasChildren) {\n        const childFlats = this.flatten(node.children!, level + 1, parentVisible && expanded);\n        result.push(...childFlats);\n      }\n    }\n    return result;\n  }\n\n  private updateVisibility(): void {\n    this.flatNodes = this.flatten(this.nodes, 1);\n  }\n}\n",
-            "properties": [
-                {
-                    "name": "expanded",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 23
-                },
-                {
-                    "name": "hasChildren",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 24
-                },
-                {
-                    "name": "level",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "\"1\" | \"2\" | \"3\" | \"4\"",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 22
-                },
-                {
-                    "name": "node",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TreeViewNode",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 21
-                },
-                {
-                    "name": "visible",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 25
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 172,
-            "methods": [],
-            "extends": []
-        },
-        {
             "name": "MonthCell",
             "id": "interface-MonthCell-5a28e75f50df70f4fa3660c56b7fcfc837a8f21248821043a2a65ed682d27f37580079476fa8dd5441a832df96112dc095ff823e45eaf487c986a1288f64566b",
             "file": "src/stories/DatePicker/monthpicker.component.ts",
@@ -1204,23 +1139,34 @@
             "extends": []
         },
         {
-            "name": "TreeViewNode",
-            "id": "interface-TreeViewNode-19b64302e0f8222f38f1441ea4799bf5c8ca2614417870b6fa8a82bd2ad11843353ef45b1101bf6f474846a4f543a4be1b2a0916efacb3d393728e349ab085ad",
+            "name": "TreeViewFlatNode",
+            "id": "interface-TreeViewFlatNode-c69f9fe539a856e2f2565671a4e30bee4abb6a72b559e6a9753ccfab6701e78a249b24a1bed98393cf9e5edbddb450bf15025a63649f6346488e435d085cf5d4",
             "file": "src/stories/TreeView/tree-view.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\nexport interface TreeViewNode {\n  id: string;\n  label: string;\n  icon?: string;\n  children?: TreeViewNode[];\n  disabled?: boolean;\n}\n\ninterface FlatNode {\n  node: TreeViewNode;\n  level: 1 | 2 | 3 | 4;\n  expanded: boolean;\n  hasChildren: boolean;\n  visible: boolean;\n}\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    id: '1',\n    label: 'Parent Item',\n    children: [\n      {\n        id: '1-1',\n        label: 'Child Item',\n        children: [\n          { id: '1-1-1', label: 'Grandchild Item' },\n          { id: '1-1-2', label: 'Grandchild Item' },\n        ],\n      },\n      { id: '1-2', label: 'Child Item' },\n      { id: '1-3', label: 'Child Item' },\n    ],\n  },\n  { id: '2', label: 'Parent Item' },\n  { id: '3', label: 'Parent Item' },\n];\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <div class=\"AppCore-tree-view\" role=\"tree\">\n      @for (flat of flatNodes; track flat.node.id) {\n        @if (flat.visible) {\n          <app-tree-view-item\n            class=\"AppCore-tree-view__item\"\n            [label]=\"flat.node.label\"\n            [level]=\"flat.level\"\n            [type]=\"type\"\n            [state]=\"getItemState(flat)\"\n            [expanded]=\"flat.expanded\"\n            [hasChildren]=\"flat.hasChildren\"\n            [showPrefixIcon]=\"showIcons\"\n            [prefixIcon]=\"flat.node.icon || 'add'\"\n            (itemClick)=\"onItemClick(flat)\"\n            (expandToggle)=\"onExpandToggle(flat)\"\n            role=\"treeitem\"\n          ></app-tree-view-item>\n        }\n      }\n    </div>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n  @Input() type: TreeViewType = 'global';\n  @Input() showIcons: boolean = true;\n  @Input() selectedId: string | null = null;\n\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n  @Output() nodeExpand = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  flatNodes: FlatNode[] = [];\n  private expandedIds = new Set<string>();\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.flatNodes = this.flatten(this.nodes, 1);\n    }\n    this.updateVisibility();\n  }\n\n  getItemState(flat: FlatNode): 'default' | 'disabled' | 'selected' {\n    if (flat.node.disabled) return 'disabled';\n    if (flat.node.id === this.selectedId) return 'selected';\n    return 'default';\n  }\n\n  onItemClick(flat: FlatNode): void {\n    if (flat.node.disabled) return;\n    this.selectedId = flat.node.id;\n    this.nodeSelect.emit(flat.node);\n  }\n\n  onExpandToggle(flat: FlatNode): void {\n    if (flat.expanded) {\n      this.expandedIds.delete(flat.node.id);\n    } else {\n      this.expandedIds.add(flat.node.id);\n    }\n    flat.expanded = !flat.expanded;\n    this.updateVisibility();\n    this.nodeExpand.emit({ node: flat.node, expanded: flat.expanded });\n  }\n\n  private flatten(\n    nodes: TreeViewNode[],\n    level: number,\n    parentVisible = true\n  ): FlatNode[] {\n    const result: FlatNode[] = [];\n    const clampedLevel = Math.min(level, 4) as 1 | 2 | 3 | 4;\n\n    for (const node of nodes) {\n      const hasChildren = !!(node.children && node.children.length > 0);\n      const expanded = this.expandedIds.has(node.id);\n      const flat: FlatNode = {\n        node,\n        level: clampedLevel,\n        expanded,\n        hasChildren,\n        visible: parentVisible,\n      };\n      result.push(flat);\n\n      if (hasChildren) {\n        const childFlats = this.flatten(node.children!, level + 1, parentVisible && expanded);\n        result.push(...childFlats);\n      }\n    }\n    return result;\n  }\n\n  private updateVisibility(): void {\n    this.flatNodes = this.flatten(this.nodes, 1);\n  }\n}\n",
+            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FlatTreeControl } from '@angular/cdk/tree';\nimport {\n  MatTreeModule,\n  MatTreeFlatDataSource,\n  MatTreeFlattener,\n} from '@angular/material/tree';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\n// ── Public types the consumer imports ────────────────────────────────────────\n\nexport interface TreeViewNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  children?: TreeViewNode[];\n  /** Any extra data the consumer wants to carry through. */\n  data?: unknown;\n}\n\n/** Flat node produced by MatTreeFlattener — internal use only. */\nexport interface TreeViewFlatNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  data?: unknown;\n  level: number;\n  expandable: boolean;\n  /** Reference back to the source node for selection tracking. */\n  _source: TreeViewNode;\n}\n\n// ── Default demo data ─────────────────────────────────────────────────────────\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    label: 'Parent Item',\n    children: [\n      {\n        label: 'Child Item',\n        children: [\n          { label: 'Grandchild Item' },\n          { label: 'Grandchild Item' },\n        ],\n      },\n      { label: 'Child Item' },\n      { label: 'Child Item' },\n    ],\n  },\n  { label: 'Parent Item' },\n  { label: 'Parent Item' },\n];\n\n// ─────────────────────────────────────────────────────────────────────────────\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, MatTreeModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <mat-tree\n      class=\"AppCore-tree-view\"\n      [dataSource]=\"dataSource\"\n      [treeControl]=\"treeControl\"\n      role=\"tree\"\n    >\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"false\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat; when: hasChild\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"true\"\n          [expanded]=\"treeControl.isExpanded(flat)\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n          (expandToggle)=\"treeControl.toggle(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n    </mat-tree>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  /**\n   * Hierarchical node data. Provide your own `TreeViewNode[]`\n   * — the component handles flattening and expansion internally.\n   */\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n\n  /** Visual theme: 'global' (blue-tinted bg) or 'local' (white bg). */\n  @Input() type: TreeViewType = 'global';\n\n  /** Show the leading icon on every row. */\n  @Input() showIcons: boolean = true;\n\n  /** ID of the currently selected node (matched on object reference via `_source`). */\n  @Input() selectedNode: TreeViewNode | null = null;\n\n  /** Emits when the user clicks a non-disabled node. */\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n\n  /** Emits when a parent node is expanded or collapsed. */\n  @Output() nodeToggle = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  // ── Material tree plumbing ─────────────────────────────────────────────────\n\n  private transformer = (node: TreeViewNode, level: number): TreeViewFlatNode => ({\n    label: node.label,\n    icon: node.icon,\n    disabled: node.disabled,\n    data: node.data,\n    level,\n    expandable: !!(node.children && node.children.length > 0),\n    _source: node,\n  });\n\n  treeControl = new FlatTreeControl<TreeViewFlatNode>(\n    flat => flat.level,\n    flat => flat.expandable,\n  );\n\n  private flattener = new MatTreeFlattener<TreeViewNode, TreeViewFlatNode>(\n    this.transformer,\n    flat => flat.level,\n    flat => flat.expandable,\n    node => node.children ?? [],\n  );\n\n  dataSource = new MatTreeFlatDataSource(this.treeControl, this.flattener);\n\n  // ── Lifecycle ──────────────────────────────────────────────────────────────\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.dataSource.data = this.nodes;\n    }\n  }\n\n  // ── Template helpers ───────────────────────────────────────────────────────\n\n  hasChild = (_: number, flat: TreeViewFlatNode): boolean => flat.expandable;\n\n  clampLevel(level: number): 1 | 2 | 3 | 4 {\n    return Math.min(Math.max(level, 1), 4) as 1 | 2 | 3 | 4;\n  }\n\n  stateOf(flat: TreeViewFlatNode): 'default' | 'selected' | 'disabled' {\n    if (flat.disabled) return 'disabled';\n    if (flat._source === this.selectedNode) return 'selected';\n    return 'default';\n  }\n\n  // ── Event handlers ─────────────────────────────────────────────────────────\n\n  onSelect(flat: TreeViewFlatNode): void {\n    if (flat.disabled) return;\n    this.selectedNode = flat._source;\n    this.nodeSelect.emit(flat._source);\n  }\n}\n",
             "properties": [
                 {
-                    "name": "children",
+                    "name": "_source",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "TreeViewNode[]",
+                    "type": "TreeViewNode",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Reference back to the source node for selection tracking.</p>\n",
+                    "line": 38,
+                    "rawdescription": "\nReference back to the source node for selection tracking."
+                },
+                {
+                    "name": "data",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 16
+                    "line": 34
                 },
                 {
                     "name": "disabled",
@@ -1230,7 +1176,17 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 17
+                    "line": 33
+                },
+                {
+                    "name": "expandable",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
                 },
                 {
                     "name": "icon",
@@ -1240,17 +1196,7 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 15
-                },
-                {
-                    "name": "id",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 13
+                    "line": 32
                 },
                 {
                     "name": "label",
@@ -1260,7 +1206,85 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 31
+                },
+                {
+                    "name": "level",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 35
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "description": "<p>Flat node produced by MatTreeFlattener — internal use only.</p>\n",
+            "rawdescription": "\nFlat node produced by MatTreeFlattener — internal use only.",
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "TreeViewNode",
+            "id": "interface-TreeViewNode-c69f9fe539a856e2f2565671a4e30bee4abb6a72b559e6a9753ccfab6701e78a249b24a1bed98393cf9e5edbddb450bf15025a63649f6346488e435d085cf5d4",
+            "file": "src/stories/TreeView/tree-view.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FlatTreeControl } from '@angular/cdk/tree';\nimport {\n  MatTreeModule,\n  MatTreeFlatDataSource,\n  MatTreeFlattener,\n} from '@angular/material/tree';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\n// ── Public types the consumer imports ────────────────────────────────────────\n\nexport interface TreeViewNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  children?: TreeViewNode[];\n  /** Any extra data the consumer wants to carry through. */\n  data?: unknown;\n}\n\n/** Flat node produced by MatTreeFlattener — internal use only. */\nexport interface TreeViewFlatNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  data?: unknown;\n  level: number;\n  expandable: boolean;\n  /** Reference back to the source node for selection tracking. */\n  _source: TreeViewNode;\n}\n\n// ── Default demo data ─────────────────────────────────────────────────────────\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    label: 'Parent Item',\n    children: [\n      {\n        label: 'Child Item',\n        children: [\n          { label: 'Grandchild Item' },\n          { label: 'Grandchild Item' },\n        ],\n      },\n      { label: 'Child Item' },\n      { label: 'Child Item' },\n    ],\n  },\n  { label: 'Parent Item' },\n  { label: 'Parent Item' },\n];\n\n// ─────────────────────────────────────────────────────────────────────────────\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, MatTreeModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <mat-tree\n      class=\"AppCore-tree-view\"\n      [dataSource]=\"dataSource\"\n      [treeControl]=\"treeControl\"\n      role=\"tree\"\n    >\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"false\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat; when: hasChild\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"true\"\n          [expanded]=\"treeControl.isExpanded(flat)\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n          (expandToggle)=\"treeControl.toggle(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n    </mat-tree>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  /**\n   * Hierarchical node data. Provide your own `TreeViewNode[]`\n   * — the component handles flattening and expansion internally.\n   */\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n\n  /** Visual theme: 'global' (blue-tinted bg) or 'local' (white bg). */\n  @Input() type: TreeViewType = 'global';\n\n  /** Show the leading icon on every row. */\n  @Input() showIcons: boolean = true;\n\n  /** ID of the currently selected node (matched on object reference via `_source`). */\n  @Input() selectedNode: TreeViewNode | null = null;\n\n  /** Emits when the user clicks a non-disabled node. */\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n\n  /** Emits when a parent node is expanded or collapsed. */\n  @Output() nodeToggle = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  // ── Material tree plumbing ─────────────────────────────────────────────────\n\n  private transformer = (node: TreeViewNode, level: number): TreeViewFlatNode => ({\n    label: node.label,\n    icon: node.icon,\n    disabled: node.disabled,\n    data: node.data,\n    level,\n    expandable: !!(node.children && node.children.length > 0),\n    _source: node,\n  });\n\n  treeControl = new FlatTreeControl<TreeViewFlatNode>(\n    flat => flat.level,\n    flat => flat.expandable,\n  );\n\n  private flattener = new MatTreeFlattener<TreeViewNode, TreeViewFlatNode>(\n    this.transformer,\n    flat => flat.level,\n    flat => flat.expandable,\n    node => node.children ?? [],\n  );\n\n  dataSource = new MatTreeFlatDataSource(this.treeControl, this.flattener);\n\n  // ── Lifecycle ──────────────────────────────────────────────────────────────\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.dataSource.data = this.nodes;\n    }\n  }\n\n  // ── Template helpers ───────────────────────────────────────────────────────\n\n  hasChild = (_: number, flat: TreeViewFlatNode): boolean => flat.expandable;\n\n  clampLevel(level: number): 1 | 2 | 3 | 4 {\n    return Math.min(Math.max(level, 1), 4) as 1 | 2 | 3 | 4;\n  }\n\n  stateOf(flat: TreeViewFlatNode): 'default' | 'selected' | 'disabled' {\n    if (flat.disabled) return 'disabled';\n    if (flat._source === this.selectedNode) return 'selected';\n    return 'default';\n  }\n\n  // ── Event handlers ─────────────────────────────────────────────────────────\n\n  onSelect(flat: TreeViewFlatNode): void {\n    if (flat.disabled) return;\n    this.selectedNode = flat._source;\n    this.nodeSelect.emit(flat._source);\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "children",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "data",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "<p>Any extra data the consumer wants to carry through.</p>\n",
+                    "line": 26,
+                    "rawdescription": "\nAny extra data the consumer wants to carry through."
+                },
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
                 }
             ],
             "indexSignatures": [],
@@ -9305,7 +9329,7 @@
         },
         {
             "name": "TreeViewComponent",
-            "id": "component-TreeViewComponent-19b64302e0f8222f38f1441ea4799bf5c8ca2614417870b6fa8a82bd2ad11843353ef45b1101bf6f474846a4f543a4be1b2a0916efacb3d393728e349ab085ad",
+            "id": "component-TreeViewComponent-c69f9fe539a856e2f2565671a4e30bee4abb6a72b559e6a9753ccfab6701e78a249b24a1bed98393cf9e5edbddb450bf15025a63649f6346488e435d085cf5d4",
             "file": "src/stories/TreeView/tree-view.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -9317,7 +9341,7 @@
                 "./tree-view.scss"
             ],
             "styles": [],
-            "template": "<div class=\"AppCore-tree-view\" role=\"tree\">\n  @for (flat of flatNodes; track flat.node.id) {\n    @if (flat.visible) {\n      <app-tree-view-item\n        class=\"AppCore-tree-view__item\"\n        [label]=\"flat.node.label\"\n        [level]=\"flat.level\"\n        [type]=\"type\"\n        [state]=\"getItemState(flat)\"\n        [expanded]=\"flat.expanded\"\n        [hasChildren]=\"flat.hasChildren\"\n        [showPrefixIcon]=\"showIcons\"\n        [prefixIcon]=\"flat.node.icon || 'add'\"\n        (itemClick)=\"onItemClick(flat)\"\n        (expandToggle)=\"onExpandToggle(flat)\"\n        role=\"treeitem\"\n      ></app-tree-view-item>\n    }\n  }\n</div>\n",
+            "template": "<mat-tree\n  class=\"AppCore-tree-view\"\n  [dataSource]=\"dataSource\"\n  [treeControl]=\"treeControl\"\n  role=\"tree\"\n>\n  <mat-tree-node\n    *matTreeNodeDef=\"let flat\"\n    class=\"AppCore-tree-view__node\"\n    matTreeNodePadding\n    [matTreeNodePaddingIndent]=\"0\"\n  >\n    <app-tree-view-item\n      [label]=\"flat.label\"\n      [level]=\"clampLevel(flat.level + 1)\"\n      [type]=\"type\"\n      [state]=\"stateOf(flat)\"\n      [hasChildren]=\"false\"\n      [showPrefixIcon]=\"showIcons\"\n      [prefixIcon]=\"flat.icon || 'add'\"\n      (itemClick)=\"onSelect(flat)\"\n    ></app-tree-view-item>\n  </mat-tree-node>\n\n  <mat-tree-node\n    *matTreeNodeDef=\"let flat; when: hasChild\"\n    class=\"AppCore-tree-view__node\"\n    matTreeNodePadding\n    [matTreeNodePaddingIndent]=\"0\"\n  >\n    <app-tree-view-item\n      [label]=\"flat.label\"\n      [level]=\"clampLevel(flat.level + 1)\"\n      [type]=\"type\"\n      [state]=\"stateOf(flat)\"\n      [hasChildren]=\"true\"\n      [expanded]=\"treeControl.isExpanded(flat)\"\n      [showPrefixIcon]=\"showIcons\"\n      [prefixIcon]=\"flat.icon || 'add'\"\n      (itemClick)=\"onSelect(flat)\"\n      (expandToggle)=\"treeControl.toggle(flat)\"\n    ></app-tree-view-item>\n  </mat-tree-node>\n</mat-tree>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -9327,17 +9351,21 @@
                     "defaultValue": "DEFAULT_NODES",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 78,
+                    "rawdescription": "\n\nHierarchical node data. Provide your own `TreeViewNode[]`\n— the component handles flattening and expansion internally.\n",
+                    "description": "<p>Hierarchical node data. Provide your own <code>TreeViewNode[]</code>\n— the component handles flattening and expansion internally.</p>\n",
+                    "line": 121,
                     "type": "TreeViewNode[]",
                     "decorators": []
                 },
                 {
-                    "name": "selectedId",
+                    "name": "selectedNode",
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 81,
-                    "type": "string | null",
+                    "rawdescription": "\nID of the currently selected node (matched on object reference via `_source`).",
+                    "description": "<p>ID of the currently selected node (matched on object reference via <code>_source</code>).</p>\n",
+                    "line": 130,
+                    "type": "TreeViewNode | null",
                     "decorators": []
                 },
                 {
@@ -9345,7 +9373,9 @@
                     "defaultValue": "true",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 80,
+                    "rawdescription": "\nShow the leading icon on every row.",
+                    "description": "<p>Show the leading icon on every row.</p>\n",
+                    "line": 127,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -9354,68 +9384,102 @@
                     "defaultValue": "'global'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 79,
+                    "rawdescription": "\nVisual theme: 'global' (blue-tinted bg) or 'local' (white bg).",
+                    "description": "<p>Visual theme: &#39;global&#39; (blue-tinted bg) or &#39;local&#39; (white bg).</p>\n",
+                    "line": 124,
                     "type": "TreeViewType",
                     "decorators": []
                 }
             ],
             "outputsClass": [
                 {
-                    "name": "nodeExpand",
-                    "defaultValue": "new EventEmitter<{ node: TreeViewNode; expanded: boolean }>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 84,
-                    "type": "EventEmitter"
-                },
-                {
                     "name": "nodeSelect",
                     "defaultValue": "new EventEmitter<TreeViewNode>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 83,
+                    "rawdescription": "\nEmits when the user clicks a non-disabled node.",
+                    "description": "<p>Emits when the user clicks a non-disabled node.</p>\n",
+                    "line": 133,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "nodeToggle",
+                    "defaultValue": "new EventEmitter<{ node: TreeViewNode; expanded: boolean }>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nEmits when a parent node is expanded or collapsed.",
+                    "description": "<p>Emits when a parent node is expanded or collapsed.</p>\n",
+                    "line": 136,
                     "type": "EventEmitter"
                 }
             ],
             "propertiesClass": [
                 {
-                    "name": "expandedIds",
-                    "defaultValue": "new Set<string>()",
+                    "name": "dataSource",
+                    "defaultValue": "new MatTreeFlatDataSource(this.treeControl, this.flattener)",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 87,
+                    "line": 162
+                },
+                {
+                    "name": "flattener",
+                    "defaultValue": "new MatTreeFlattener<TreeViewNode, TreeViewFlatNode>(\n    this.transformer,\n    flat => flat.level,\n    flat => flat.expandable,\n    node => node.children ?? [],\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 155,
                     "modifierKind": [
                         123
                     ]
                 },
                 {
-                    "name": "flatNodes",
-                    "defaultValue": "[]",
+                    "name": "hasChild",
+                    "defaultValue": "() => {...}",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "FlatNode[]",
+                    "type": "unknown",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 86
+                    "line": 174
+                },
+                {
+                    "name": "transformer",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 140,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "treeControl",
+                    "defaultValue": "new FlatTreeControl<TreeViewFlatNode>(\n    flat => flat.level,\n    flat => flat.expandable,\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 150
                 }
             ],
             "methodsClass": [
                 {
-                    "name": "flatten",
+                    "name": "clampLevel",
                     "args": [
-                        {
-                            "name": "nodes",
-                            "type": "TreeViewNode[]",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        },
                         {
                             "name": "level",
                             "type": "number",
@@ -9423,85 +9487,18 @@
                             "dotDotDotToken": false,
                             "deprecated": false,
                             "deprecationMessage": ""
-                        },
-                        {
-                            "name": "parentVisible",
-                            "type": "unknown",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "defaultValue": "true"
                         }
                     ],
                     "optional": false,
-                    "returnType": "FlatNode[]",
+                    "returnType": "\"1\" | \"2\" | \"3\" | \"4\"",
                     "typeParameters": [],
-                    "line": 119,
+                    "line": 176,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "modifierKind": [
-                        123
-                    ],
                     "jsdoctags": [
-                        {
-                            "name": "nodes",
-                            "type": "TreeViewNode[]",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
                         {
                             "name": "level",
                             "type": "number",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
-                        {
-                            "name": "parentVisible",
-                            "type": "unknown",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "defaultValue": "true",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "getItemState",
-                    "args": [
-                        {
-                            "name": "flat",
-                            "type": "FlatNode",
-                            "optional": false,
-                            "dotDotDotToken": false,
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "\"default\" | \"disabled\" | \"selected\"",
-                    "typeParameters": [],
-                    "line": 96,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "jsdoctags": [
-                        {
-                            "name": "flat",
-                            "type": "FlatNode",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -9527,7 +9524,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 89,
+                    "line": 166,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -9545,11 +9542,11 @@
                     ]
                 },
                 {
-                    "name": "onExpandToggle",
+                    "name": "onSelect",
                     "args": [
                         {
                             "name": "flat",
-                            "type": "FlatNode",
+                            "type": "TreeViewFlatNode",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -9559,13 +9556,13 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 108,
+                    "line": 188,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "flat",
-                            "type": "FlatNode",
+                            "type": "TreeViewFlatNode",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -9577,11 +9574,11 @@
                     ]
                 },
                 {
-                    "name": "onItemClick",
+                    "name": "stateOf",
                     "args": [
                         {
                             "name": "flat",
-                            "type": "FlatNode",
+                            "type": "TreeViewFlatNode",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -9589,15 +9586,15 @@
                         }
                     ],
                     "optional": false,
-                    "returnType": "void",
+                    "returnType": "\"default\" | \"selected\" | \"disabled\"",
                     "typeParameters": [],
-                    "line": 102,
+                    "line": 180,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "flat",
-                            "type": "FlatNode",
+                            "type": "TreeViewFlatNode",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -9606,19 +9603,6 @@
                                 "text": "param"
                             }
                         }
-                    ]
-                },
-                {
-                    "name": "updateVisibility",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 147,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        123
                     ]
                 }
             ],
@@ -9633,6 +9617,10 @@
                     "type": "module"
                 },
                 {
+                    "name": "MatTreeModule",
+                    "type": "module"
+                },
+                {
                     "name": "TreeViewItemComponent",
                     "type": "component"
                 }
@@ -9640,11 +9628,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\nexport interface TreeViewNode {\n  id: string;\n  label: string;\n  icon?: string;\n  children?: TreeViewNode[];\n  disabled?: boolean;\n}\n\ninterface FlatNode {\n  node: TreeViewNode;\n  level: 1 | 2 | 3 | 4;\n  expanded: boolean;\n  hasChildren: boolean;\n  visible: boolean;\n}\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    id: '1',\n    label: 'Parent Item',\n    children: [\n      {\n        id: '1-1',\n        label: 'Child Item',\n        children: [\n          { id: '1-1-1', label: 'Grandchild Item' },\n          { id: '1-1-2', label: 'Grandchild Item' },\n        ],\n      },\n      { id: '1-2', label: 'Child Item' },\n      { id: '1-3', label: 'Child Item' },\n    ],\n  },\n  { id: '2', label: 'Parent Item' },\n  { id: '3', label: 'Parent Item' },\n];\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <div class=\"AppCore-tree-view\" role=\"tree\">\n      @for (flat of flatNodes; track flat.node.id) {\n        @if (flat.visible) {\n          <app-tree-view-item\n            class=\"AppCore-tree-view__item\"\n            [label]=\"flat.node.label\"\n            [level]=\"flat.level\"\n            [type]=\"type\"\n            [state]=\"getItemState(flat)\"\n            [expanded]=\"flat.expanded\"\n            [hasChildren]=\"flat.hasChildren\"\n            [showPrefixIcon]=\"showIcons\"\n            [prefixIcon]=\"flat.node.icon || 'add'\"\n            (itemClick)=\"onItemClick(flat)\"\n            (expandToggle)=\"onExpandToggle(flat)\"\n            role=\"treeitem\"\n          ></app-tree-view-item>\n        }\n      }\n    </div>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n  @Input() type: TreeViewType = 'global';\n  @Input() showIcons: boolean = true;\n  @Input() selectedId: string | null = null;\n\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n  @Output() nodeExpand = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  flatNodes: FlatNode[] = [];\n  private expandedIds = new Set<string>();\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.flatNodes = this.flatten(this.nodes, 1);\n    }\n    this.updateVisibility();\n  }\n\n  getItemState(flat: FlatNode): 'default' | 'disabled' | 'selected' {\n    if (flat.node.disabled) return 'disabled';\n    if (flat.node.id === this.selectedId) return 'selected';\n    return 'default';\n  }\n\n  onItemClick(flat: FlatNode): void {\n    if (flat.node.disabled) return;\n    this.selectedId = flat.node.id;\n    this.nodeSelect.emit(flat.node);\n  }\n\n  onExpandToggle(flat: FlatNode): void {\n    if (flat.expanded) {\n      this.expandedIds.delete(flat.node.id);\n    } else {\n      this.expandedIds.add(flat.node.id);\n    }\n    flat.expanded = !flat.expanded;\n    this.updateVisibility();\n    this.nodeExpand.emit({ node: flat.node, expanded: flat.expanded });\n  }\n\n  private flatten(\n    nodes: TreeViewNode[],\n    level: number,\n    parentVisible = true\n  ): FlatNode[] {\n    const result: FlatNode[] = [];\n    const clampedLevel = Math.min(level, 4) as 1 | 2 | 3 | 4;\n\n    for (const node of nodes) {\n      const hasChildren = !!(node.children && node.children.length > 0);\n      const expanded = this.expandedIds.has(node.id);\n      const flat: FlatNode = {\n        node,\n        level: clampedLevel,\n        expanded,\n        hasChildren,\n        visible: parentVisible,\n      };\n      result.push(flat);\n\n      if (hasChildren) {\n        const childFlats = this.flatten(node.children!, level + 1, parentVisible && expanded);\n        result.push(...childFlats);\n      }\n    }\n    return result;\n  }\n\n  private updateVisibility(): void {\n    this.flatNodes = this.flatten(this.nodes, 1);\n  }\n}\n",
+            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  OnChanges,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FlatTreeControl } from '@angular/cdk/tree';\nimport {\n  MatTreeModule,\n  MatTreeFlatDataSource,\n  MatTreeFlattener,\n} from '@angular/material/tree';\nimport { TreeViewItemComponent, TreeViewType } from './tree-view-item.component';\n\n// ── Public types the consumer imports ────────────────────────────────────────\n\nexport interface TreeViewNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  children?: TreeViewNode[];\n  /** Any extra data the consumer wants to carry through. */\n  data?: unknown;\n}\n\n/** Flat node produced by MatTreeFlattener — internal use only. */\nexport interface TreeViewFlatNode {\n  label: string;\n  icon?: string;\n  disabled?: boolean;\n  data?: unknown;\n  level: number;\n  expandable: boolean;\n  /** Reference back to the source node for selection tracking. */\n  _source: TreeViewNode;\n}\n\n// ── Default demo data ─────────────────────────────────────────────────────────\n\nconst DEFAULT_NODES: TreeViewNode[] = [\n  {\n    label: 'Parent Item',\n    children: [\n      {\n        label: 'Child Item',\n        children: [\n          { label: 'Grandchild Item' },\n          { label: 'Grandchild Item' },\n        ],\n      },\n      { label: 'Child Item' },\n      { label: 'Child Item' },\n    ],\n  },\n  { label: 'Parent Item' },\n  { label: 'Parent Item' },\n];\n\n// ─────────────────────────────────────────────────────────────────────────────\n\n@Component({\n  selector: 'app-tree-view',\n  standalone: true,\n  imports: [CommonModule, MatTreeModule, TreeViewItemComponent],\n  styleUrls: ['./tree-view.scss'],\n  template: `\n    <mat-tree\n      class=\"AppCore-tree-view\"\n      [dataSource]=\"dataSource\"\n      [treeControl]=\"treeControl\"\n      role=\"tree\"\n    >\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"false\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n\n      <mat-tree-node\n        *matTreeNodeDef=\"let flat; when: hasChild\"\n        class=\"AppCore-tree-view__node\"\n        matTreeNodePadding\n        [matTreeNodePaddingIndent]=\"0\"\n      >\n        <app-tree-view-item\n          [label]=\"flat.label\"\n          [level]=\"clampLevel(flat.level + 1)\"\n          [type]=\"type\"\n          [state]=\"stateOf(flat)\"\n          [hasChildren]=\"true\"\n          [expanded]=\"treeControl.isExpanded(flat)\"\n          [showPrefixIcon]=\"showIcons\"\n          [prefixIcon]=\"flat.icon || 'add'\"\n          (itemClick)=\"onSelect(flat)\"\n          (expandToggle)=\"treeControl.toggle(flat)\"\n        ></app-tree-view-item>\n      </mat-tree-node>\n    </mat-tree>\n  `,\n})\nexport class TreeViewComponent implements OnChanges {\n  /**\n   * Hierarchical node data. Provide your own `TreeViewNode[]`\n   * — the component handles flattening and expansion internally.\n   */\n  @Input() nodes: TreeViewNode[] = DEFAULT_NODES;\n\n  /** Visual theme: 'global' (blue-tinted bg) or 'local' (white bg). */\n  @Input() type: TreeViewType = 'global';\n\n  /** Show the leading icon on every row. */\n  @Input() showIcons: boolean = true;\n\n  /** ID of the currently selected node (matched on object reference via `_source`). */\n  @Input() selectedNode: TreeViewNode | null = null;\n\n  /** Emits when the user clicks a non-disabled node. */\n  @Output() nodeSelect = new EventEmitter<TreeViewNode>();\n\n  /** Emits when a parent node is expanded or collapsed. */\n  @Output() nodeToggle = new EventEmitter<{ node: TreeViewNode; expanded: boolean }>();\n\n  // ── Material tree plumbing ─────────────────────────────────────────────────\n\n  private transformer = (node: TreeViewNode, level: number): TreeViewFlatNode => ({\n    label: node.label,\n    icon: node.icon,\n    disabled: node.disabled,\n    data: node.data,\n    level,\n    expandable: !!(node.children && node.children.length > 0),\n    _source: node,\n  });\n\n  treeControl = new FlatTreeControl<TreeViewFlatNode>(\n    flat => flat.level,\n    flat => flat.expandable,\n  );\n\n  private flattener = new MatTreeFlattener<TreeViewNode, TreeViewFlatNode>(\n    this.transformer,\n    flat => flat.level,\n    flat => flat.expandable,\n    node => node.children ?? [],\n  );\n\n  dataSource = new MatTreeFlatDataSource(this.treeControl, this.flattener);\n\n  // ── Lifecycle ──────────────────────────────────────────────────────────────\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['nodes']) {\n      this.dataSource.data = this.nodes;\n    }\n  }\n\n  // ── Template helpers ───────────────────────────────────────────────────────\n\n  hasChild = (_: number, flat: TreeViewFlatNode): boolean => flat.expandable;\n\n  clampLevel(level: number): 1 | 2 | 3 | 4 {\n    return Math.min(Math.max(level, 1), 4) as 1 | 2 | 3 | 4;\n  }\n\n  stateOf(flat: TreeViewFlatNode): 'default' | 'selected' | 'disabled' {\n    if (flat.disabled) return 'disabled';\n    if (flat._source === this.selectedNode) return 'selected';\n    return 'default';\n  }\n\n  // ── Event handlers ─────────────────────────────────────────────────────────\n\n  onSelect(flat: TreeViewFlatNode): void {\n    if (flat.disabled) return;\n    this.selectedNode = flat._source;\n    this.nodeSelect.emit(flat._source);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n\n.AppCore-tree-view {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  width: 220px;\n  border-radius: $number-tokens-corner-radius-2;\n\n  &__item {\n    display: block;\n    width: 100%;\n  }\n\n  app-tree-view-item {\n    display: block;\n    width: 100%;\n\n    .AppCore-tree-view-item {\n      width: 100%;\n      box-sizing: border-box;\n    }\n  }\n}\n",
+                    "data": "@use '../../styles/primitives' as *;\n@use '../../styles/numbers' as *;\n\n// ── Reset Material tree chrome ────────────────────────────────────────────────\n// mat-tree adds background, padding, and min-width — override them all.\n.AppCore-tree-view {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  width: 220px;\n  background: transparent !important;\n  padding: 0 !important;\n  border-radius: $number-tokens-corner-radius-2;\n\n  // mat-tree-node injects min-height and padding — strip both so our item\n  // component is the sole source of sizing truth.\n  .mat-tree-node,\n  .AppCore-tree-view__node {\n    min-height: unset !important;\n    padding: 0 !important;\n    display: block;\n\n    // mat-tree-node adds inline padding for indentation via matTreeNodePadding;\n    // we zero it out here and let the item component handle indent via level.\n    > app-tree-view-item {\n      display: block;\n      width: 100%;\n\n      .AppCore-tree-view-item {\n        width: 100%;\n        box-sizing: border-box;\n      }\n    }\n  }\n}\n",
                     "styleUrl": "./tree-view.scss"
                 }
             ],
@@ -10347,7 +10335,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Alert/alert.stories.ts",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -10357,7 +10345,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "file": "src/stories/Alert/alert.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -10617,16 +10605,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/TreeView/tree-view.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -10711,7 +10689,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TreeViewNode[]",
-                "defaultValue": "[\n  {\n    id: '1',\n    label: 'Parent Item',\n    children: [\n      {\n        id: '1-1',\n        label: 'Child Item',\n        children: [\n          { id: '1-1-1', label: 'Grandchild Item' },\n          { id: '1-1-2', label: 'Grandchild Item' },\n        ],\n      },\n      { id: '1-2', label: 'Child Item' },\n      { id: '1-3', label: 'Child Item' },\n    ],\n  },\n  { id: '2', label: 'Parent Item' },\n  { id: '3', label: 'Parent Item' },\n]"
+                "defaultValue": "[\n  {\n    label: 'Parent Item',\n    children: [\n      {\n        label: 'Child Item',\n        children: [\n          { label: 'Grandchild Item' },\n          { label: 'Grandchild Item' },\n        ],\n      },\n      { label: 'Child Item' },\n      { label: 'Child Item' },\n    ],\n  },\n  { label: 'Parent Item' },\n  { label: 'Parent Item' },\n]"
             },
             {
                 "name": "DEFAULT_TC_LINKS",
@@ -11281,7 +11259,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TreeViewNode[]",
-                "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      {\n        id: '1-1',\n        label: 'Label',\n        children: [\n          {\n            id: '1-1-1',\n            label: 'Label',\n            children: [\n              { id: '1-1-1-1', label: 'Label' },\n              { id: '1-1-1-2', label: 'Label' },\n            ],\n          },\n          { id: '1-1-2', label: 'Label' },\n        ],\n      },\n      { id: '1-2', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n]"
+                "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      {\n        label: 'Label',\n        children: [\n          {\n            label: 'Label',\n            children: [\n              { label: 'Label' },\n              { label: 'Label' },\n            ],\n          },\n          { label: 'Label' },\n        ],\n      },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n]"
             },
             {
                 "name": "FourLevels",
@@ -11291,7 +11269,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    nodes: fourLevelNodes,\n  },\n}"
+                "defaultValue": "{\n  args: { nodes: fourLevelNodes },\n}",
+                "rawdescription": "Matches Figma: States=4 Levels",
+                "description": "<p>Matches Figma: States=4 Levels</p>\n"
             },
             {
                 "name": "GlobalVsLocal",
@@ -11301,7 +11281,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    template: `\n      <div style=\"display: flex; gap: 40px; padding: 24px; align-items: flex-start;\">\n        <div>\n          <p style=\"font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;\">Global</p>\n          <app-tree-view type=\"global\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n        <div>\n          <p style=\"font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;\">Local</p>\n          <app-tree-view type=\"local\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n      </div>\n    `,\n    props: { nodes: twoLevelNodes },\n    moduleMetadata: { imports: [TreeViewComponent] },\n  }),\n}"
+                "defaultValue": "{\n  render: () => ({\n    template: `\n      <div style=\"display:flex; gap:40px; padding:24px; align-items:flex-start; font-family:Inter,sans-serif;\">\n        <div>\n          <p style=\"font-size:11px;color:#888;margin:0 0 6px\">Global</p>\n          <app-tree-view type=\"global\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n        <div>\n          <p style=\"font-size:11px;color:#888;margin:0 0 6px\">Local</p>\n          <app-tree-view type=\"local\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n      </div>\n    `,\n    props: { nodes: twoLevelNodes },\n    moduleMetadata: { imports: [TreeViewComponent] },\n  }),\n}",
+                "rawdescription": "Side-by-side Global vs Local (mirrors Figma layout)",
+                "description": "<p>Side-by-side Global vs Local (mirrors Figma layout)</p>\n"
             },
             {
                 "name": "Header1",
@@ -11821,7 +11803,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    type: 'local',\n    nodes: twoLevelNodes,\n  },\n}"
+                "defaultValue": "{\n  args: { type: 'local', nodes: twoLevelNodes },\n}",
+                "rawdescription": "Matches Figma: Type=Local",
+                "description": "<p>Matches Figma: Type=Local</p>\n"
             },
             {
                 "name": "LongLabels",
@@ -11857,21 +11841,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Alert/alert.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AlertComponent>",
-                "defaultValue": "{\n  title: 'components/Alert',\n  component: AlertComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [AlertComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    dismiss: { action: 'dismissed' },\n  },\n  args: {\n    type: 'Information',\n    title: '',\n    description: 'Alert description text goes here.',\n    showIcon: true,\n    dismissible: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/Actionbar/actionbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ActionbarComponent>",
                 "defaultValue": "{\n  title: 'components/ActionBar',\n  component: ActionbarComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ActionbarComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['icon', 'text'],\n    },\n    size: {\n      control: 'select',\n      options: ['xs', 's', 'm', 'l', 'xl'],\n    },\n    showSet2: { control: 'boolean' },\n    showSet3: { control: 'boolean' },\n    showKebabMenu: { control: 'boolean' },\n  },\n  args: {\n    type: 'icon',\n    size: 'xs',\n    showSet2: true,\n    showSet3: true,\n    showKebabMenu: true,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Alert/alert.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AlertComponent>",
+                "defaultValue": "{\n  title: 'components/Alert',\n  component: AlertComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [AlertComponent],\n    }),\n  ],\n  argTypes: {\n    type: {\n      control: 'select',\n      options: ['Information', 'Success', 'Warning', 'Error'],\n    },\n    title: { control: 'text' },\n    description: { control: 'text' },\n    showIcon: { control: 'boolean' },\n    dismissible: { control: 'boolean' },\n    dismiss: { action: 'dismissed' },\n  },\n  args: {\n    type: 'Information',\n    title: '',\n    description: 'Alert description text goes here.',\n    showIcon: true,\n    dismissible: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -12211,7 +12195,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<TreeViewComponent>",
-                "defaultValue": "{\n  title: 'components/Tree View/Tree View',\n  component: TreeViewComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [TreeViewComponent],\n    }),\n  ],\n  argTypes: {\n    type: { control: 'select', options: ['global', 'local'] },\n    showIcons: { control: 'boolean' },\n    nodes: { control: 'object' },\n    selectedId: { control: 'text' },\n  },\n  args: {\n    type: 'global',\n    showIcons: true,\n    nodes: oneLevelNodes,\n    selectedId: null,\n  },\n}"
+                "defaultValue": "{\n  title: 'components/Tree View/Tree View',\n  component: TreeViewComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({ imports: [TreeViewComponent] }),\n  ],\n  argTypes: {\n    type: { control: 'select', options: ['global', 'local'] },\n    showIcons: { control: 'boolean' },\n    nodes: { control: 'object' },\n  },\n  args: {\n    type: 'global',\n    showIcons: true,\n    nodes: twoLevelNodes,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -12361,7 +12345,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    nodes: oneLevelNodes,\n  },\n}"
+                "defaultValue": "{\n  args: { nodes: oneLevelNodes },\n}",
+                "rawdescription": "Matches Figma: States=1 Level (Default)",
+                "description": "<p>Matches Figma: States=1 Level (Default)</p>\n"
             },
             {
                 "name": "oneLevelNodes",
@@ -12371,7 +12357,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TreeViewNode[]",
-                "defaultValue": "[\n  { id: '1', label: 'Label' },\n  { id: '2', label: 'Label' },\n  { id: '3', label: 'Label' },\n  { id: '4', label: 'Label' },\n  { id: '5', label: 'Label' },\n]"
+                "defaultValue": "[\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n]"
             },
             {
                 "name": "PartiallyDisabled",
@@ -12432,6 +12418,28 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Button',\n    showLeftIcon: true,\n    showRightIcon: true,\n    leftIconName: 'add',\n    rightIconName: 'add',\n  },\n}"
+            },
+            {
+                "name": "RealWorldData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/TreeView/tree-view.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    type: 'global',\n    nodes: realWorldNodes,\n    showIcons: true,\n  },\n}",
+                "rawdescription": "Custom data with icons, nested folders, and a disabled leaf.",
+                "description": "<p>Custom data with icons, nested folders, and a disabled leaf.</p>\n"
+            },
+            {
+                "name": "realWorldNodes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/TreeView/tree-view.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "TreeViewNode[]",
+                "defaultValue": "[\n  {\n    label: 'Documents',\n    icon: 'folder',\n    children: [\n      {\n        label: 'Reports',\n        icon: 'folder',\n        children: [\n          { label: 'Q1 Report.pdf', icon: 'description' },\n          { label: 'Q2 Report.pdf', icon: 'description' },\n        ],\n      },\n      { label: 'Invoice.xlsx', icon: 'description' },\n    ],\n  },\n  {\n    label: 'Images',\n    icon: 'folder',\n    children: [\n      { label: 'logo.png', icon: 'image' },\n      { label: 'banner.jpg', icon: 'image', disabled: true },\n    ],\n  },\n  { label: 'README.md', icon: 'description' },\n]"
             },
             {
                 "name": "sampleItems",
@@ -13341,7 +13349,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TreeViewNode[]",
-                "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      {\n        id: '1-1',\n        label: 'Label',\n        children: [\n          { id: '1-1-1', label: 'Label' },\n          { id: '1-1-2', label: 'Label' },\n        ],\n      },\n      { id: '1-2', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n]"
+                "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      {\n        label: 'Label',\n        children: [\n          { label: 'Label' },\n          { label: 'Label' },\n        ],\n      },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n]"
             },
             {
                 "name": "ThreeLevels",
@@ -13351,7 +13359,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    nodes: threeLevelNodes,\n  },\n}"
+                "defaultValue": "{\n  args: { nodes: threeLevelNodes },\n}",
+                "rawdescription": "Matches Figma: States=3 Levels",
+                "description": "<p>Matches Figma: States=3 Levels</p>\n"
             },
             {
                 "name": "Toned",
@@ -13381,7 +13391,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "TreeViewNode[]",
-                "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      { id: '1-1', label: 'Label' },\n      { id: '1-2', label: 'Label' },\n      { id: '1-3', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n  { id: '3', label: 'Label' },\n]"
+                "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      { label: 'Label' },\n      { label: 'Label' },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n  { label: 'Label' },\n]"
             },
             {
                 "name": "TwoLevels",
@@ -13391,7 +13401,9 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    nodes: twoLevelNodes,\n  },\n}"
+                "defaultValue": "{\n  args: { nodes: twoLevelNodes },\n}",
+                "rawdescription": "Matches Figma: States=2 Levels",
+                "description": "<p>Matches Figma: States=2 Levels</p>\n"
             },
             {
                 "name": "Vertical",
@@ -13621,7 +13633,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    nodes: [\n      { id: '1', label: 'Active Item' },\n      { id: '2', label: 'Disabled Item', disabled: true },\n      { id: '3', label: 'Active Item' },\n      { id: '4', label: 'Disabled Item', disabled: true },\n    ],\n  },\n}"
+                "defaultValue": "{\n  args: {\n    nodes: [\n      { label: 'Active Item' },\n      { label: 'Disabled Item', disabled: true },\n      { label: 'Active Item' },\n      { label: 'Disabled Item', disabled: true },\n    ],\n  },\n}"
             },
             {
                 "name": "WithDivider",
@@ -14499,8 +14511,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AlertComponent>",
-                "file": "src/stories/Alert/alert.stories.ts",
+                "rawtype": "StoryObj<ActionbarComponent>",
+                "file": "src/stories/Actionbar/actionbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -14510,8 +14522,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<ActionbarComponent>",
-                "file": "src/stories/Actionbar/actionbar.stories.ts",
+                "rawtype": "StoryObj<AlertComponent>",
+                "file": "src/stories/Alert/alert.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -18869,138 +18881,6 @@
                     "defaultValue": "{\n  args: { size: 'sm', checked: true },\n}"
                 }
             ],
-            "src/stories/TreeView/tree-view.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{}"
-                },
-                {
-                    "name": "fourLevelNodes",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TreeViewNode[]",
-                    "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      {\n        id: '1-1',\n        label: 'Label',\n        children: [\n          {\n            id: '1-1-1',\n            label: 'Label',\n            children: [\n              { id: '1-1-1-1', label: 'Label' },\n              { id: '1-1-1-2', label: 'Label' },\n            ],\n          },\n          { id: '1-1-2', label: 'Label' },\n        ],\n      },\n      { id: '1-2', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n]"
-                },
-                {
-                    "name": "FourLevels",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nodes: fourLevelNodes,\n  },\n}"
-                },
-                {
-                    "name": "GlobalVsLocal",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    template: `\n      <div style=\"display: flex; gap: 40px; padding: 24px; align-items: flex-start;\">\n        <div>\n          <p style=\"font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;\">Global</p>\n          <app-tree-view type=\"global\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n        <div>\n          <p style=\"font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;\">Local</p>\n          <app-tree-view type=\"local\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n      </div>\n    `,\n    props: { nodes: twoLevelNodes },\n    moduleMetadata: { imports: [TreeViewComponent] },\n  }),\n}"
-                },
-                {
-                    "name": "LocalType",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    type: 'local',\n    nodes: twoLevelNodes,\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<TreeViewComponent>",
-                    "defaultValue": "{\n  title: 'components/Tree View/Tree View',\n  component: TreeViewComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [TreeViewComponent],\n    }),\n  ],\n  argTypes: {\n    type: { control: 'select', options: ['global', 'local'] },\n    showIcons: { control: 'boolean' },\n    nodes: { control: 'object' },\n    selectedId: { control: 'text' },\n  },\n  args: {\n    type: 'global',\n    showIcons: true,\n    nodes: oneLevelNodes,\n    selectedId: null,\n  },\n}"
-                },
-                {
-                    "name": "OneLevel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nodes: oneLevelNodes,\n  },\n}"
-                },
-                {
-                    "name": "oneLevelNodes",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TreeViewNode[]",
-                    "defaultValue": "[\n  { id: '1', label: 'Label' },\n  { id: '2', label: 'Label' },\n  { id: '3', label: 'Label' },\n  { id: '4', label: 'Label' },\n  { id: '5', label: 'Label' },\n]"
-                },
-                {
-                    "name": "threeLevelNodes",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TreeViewNode[]",
-                    "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      {\n        id: '1-1',\n        label: 'Label',\n        children: [\n          { id: '1-1-1', label: 'Label' },\n          { id: '1-1-2', label: 'Label' },\n        ],\n      },\n      { id: '1-2', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n]"
-                },
-                {
-                    "name": "ThreeLevels",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nodes: threeLevelNodes,\n  },\n}"
-                },
-                {
-                    "name": "twoLevelNodes",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "TreeViewNode[]",
-                    "defaultValue": "[\n  {\n    id: '1',\n    label: 'Label',\n    children: [\n      { id: '1-1', label: 'Label' },\n      { id: '1-2', label: 'Label' },\n      { id: '1-3', label: 'Label' },\n    ],\n  },\n  { id: '2', label: 'Label' },\n  { id: '3', label: 'Label' },\n]"
-                },
-                {
-                    "name": "TwoLevels",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nodes: twoLevelNodes,\n  },\n}"
-                },
-                {
-                    "name": "WithDisabledNodes",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/TreeView/tree-view.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    nodes: [\n      { id: '1', label: 'Active Item' },\n      { id: '2', label: 'Disabled Item', disabled: true },\n      { id: '3', label: 'Active Item' },\n      { id: '4', label: 'Disabled Item', disabled: true },\n    ],\n  },\n}"
-                }
-            ],
             "src/stories/icon/icon.stories.ts": [
                 {
                     "name": "Default",
@@ -19140,7 +19020,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "TreeViewNode[]",
-                    "defaultValue": "[\n  {\n    id: '1',\n    label: 'Parent Item',\n    children: [\n      {\n        id: '1-1',\n        label: 'Child Item',\n        children: [\n          { id: '1-1-1', label: 'Grandchild Item' },\n          { id: '1-1-2', label: 'Grandchild Item' },\n        ],\n      },\n      { id: '1-2', label: 'Child Item' },\n      { id: '1-3', label: 'Child Item' },\n    ],\n  },\n  { id: '2', label: 'Parent Item' },\n  { id: '3', label: 'Parent Item' },\n]"
+                    "defaultValue": "[\n  {\n    label: 'Parent Item',\n    children: [\n      {\n        label: 'Child Item',\n        children: [\n          { label: 'Grandchild Item' },\n          { label: 'Grandchild Item' },\n        ],\n      },\n      { label: 'Child Item' },\n      { label: 'Child Item' },\n    ],\n  },\n  { label: 'Parent Item' },\n  { label: 'Parent Item' },\n]"
                 }
             ],
             "src/stories/Footer/footer.component.ts": [
@@ -19163,6 +19043,162 @@
                     "deprecationMessage": "",
                     "type": "[]",
                     "defaultValue": "[\n  'About Us', 'Services', 'Solutions', 'Contact Us', 'Blog',\n]"
+                }
+            ],
+            "src/stories/TreeView/tree-view.stories.ts": [
+                {
+                    "name": "fourLevelNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      {\n        label: 'Label',\n        children: [\n          {\n            label: 'Label',\n            children: [\n              { label: 'Label' },\n              { label: 'Label' },\n            ],\n          },\n          { label: 'Label' },\n        ],\n      },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n]"
+                },
+                {
+                    "name": "FourLevels",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { nodes: fourLevelNodes },\n}",
+                    "rawdescription": "Matches Figma: States=4 Levels",
+                    "description": "<p>Matches Figma: States=4 Levels</p>\n"
+                },
+                {
+                    "name": "GlobalVsLocal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    template: `\n      <div style=\"display:flex; gap:40px; padding:24px; align-items:flex-start; font-family:Inter,sans-serif;\">\n        <div>\n          <p style=\"font-size:11px;color:#888;margin:0 0 6px\">Global</p>\n          <app-tree-view type=\"global\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n        <div>\n          <p style=\"font-size:11px;color:#888;margin:0 0 6px\">Local</p>\n          <app-tree-view type=\"local\" [nodes]=\"nodes\" [showIcons]=\"true\"></app-tree-view>\n        </div>\n      </div>\n    `,\n    props: { nodes: twoLevelNodes },\n    moduleMetadata: { imports: [TreeViewComponent] },\n  }),\n}",
+                    "rawdescription": "Side-by-side Global vs Local (mirrors Figma layout)",
+                    "description": "<p>Side-by-side Global vs Local (mirrors Figma layout)</p>\n"
+                },
+                {
+                    "name": "LocalType",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { type: 'local', nodes: twoLevelNodes },\n}",
+                    "rawdescription": "Matches Figma: Type=Local",
+                    "description": "<p>Matches Figma: Type=Local</p>\n"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<TreeViewComponent>",
+                    "defaultValue": "{\n  title: 'components/Tree View/Tree View',\n  component: TreeViewComponent,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({ imports: [TreeViewComponent] }),\n  ],\n  argTypes: {\n    type: { control: 'select', options: ['global', 'local'] },\n    showIcons: { control: 'boolean' },\n    nodes: { control: 'object' },\n  },\n  args: {\n    type: 'global',\n    showIcons: true,\n    nodes: twoLevelNodes,\n  },\n}"
+                },
+                {
+                    "name": "OneLevel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { nodes: oneLevelNodes },\n}",
+                    "rawdescription": "Matches Figma: States=1 Level (Default)",
+                    "description": "<p>Matches Figma: States=1 Level (Default)</p>\n"
+                },
+                {
+                    "name": "oneLevelNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "defaultValue": "[\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n  { label: 'Label' },\n]"
+                },
+                {
+                    "name": "RealWorldData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    type: 'global',\n    nodes: realWorldNodes,\n    showIcons: true,\n  },\n}",
+                    "rawdescription": "Custom data with icons, nested folders, and a disabled leaf.",
+                    "description": "<p>Custom data with icons, nested folders, and a disabled leaf.</p>\n"
+                },
+                {
+                    "name": "realWorldNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "defaultValue": "[\n  {\n    label: 'Documents',\n    icon: 'folder',\n    children: [\n      {\n        label: 'Reports',\n        icon: 'folder',\n        children: [\n          { label: 'Q1 Report.pdf', icon: 'description' },\n          { label: 'Q2 Report.pdf', icon: 'description' },\n        ],\n      },\n      { label: 'Invoice.xlsx', icon: 'description' },\n    ],\n  },\n  {\n    label: 'Images',\n    icon: 'folder',\n    children: [\n      { label: 'logo.png', icon: 'image' },\n      { label: 'banner.jpg', icon: 'image', disabled: true },\n    ],\n  },\n  { label: 'README.md', icon: 'description' },\n]"
+                },
+                {
+                    "name": "threeLevelNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      {\n        label: 'Label',\n        children: [\n          { label: 'Label' },\n          { label: 'Label' },\n        ],\n      },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n]"
+                },
+                {
+                    "name": "ThreeLevels",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { nodes: threeLevelNodes },\n}",
+                    "rawdescription": "Matches Figma: States=3 Levels",
+                    "description": "<p>Matches Figma: States=3 Levels</p>\n"
+                },
+                {
+                    "name": "twoLevelNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TreeViewNode[]",
+                    "defaultValue": "[\n  {\n    label: 'Label',\n    children: [\n      { label: 'Label' },\n      { label: 'Label' },\n      { label: 'Label' },\n    ],\n  },\n  { label: 'Label' },\n  { label: 'Label' },\n]"
+                },
+                {
+                    "name": "TwoLevels",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { nodes: twoLevelNodes },\n}",
+                    "rawdescription": "Matches Figma: States=2 Levels",
+                    "description": "<p>Matches Figma: States=2 Levels</p>\n"
+                },
+                {
+                    "name": "WithDisabledNodes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/TreeView/tree-view.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    nodes: [\n      { label: 'Active Item' },\n      { label: 'Disabled Item', disabled: true },\n      { label: 'Active Item' },\n      { label: 'Disabled Item', disabled: true },\n    ],\n  },\n}"
                 }
             ],
             "src/stories/Footer/footer.stories.ts": [
@@ -19698,19 +19734,6 @@
                     "kind": 193
                 }
             ],
-            "src/stories/Alert/alert.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AlertComponent>",
-                    "file": "src/stories/Alert/alert.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "src/stories/Actionbar/actionbar.stories.ts": [
                 {
                     "name": "Story",
@@ -19718,6 +19741,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ActionbarComponent>",
                     "file": "src/stories/Actionbar/actionbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "src/stories/Alert/alert.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AlertComponent>",
+                    "file": "src/stories/Alert/alert.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -20235,7 +20271,7 @@
         "children": []
     },
     "coverage": {
-        "count": 1,
+        "count": 3,
         "status": "low",
         "files": [
             {
@@ -25527,17 +25563,17 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "TreeViewComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/15",
-                "status": "low"
+                "coveragePercent": 37,
+                "coverageCount": "6/16",
+                "status": "medium"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.component.ts",
                 "type": "interface",
                 "linktype": "interface",
-                "name": "FlatNode",
-                "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "name": "TreeViewFlatNode",
+                "coveragePercent": 25,
+                "coverageCount": "2/8",
                 "status": "low"
             },
             {
@@ -25545,8 +25581,8 @@
                 "type": "interface",
                 "linktype": "interface",
                 "name": "TreeViewNode",
-                "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
                 "status": "low"
             },
             {
@@ -25555,16 +25591,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "DEFAULT_NODES",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/TreeView/tree-view.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -25585,9 +25611,9 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "FourLevels",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.stories.ts",
@@ -25595,9 +25621,9 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "GlobalVsLocal",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.stories.ts",
@@ -25605,9 +25631,9 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "LocalType",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.stories.ts",
@@ -25625,6 +25651,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "OneLevel",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/TreeView/tree-view.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "oneLevelNodes",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -25634,7 +25670,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "oneLevelNodes",
+                "name": "RealWorldData",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/TreeView/tree-view.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "realWorldNodes",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -25655,9 +25701,9 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "ThreeLevels",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.stories.ts",
@@ -25675,9 +25721,9 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "TwoLevels",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/TreeView/tree-view.stories.ts",

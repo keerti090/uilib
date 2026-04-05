@@ -1,25 +1,35 @@
 @use '../../styles/primitives' as *;
 @use '../../styles/numbers' as *;
 
+// ── Reset Material tree chrome ────────────────────────────────────────────────
+// mat-tree adds background, padding, and min-width — override them all.
 .AppCore-tree-view {
   display: flex;
   flex-direction: column;
   gap: 2px;
   width: 220px;
+  background: transparent !important;
+  padding: 0 !important;
   border-radius: $number-tokens-corner-radius-2;
 
-  &__item {
+  // mat-tree-node injects min-height and padding — strip both so our item
+  // component is the sole source of sizing truth.
+  .mat-tree-node,
+  .AppCore-tree-view__node {
+    min-height: unset !important;
+    padding: 0 !important;
     display: block;
-    width: 100%;
-  }
 
-  app-tree-view-item {
-    display: block;
-    width: 100%;
-
-    .AppCore-tree-view-item {
+    // mat-tree-node adds inline padding for indentation via matTreeNodePadding;
+    // we zero it out here and let the item component handle indent via level.
+    > app-tree-view-item {
+      display: block;
       width: 100%;
-      box-sizing: border-box;
+
+      .AppCore-tree-view-item {
+        width: 100%;
+        box-sizing: border-box;
+      }
     }
   }
 }

@@ -2,153 +2,160 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { TreeViewComponent, TreeViewNode } from './tree-view.component';
 
+// ── Sample data sets (mirrors the Figma variants) ────────────────────────────
+
 const oneLevelNodes: TreeViewNode[] = [
-  { id: '1', label: 'Label' },
-  { id: '2', label: 'Label' },
-  { id: '3', label: 'Label' },
-  { id: '4', label: 'Label' },
-  { id: '5', label: 'Label' },
+  { label: 'Label' },
+  { label: 'Label' },
+  { label: 'Label' },
+  { label: 'Label' },
+  { label: 'Label' },
 ];
 
 const twoLevelNodes: TreeViewNode[] = [
   {
-    id: '1',
     label: 'Label',
     children: [
-      { id: '1-1', label: 'Label' },
-      { id: '1-2', label: 'Label' },
-      { id: '1-3', label: 'Label' },
+      { label: 'Label' },
+      { label: 'Label' },
+      { label: 'Label' },
     ],
   },
-  { id: '2', label: 'Label' },
-  { id: '3', label: 'Label' },
+  { label: 'Label' },
+  { label: 'Label' },
 ];
 
 const threeLevelNodes: TreeViewNode[] = [
   {
-    id: '1',
     label: 'Label',
     children: [
       {
-        id: '1-1',
         label: 'Label',
         children: [
-          { id: '1-1-1', label: 'Label' },
-          { id: '1-1-2', label: 'Label' },
+          { label: 'Label' },
+          { label: 'Label' },
         ],
       },
-      { id: '1-2', label: 'Label' },
+      { label: 'Label' },
     ],
   },
-  { id: '2', label: 'Label' },
+  { label: 'Label' },
 ];
 
 const fourLevelNodes: TreeViewNode[] = [
   {
-    id: '1',
     label: 'Label',
     children: [
       {
-        id: '1-1',
         label: 'Label',
         children: [
           {
-            id: '1-1-1',
             label: 'Label',
             children: [
-              { id: '1-1-1-1', label: 'Label' },
-              { id: '1-1-1-2', label: 'Label' },
+              { label: 'Label' },
+              { label: 'Label' },
             ],
           },
-          { id: '1-1-2', label: 'Label' },
+          { label: 'Label' },
         ],
       },
-      { id: '1-2', label: 'Label' },
+      { label: 'Label' },
     ],
   },
-  { id: '2', label: 'Label' },
+  { label: 'Label' },
 ];
+
+const realWorldNodes: TreeViewNode[] = [
+  {
+    label: 'Documents',
+    icon: 'folder',
+    children: [
+      {
+        label: 'Reports',
+        icon: 'folder',
+        children: [
+          { label: 'Q1 Report.pdf', icon: 'description' },
+          { label: 'Q2 Report.pdf', icon: 'description' },
+        ],
+      },
+      { label: 'Invoice.xlsx', icon: 'description' },
+    ],
+  },
+  {
+    label: 'Images',
+    icon: 'folder',
+    children: [
+      { label: 'logo.png', icon: 'image' },
+      { label: 'banner.jpg', icon: 'image', disabled: true },
+    ],
+  },
+  { label: 'README.md', icon: 'description' },
+];
+
+// ── Meta ─────────────────────────────────────────────────────────────────────
 
 const meta: Meta<TreeViewComponent> = {
   title: 'components/Tree View/Tree View',
   component: TreeViewComponent,
   tags: ['autodocs'],
   decorators: [
-    moduleMetadata({
-      imports: [TreeViewComponent],
-    }),
+    moduleMetadata({ imports: [TreeViewComponent] }),
   ],
   argTypes: {
     type: { control: 'select', options: ['global', 'local'] },
     showIcons: { control: 'boolean' },
     nodes: { control: 'object' },
-    selectedId: { control: 'text' },
   },
   args: {
     type: 'global',
     showIcons: true,
-    nodes: oneLevelNodes,
-    selectedId: null,
+    nodes: twoLevelNodes,
   },
 };
 
 export default meta;
 type Story = StoryObj<TreeViewComponent>;
 
-export const Default: Story = {};
+// ── Figma spec variants ───────────────────────────────────────────────────────
 
+/** Matches Figma: States=1 Level (Default) */
 export const OneLevel: Story = {
-  args: {
-    nodes: oneLevelNodes,
-  },
+  args: { nodes: oneLevelNodes },
 };
 
+/** Matches Figma: States=2 Levels */
 export const TwoLevels: Story = {
-  args: {
-    nodes: twoLevelNodes,
-  },
+  args: { nodes: twoLevelNodes },
 };
 
+/** Matches Figma: States=3 Levels */
 export const ThreeLevels: Story = {
-  args: {
-    nodes: threeLevelNodes,
-  },
+  args: { nodes: threeLevelNodes },
 };
 
+/** Matches Figma: States=4 Levels */
 export const FourLevels: Story = {
-  args: {
-    nodes: fourLevelNodes,
-  },
+  args: { nodes: fourLevelNodes },
 };
 
+// ── Type variants ─────────────────────────────────────────────────────────────
+
+/** Matches Figma: Type=Local */
 export const LocalType: Story = {
-  args: {
-    type: 'local',
-    nodes: twoLevelNodes,
-  },
+  args: { type: 'local', nodes: twoLevelNodes },
 };
 
-export const WithDisabledNodes: Story = {
-  args: {
-    nodes: [
-      { id: '1', label: 'Active Item' },
-      { id: '2', label: 'Disabled Item', disabled: true },
-      { id: '3', label: 'Active Item' },
-      { id: '4', label: 'Disabled Item', disabled: true },
-    ],
-  },
-};
-
+/** Side-by-side Global vs Local (mirrors Figma layout) */
 export const GlobalVsLocal: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; gap: 40px; padding: 24px; align-items: flex-start;">
+      <div style="display:flex; gap:40px; padding:24px; align-items:flex-start; font-family:Inter,sans-serif;">
         <div>
-          <p style="font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;">Global</p>
+          <p style="font-size:11px;color:#888;margin:0 0 6px">Global</p>
           <app-tree-view type="global" [nodes]="nodes" [showIcons]="true"></app-tree-view>
         </div>
         <div>
-          <p style="font-family: Inter, sans-serif; font-size: 12px; color: #666; margin: 0 0 8px;">Local</p>
+          <p style="font-size:11px;color:#888;margin:0 0 6px">Local</p>
           <app-tree-view type="local" [nodes]="nodes" [showIcons]="true"></app-tree-view>
         </div>
       </div>
@@ -156,4 +163,26 @@ export const GlobalVsLocal: Story = {
     props: { nodes: twoLevelNodes },
     moduleMetadata: { imports: [TreeViewComponent] },
   }),
+};
+
+// ── Real-world usage ──────────────────────────────────────────────────────────
+
+/** Custom data with icons, nested folders, and a disabled leaf. */
+export const RealWorldData: Story = {
+  args: {
+    type: 'global',
+    nodes: realWorldNodes,
+    showIcons: true,
+  },
+};
+
+export const WithDisabledNodes: Story = {
+  args: {
+    nodes: [
+      { label: 'Active Item' },
+      { label: 'Disabled Item', disabled: true },
+      { label: 'Active Item' },
+      { label: 'Disabled Item', disabled: true },
+    ],
+  },
 };
