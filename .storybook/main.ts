@@ -7,6 +7,12 @@ const config: StorybookConfig = {
     name: '@storybook/angular',
     options: {},
   },
+  core: {
+    builder: 'webpack5',
+  },
+  docs: {
+    autodocs: 'tag',
+  },
 };
 
 export default config;
