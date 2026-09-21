@@ -1,0 +1,182 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/colors' as *;
+
+.appcore-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 80px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  font-family: $font-inter;
+  font-weight: 400;
+
+  // ===== Sizes =====
+  &--size-S {
+    padding: 3px 6px;
+
+    .appcore-badge__label {
+      font-size: 10px;
+      line-height: 14px;
+    }
+
+    .appcore-badge__icon ::ng-deep .material-symbols-rounded,
+    .appcore-badge__icon ::ng-deep img.icon {
+      font-size: 12px !important;
+      width: 12px !important;
+      height: 12px !important;
+    }
+  }
+
+  &--size-M {
+    padding: 4px 8px;
+
+    .appcore-badge__label {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .appcore-badge__icon ::ng-deep .material-symbols-rounded,
+    .appcore-badge__icon ::ng-deep img.icon {
+      font-size: 14px !important;
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
+
+  &--size-L {
+    padding: 5px 10px;
+
+    .appcore-badge__label {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .appcore-badge__icon ::ng-deep .material-symbols-rounded,
+    .appcore-badge__icon ::ng-deep img.icon {
+      font-size: 16px !important;
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
+
+  // ===== Default Type =====
+  &--type-Default {
+    &.appcore-badge--style-Outlined {
+      background-color: $color-tokens-surface-neutral-white;
+      border-color: $color-tokens-border-neutral-light-stroke-divider;
+      color: $color-tokens-content-neutral-heading2-label2-body1;
+    }
+
+    &.appcore-badge--style-Toned {
+      background-color: $color-tokens-surface-neutral-white-faded;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-heading2-label2-body1;
+    }
+
+    &.appcore-badge--style-Highlighted {
+      background-color: $color-tokens-surface-neutral-black-default;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // ===== Error Type =====
+  &--type-Error {
+    &.appcore-badge--style-Outlined {
+      background-color: $color-tokens-surface-neutral-white;
+      border-color: $color-tokens-surface-error-hover; // error-75 shade, no error-border-light token in project
+      color: $color-tokens-content-error-default;
+    }
+
+    &.appcore-badge--style-Toned {
+      background-color: $color-tokens-surface-error-background-light;
+      border-color: transparent;
+      color: $color-tokens-content-error-default;
+    }
+
+    &.appcore-badge--style-Highlighted {
+      background-color: $color-tokens-surface-error-default;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // ===== Success Type =====
+  &--type-Success {
+    &.appcore-badge--style-Outlined {
+      background-color: $color-tokens-surface-neutral-white;
+      border-color: $color-tokens-border-success-light;
+      color: $color-tokens-content-success-default;
+    }
+
+    &.appcore-badge--style-Toned {
+      background-color: $color-tokens-surface-success-background-light;
+      border-color: transparent;
+      color: $color-tokens-content-success-default;
+    }
+
+    &.appcore-badge--style-Highlighted {
+      background-color: $color-tokens-surface-success-default;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // ===== Warning Type =====
+  &--type-Warning {
+    &.appcore-badge--style-Outlined {
+      background-color: $color-tokens-surface-neutral-white;
+      border-color: $color-tokens-border-warning-light;
+      color: $color-tokens-content-warning-default;
+    }
+
+    &.appcore-badge--style-Toned {
+      background-color: $color-tokens-surface-warning-background-dark;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-display-heading1-label1-selected;
+    }
+
+    &.appcore-badge--style-Highlighted {
+      background-color: $color-tokens-surface-warning-default;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-display-heading1-label1-selected;
+    }
+  }
+
+  // ===== Information Type =====
+  &--type-Information {
+    &.appcore-badge--style-Outlined {
+      background-color: $color-tokens-surface-neutral-white;
+      border-color: $color-tokens-border-primary-default;
+      color: $color-tokens-content-primary-default;
+    }
+
+    &.appcore-badge--style-Toned {
+      background-color: $color-tokens-surface-primary-background-light;
+      border-color: transparent;
+      color: $color-tokens-content-primary-default;
+    }
+
+    &.appcore-badge--style-Highlighted {
+      background-color: $color-tokens-surface-primary-default;
+      border-color: transparent;
+      color: $color-tokens-content-neutral-button-darkbg;
+    }
+  }
+
+  // Icon inherits text color
+  &__icon ::ng-deep .material-symbols-rounded,
+  &__icon ::ng-deep img.icon {
+    color: inherit !important;
+  }
+
+  &__label {
+    display: inline;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+}

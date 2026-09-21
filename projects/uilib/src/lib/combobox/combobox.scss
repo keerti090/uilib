@@ -1,0 +1,301 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use 'sass:map';
+
+// ─── Combobox ─────────────────────────────────────────────────────────────────
+//
+// Anatomy:
+//   <div .appcore-combobox>
+//     <label  .appcore-combobox__label>
+//     <div    .appcore-combobox__control>
+//       <input  .appcore-combobox__input>
+//       <button .appcore-combobox__clear>      ← visible only when value set
+//       <span   .appcore-combobox__chevron>    ← rotates when open
+//     </div>
+//     <div    .appcore-combobox__dropdown>
+//       <ul   .appcore-combobox__options>
+//         <li .appcore-combobox__option>
+//     <span   .appcore-combobox__helper-text | .appcore-combobox__error-text>
+//   </div>
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+
+.appcore-combobox {
+  display: inline-flex;
+  flex-direction: column;
+  gap: $number-tokens-spacing-2;
+  font-family: $font-inter;
+  position: relative;
+  width: 100%;
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+
+.appcore-combobox__label {
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  font-weight: $font-weight-inter-1; // Medium
+  color: $color-tokens-content-neutral-heading2-label2-body1;
+}
+
+// ─── Control (input row) ──────────────────────────────────────────────────────
+
+.appcore-combobox__control {
+  display: flex;
+  align-items: center;
+  gap: $number-tokens-spacing-2;
+  padding: 0 $number-tokens-padding-4;
+  height: 40px; // md default
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  background-color: $color-tokens-surface-neutral-white;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus-within {
+    border-color: $color-tokens-border-primary-default;
+    box-shadow: 0 0 0 2px $primitives-colors-focus-blue-outline;
+    outline: none;
+  }
+}
+
+.appcore-combobox--open .appcore-combobox__control {
+  border-color: $color-tokens-border-primary-default;
+}
+
+// ─── Native input ─────────────────────────────────────────────────────────────
+
+.appcore-combobox__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: $font-inter;
+  @include apply-typography($typography-label-sm);
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  cursor: pointer;
+
+  &[readonly] {
+    cursor: pointer;
+  }
+
+  &::placeholder {
+    color: $color-tokens-content-neutral-disabled;
+    font-weight: $font-weight-inter-2;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// ─── Clear button ─────────────────────────────────────────────────────────────
+
+.appcore-combobox__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: $color-tokens-content-neutral-disabled;
+  flex-shrink: 0;
+  line-height: 1;
+
+  &:hover {
+    color: $color-tokens-content-neutral-display-heading1-label1-selected;
+  }
+}
+
+// ─── Chevron ──────────────────────────────────────────────────────────────────
+
+.appcore-combobox__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-tokens-content-neutral-body2;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+// ─── Dropdown panel ───────────────────────────────────────────────────────────
+
+.appcore-combobox__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: $color-tokens-surface-neutral-white;
+  border: 1px solid $color-tokens-border-neutral-light-stroke-divider;
+  border-radius: $number-tokens-corner-radius-3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+// ─── Options list ─────────────────────────────────────────────────────────────
+
+.appcore-combobox__options {
+  list-style: none;
+  margin: 0;
+  padding: $number-tokens-padding-2 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+// ─── Option item ──────────────────────────────────────────────────────────────
+
+.appcore-combobox__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $number-tokens-padding-3 $number-tokens-padding-4;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  @include apply-typography($typography-label-sm);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-display-heading1-label1-selected;
+
+  &:hover {
+    background-color: $color-tokens-surface-primary-background-light;
+  }
+
+  &--selected {
+    background-color: $color-tokens-surface-primary-background-light;
+    color: $color-tokens-content-primary-default;
+    font-weight: $font-weight-inter-1;
+  }
+
+  &--disabled {
+    color: $color-tokens-content-neutral-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &--empty {
+    padding: $number-tokens-padding-3 $number-tokens-padding-4;
+    @include apply-typography($typography-label-sm);
+    font-family: $font-inter;
+    color: $color-tokens-content-neutral-disabled;
+    text-align: center;
+  }
+}
+
+.appcore-combobox__option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appcore-combobox__option-check {
+  flex-shrink: 0;
+  color: $color-tokens-content-primary-default;
+}
+
+// ─── Helper & error text ──────────────────────────────────────────────────────
+
+.appcore-combobox__helper-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-neutral-body2;
+}
+
+.appcore-combobox__error-text {
+  @include apply-typography($typography-label-xs);
+  font-family: $font-inter;
+  color: $color-tokens-content-error-default;
+}
+
+// ─── State: error ─────────────────────────────────────────────────────────────
+
+.appcore-combobox--error {
+  .appcore-combobox__control {
+    border-color: $color-tokens-content-error-default;
+
+    &:focus-within {
+      border-color: $color-tokens-content-error-default;
+      box-shadow: 0 0 0 2px rgba(210, 34, 45, 0.25);
+    }
+  }
+}
+
+// ─── State: disabled ──────────────────────────────────────────────────────────
+
+.appcore-combobox--disabled {
+  .appcore-combobox__label {
+    color: $color-tokens-content-neutral-disabled;
+  }
+
+  .appcore-combobox__control {
+    background-color: $color-tokens-surface-neutral-white-disabled;
+    border-color: $color-tokens-border-neutral-light-stroke-divider;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .appcore-combobox__input {
+    color: $color-tokens-content-neutral-disabled;
+  }
+}
+
+// ─── Size: sm ─────────────────────────────────────────────────────────────────
+
+.appcore-combobox--sm {
+  .appcore-combobox__label {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+
+  .appcore-combobox__control {
+    height: 32px;
+    padding: 0 $number-tokens-padding-3;
+  }
+
+  .appcore-combobox__input {
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+
+  .appcore-combobox__option {
+    padding: $number-tokens-padding-2 $number-tokens-padding-3;
+    @include apply-typography($typography-label-xs);
+    font-family: $font-inter;
+  }
+}
+
+// ─── Size: md (default — no overrides needed) ─────────────────────────────────
+
+// ─── Size: lg ─────────────────────────────────────────────────────────────────
+
+.appcore-combobox--lg {
+  .appcore-combobox__label {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+
+  .appcore-combobox__control {
+    height: 48px;
+    padding: 0 $number-tokens-padding-5;
+  }
+
+  .appcore-combobox__input {
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+
+  .appcore-combobox__option {
+    padding: $number-tokens-padding-4 $number-tokens-padding-5;
+    @include apply-typography($typography-label-md);
+    font-family: $font-inter;
+  }
+}
