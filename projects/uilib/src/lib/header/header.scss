@@ -1,0 +1,157 @@
+.appcore-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: #ffffff;
+  font-family: Inter, sans-serif;
+}
+
+// Back button
+.appcore-header__back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3d3d3d;
+}
+
+// Logo / Image slots
+.appcore-header__logo,
+.appcore-header__image {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+// Main content — grows to fill available space
+.appcore-header__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.appcore-header__breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.appcore-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.appcore-header__title-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.appcore-header__title {
+  color: #3d3d3d;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.appcore-header__subtitle {
+  color: #525252;
+  font-weight: 400;
+}
+
+// Right-side actions
+.appcore-header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.appcore-header__slot {
+  display: flex;
+  align-items: center;
+}
+
+// ─── Type variants ────────────────────────────────────────────────────────────
+
+// H1 — Display/Medium-SB (24px/600) + Label/Medium-R (14px/400)
+.appcore-header--h1 {
+  .appcore-header__title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.333em;
+  }
+
+  .appcore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H2 — Heading/Large-SB (20px/600) + Label/Medium-R (14px/400)
+.appcore-header--h2 {
+  .appcore-header__title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4em;
+  }
+
+  .appcore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H3 — Heading/Medium-SB (16px/600) + Label/Medium-R (14px/400)
+.appcore-header--h3 {
+  .appcore-header__title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5em;
+  }
+
+  .appcore-header__subtitle {
+    font-size: 14px;
+    line-height: 1.286em;
+  }
+}
+
+// H4 — Heading/Small-SB (14px/600) + Label/Small-R (12px/400)
+.appcore-header--h4 {
+  .appcore-header__title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.429em;
+  }
+
+  .appcore-header__subtitle {
+    font-size: 12px;
+    line-height: 1.333em;
+  }
+}
+
+// H5 — Label/Small-M (12px/500) + Body/Medium-R (12px/400)
+.appcore-header--h5 {
+  .appcore-header__title {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.333em;
+  }
+
+  .appcore-header__subtitle {
+    font-size: 12px;
+    line-height: 1.333em;
+  }
+}
