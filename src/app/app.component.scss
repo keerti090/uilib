@@ -1,6 +1,6 @@
-@use '../styles/numbers' as *;
-@use '../styles/primitives' as *;
-@use '../styles/typography' as *;
+@use '../../projects/uilib/src/styles/numbers' as *;
+@use '../../projects/uilib/src/styles/primitives' as *;
+@use '../../projects/uilib/src/styles/typography' as *;
 
 :host {
   display: block;

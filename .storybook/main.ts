@@ -1,14 +1,20 @@
 import type { StorybookConfig } from '@storybook/angular';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],
+  stories: [
+    '../projects/uilib/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'
+  ],
+  addons: [
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y'
+  ],
   framework: {
     name: '@storybook/angular',
-    options: {},
-  },
-  core: {
-    builder: 'webpack5',
+    options: {
+      // 👇 ADD THIS LINE (use the exact name from your angular.json "projects" list)
+      projectName: 'storybook-apptium', 
+    },
   },
   docs: {
     autodocs: 'tag',

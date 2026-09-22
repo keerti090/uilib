@@ -12,7 +12,7 @@ const DEFAULT_NAV_ITEMS = [
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModuge, MatIconModule],
   styleUrls: ['./nav-bar.scss'],
   template: `
     <!-- ===== CCP PLATFORM ===== -->
