@@ -34,5 +34,15 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*", ".storybook/**/*"]
+  "include": [
+    "src/**/*",
+    ".storybook/**/*",
+    "projects/uilib/src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.spec.ts",
+    "projects/**/*.spec.ts"
+  ],
+  
 }

@@ -110,6 +110,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "storybook-apptium:build",
+            "compodoc": false,
             "port": 6006
           }
         },
