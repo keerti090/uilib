@@ -60,6 +60,9 @@ export * from './lib/footer/footer.component';
 // Header
 export * from './lib/header/header.component';
 
+// Input
+export * from './lib/input/input.component';
+
 // Loader
 export * from './lib/loader/content-loader-dots.component';
 export * from './lib/loader/inline-loader-with-text.component';

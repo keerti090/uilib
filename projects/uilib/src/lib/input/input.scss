@@ -1,0 +1,239 @@
+@use '../../styles/primitives' as *;
+@use '../../styles/numbers' as *;
+@use '../../styles/colors' as *;
+@use '../../styles/typography' as *;
+@use 'sass:map';
+
+// ─── Input (Figma: DS-Components / Input field) ───────────────────────────────
+// Wraps mat-form-field (outline) + matInput. Every visual value is a CSS custom
+// property with a Figma-token default, so consumers can restyle without
+// ::ng-deep or !important:
+//
+//   appcore-input { --appcore-input-border-color: hotpink; }
+//
+// The properties feed Material's own --mdc-* / --mat-* tokens, so anything not
+// exposed here can still be set with those.
+
+.appcore-input {
+  // Defaults come from the shared token partials (styles/_colors, _numbers, _typography)
+  --appcore-input-label-color: #{$color-tokens-content-neutral-heading2-label2-body1};
+  --appcore-input-label-hover-color: #{$color-tokens-content-neutral-hover};
+  --appcore-input-text-color: #{$color-tokens-content-neutral-heading2-label2-body1};
+  --appcore-input-placeholder-color: #{$color-tokens-content-neutral-disabled};
+  --appcore-input-affix-color: #{$color-tokens-content-neutral-body2};
+  --appcore-input-help-color: #{$color-tokens-content-neutral-body2};
+  --appcore-input-required-color: #{$color-tokens-content-error-default};
+  --appcore-input-error-color: #{$primitives-colors-error-error};
+  --appcore-input-bg: #{$color-tokens-surface-neutral-white};
+  --appcore-input-border-color: #{$color-tokens-border-neutral-dark-stroke-divider};
+  --appcore-input-border-focus-color: #{$color-tokens-border-primary-default};
+  --appcore-input-divider-color: #{$color-tokens-border-neutral-light-stroke-divider};
+  --appcore-input-disabled-color: #{$color-tokens-content-neutral-disabled};
+  --appcore-input-disabled-bg: #{$color-tokens-surface-neutral-white-disabled};
+  --appcore-input-disabled-border-color: #{$color-tokens-border-neutral-light-stroke-divider};
+  --appcore-input-radius: #{$number-tokens-corner-radius-2};
+  --appcore-input-gap: #{$number-tokens-spacing-2};
+  --appcore-input-padding-x: #{$number-tokens-spacing-4};
+  --appcore-input-padding-y: #{$number-tokens-spacing-3};
+  --appcore-input-font-family: #{$font-inter};
+  --appcore-input-font-size: #{$font-size-21};
+  --appcore-input-line-height: #{$line-height-21};
+  --appcore-input-help-font-size: #{$font-size-22};
+  --appcore-input-help-line-height: #{$line-height-22};
+  --appcore-input-min-width: 200px;
+  --appcore-input-label-width: auto;               // horizontal layout label column
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--appcore-input-gap);
+  min-width: var(--appcore-input-min-width);
+  font-family: var(--appcore-input-font-family);
+  font-size: var(--appcore-input-font-size);
+  line-height: var(--appcore-input-line-height);
+  font-weight: $font-weight-inter-2;
+
+  // Forward to Material tokens
+  --mdc-outlined-text-field-outline-color: var(--appcore-input-border-color);
+  --mdc-outlined-text-field-hover-outline-color: var(--appcore-input-border-color);
+  --mdc-outlined-text-field-focus-outline-color: var(--appcore-input-border-focus-color);
+  --mdc-outlined-text-field-error-outline-color: var(--appcore-input-error-color);
+  --mdc-outlined-text-field-error-hover-outline-color: var(--appcore-input-error-color);
+  --mdc-outlined-text-field-error-focus-outline-color: var(--appcore-input-error-color);
+  --mdc-outlined-text-field-disabled-outline-color: var(--appcore-input-disabled-border-color);
+  --mdc-outlined-text-field-outline-width: #{$number-tokens-other-0};
+  --mdc-outlined-text-field-hover-outline-width: #{$number-tokens-other-0};
+  --mdc-outlined-text-field-focus-outline-width: #{$number-tokens-other-0};
+  --mdc-outlined-text-field-container-shape: var(--appcore-input-radius);
+  --mdc-outlined-text-field-input-text-color: var(--appcore-input-text-color);
+  --mdc-outlined-text-field-input-text-placeholder-color: var(--appcore-input-placeholder-color);
+  --mdc-outlined-text-field-disabled-input-text-color: var(--appcore-input-disabled-color);
+  --mdc-outlined-text-field-caret-color: var(--appcore-input-border-focus-color);
+  --mdc-outlined-text-field-error-caret-color: var(--appcore-input-error-color);
+  --mat-form-field-container-height: var(--appcore-input-line-height);
+  --mat-form-field-container-vertical-padding: var(--appcore-input-padding-y);
+  --mat-form-field-container-text-font: var(--appcore-input-font-family);
+  --mat-form-field-container-text-size: var(--appcore-input-font-size);
+  --mat-form-field-container-text-line-height: var(--appcore-input-line-height);
+  --mat-form-field-outlined-label-text-populated-size: var(--appcore-input-font-size);
+
+  &--small {
+    --appcore-input-padding-y: 0.375rem; // Figma 6px — no spacing token exists
+  }
+
+  // ── Label ──
+  &__label-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--appcore-input-gap);
+    min-width: 0;
+  }
+  &__label {
+    color: var(--appcore-input-label-color);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  &__required {
+    color: var(--appcore-input-required-color);
+    line-height: map.get($typography-label-xs, line-height);
+    letter-spacing: $number-tokens-other-0;
+  }
+  &__label-suffix {
+    flex: 1 0 0;
+    min-width: 1px;
+    align-self: stretch;
+    &:empty { display: none; }
+  }
+  &--hover &__label {
+    color: var(--appcore-input-label-hover-color);
+  }
+
+  // ── Control row (field + info icon) ──
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: $number-tokens-spacing-2;
+    min-width: 0;
+  }
+
+  // ── mat-form-field restyle ──
+  &__field-wrap.mat-mdc-form-field {
+    flex: 1 0 0;
+    min-width: 1px;
+    width: 100%;
+
+    .mat-mdc-text-field-wrapper {
+      background: var(--appcore-input-bg);
+      border-radius: var(--appcore-input-radius);
+      padding: 0 var(--appcore-input-padding-x);
+    }
+    .mat-mdc-form-field-flex {
+      align-items: center;
+    }
+    .mat-mdc-form-field-infix {
+      min-height: 0;
+      width: auto;
+      flex: 1 1 auto;
+      padding-top: var(--appcore-input-padding-y);
+      padding-bottom: var(--appcore-input-padding-y);
+    }
+    .mat-mdc-form-field-icon-prefix,
+    .mat-mdc-form-field-icon-suffix,
+    .mat-mdc-form-field-text-prefix,
+    .mat-mdc-form-field-text-suffix {
+      padding: 0;
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none; // help text is rendered outside the field to match the Figma layout
+    }
+  }
+
+  &__field {
+    font-family: var(--appcore-input-font-family);
+    font-size: var(--appcore-input-font-size);
+    line-height: var(--appcore-input-line-height);
+    color: var(--appcore-input-text-color);
+    text-overflow: ellipsis;
+  }
+
+  // ── Affixes: icons / text / divider / clear ──
+  &__affix {
+    display: inline-flex;
+    align-items: center;
+    gap: $number-tokens-spacing-1;
+    color: var(--appcore-input-affix-color);
+
+    &:empty { display: none; }
+    &--prefix { padding-right: $number-tokens-spacing-3; }
+    &--suffix { padding-left: $number-tokens-spacing-3; }
+  }
+  &__affix-text {
+    white-space: nowrap;
+    &--suffix { color: var(--appcore-input-placeholder-color); }
+  }
+  &__divider {
+    display: inline-block;
+    width: $number-tokens-other-0;
+    height: $number-tokens-other-6;
+    margin: 0 $number-tokens-spacing-1;
+    background: var(--appcore-input-divider-color);
+  }
+  &__clear,
+  &__info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--appcore-input-affix-color);
+    cursor: pointer;
+  }
+
+  // ── Help text ──
+  &__help {
+    color: var(--appcore-input-help-color);
+    font-size: var(--appcore-input-help-font-size);
+    line-height: var(--appcore-input-help-line-height);
+  }
+
+  // ── Horizontal layout: label left, field + help right ──
+  &--horizontal {
+    display: grid;
+    grid-template-columns: var(--appcore-input-label-width) 1fr;
+    align-items: center;
+    column-gap: var(--appcore-input-gap);
+    row-gap: var(--appcore-input-gap);
+
+    .appcore-input__label-row { align-items: center; grid-column: 1; }
+    .appcore-input__control { grid-column: 2; }
+    .appcore-input__help { grid-column: 2; }
+  }
+
+  // ── States (pinned via class so a static `state` renders without real focus) ──
+  &--active {
+    --mdc-outlined-text-field-outline-color: var(--appcore-input-border-focus-color);
+  }
+  &--error,
+  &--error-active {
+    --mdc-outlined-text-field-outline-color: var(--appcore-input-error-color);
+
+    .appcore-input__help {
+      color: var(--appcore-input-error-color);
+    }
+  }
+
+  // ── Disabled ──
+  &--disabled {
+    .appcore-input__label,
+    .appcore-input__required,
+    .appcore-input__help,
+    .appcore-input__affix,
+    .appcore-input__affix-text {
+      color: var(--appcore-input-disabled-color);
+    }
+    .appcore-input__field-wrap .mat-mdc-text-field-wrapper {
+      background: var(--appcore-input-disabled-bg);
+    }
+    .appcore-input__label { cursor: default; }
+  }
+}
