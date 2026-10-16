@@ -34,6 +34,21 @@ const meta: Meta<NavBarComponent> = {
       control: 'text',
       description: 'Full name of logged-in user (CBOT only)',
     },
+    searchOpen: {
+      control: 'boolean',
+      description: 'Opens the top search drawer (25% of viewport height). Clicking the search bar also opens it (CCP / WLMP)',
+    },
+    searchValue: {
+      control: 'text',
+      description: 'Current search text; shown in the nav search bar and the drawer input',
+    },
+    searchPlaceholder: {
+      control: 'text',
+      description: 'Placeholder / label shown when the search is empty',
+    },
+    searchOpenChange: { action: 'searchOpenChange' },
+    searchValueChange: { action: 'searchValueChange' },
+    searchSubmit: { action: 'searchSubmit' },
   },
   args: {
     platform: 'CCP',
@@ -42,6 +57,9 @@ const meta: Meta<NavBarComponent> = {
     userName: 'SMP RESELLER',
     marketplaceName: 'Marketplace',
     loggedInUser: 'John Doe',
+    searchOpen: false,
+    searchValue: '',
+    searchPlaceholder: 'Global Search',
   },
 };
 
@@ -69,5 +87,13 @@ export const CBOT: Story = {
   args: {
     platform: 'CBOT',
     loggedInUser: 'John Doe',
+  },
+};
+
+export const SearchDrawerOpen: Story = {
+  args: {
+    platform: 'CCP',
+    searchOpen: true,
+    searchValue: 'Quotes',
   },
 };

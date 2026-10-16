@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -22,10 +22,10 @@ const DEFAULT_NAV_ITEMS = [
           <span class="nav-bar__logo-wordmark">StreamOne Ion</span>
         </div>
         <div class="nav-bar__actions">
-          <div class="nav-bar__search nav-bar__search--filled">
+          <button type="button" class="nav-bar__search nav-bar__search--filled" aria-haspopup="dialog" [attr.aria-expanded]="searchOpen" (click)="openSearch()">
             <span class="material-symbols-rounded nav-bar__search-icon">search</span>
-            <span class="nav-bar__search-label">Global Search</span>
-          </div>
+            <span class="nav-bar__search-label">{{ searchValue || searchPlaceholder }}</span>
+          </button>
           <button class="nav-bar__icon-btn" aria-label="Notifications">
             <span class="material-symbols-rounded">notifications</span>
           </button>
@@ -62,10 +62,10 @@ const DEFAULT_NAV_ITEMS = [
           <span class="nav-bar__mp-name">{{ marketplaceName }}</span>
         </div>
         <div class="nav-bar__actions nav-bar__actions--wide">
-          <div class="nav-bar__search nav-bar__search--outlined">
+          <button type="button" class="nav-bar__search nav-bar__search--outlined" aria-haspopup="dialog" [attr.aria-expanded]="searchOpen" (click)="openSearch()">
             <span class="material-symbols-rounded nav-bar__search-icon nav-bar__search-icon--dark">search</span>
-            <span class="nav-bar__search-label nav-bar__search-label--dark">Global Search</span>
-          </div>
+            <span class="nav-bar__search-label nav-bar__search-label--dark">{{ searchValue || searchPlaceholder }}</span>
+          </button>
           <button class="nav-bar__icon-btn nav-bar__icon-btn--dark" aria-label="Notifications">
             <span class="material-symbols-rounded">notifications</span>
           </button>
@@ -113,6 +113,39 @@ const DEFAULT_NAV_ITEMS = [
         </div>
       </div>
     </nav>
+
+    <!-- ===== SEARCH DRAWER (CCP / WLMP) ===== -->
+    <ng-container *ngIf="platform !== 'CBOT'">
+      <div class="nav-bar__drawer-backdrop" [class.nav-bar__drawer-backdrop--open]="searchOpen" (click)="closeSearch()"></div>
+      <div
+        class="nav-bar__drawer"
+        [class.nav-bar__drawer--open]="searchOpen"
+        role="dialog"
+        aria-label="Search"
+        [attr.aria-hidden]="!searchOpen"
+        (keydown.escape)="closeSearch()"
+      >
+        <div class="nav-bar__drawer-header">
+          <span class="material-symbols-rounded nav-bar__drawer-icon">search</span>
+          <input
+            #drawerInput
+            class="nav-bar__drawer-input"
+            type="search"
+            [placeholder]="searchPlaceholder"
+            [value]="searchValue"
+            [attr.tabindex]="searchOpen ? 0 : -1"
+            (input)="onSearchInput($event)"
+            (keydown.enter)="searchSubmit.emit(searchValue)"
+          />
+          <button type="button" class="nav-bar__icon-btn nav-bar__icon-btn--dark" aria-label="Close search" [attr.tabindex]="searchOpen ? 0 : -1" (click)="closeSearch()">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+        <div class="nav-bar__drawer-body">
+          <ng-content select="[searchResults]"></ng-content>
+        </div>
+      </div>
+    </ng-container>
   `
 })
 export class NavBarComponent {
@@ -124,7 +157,35 @@ export class NavBarComponent {
   @Input() marketplaceName = 'Marketplace';
   @Input() loggedInUser = 'John Doe';
 
+  @Input() searchPlaceholder = 'Global Search';
+  @Input() searchValue = '';
+  /** Whether the top search drawer (quarter of the viewport height) is open. */
+  @Input() searchOpen = false;
+
   @Output() navItemClick = new EventEmitter<string>();
+  @Output() searchOpenChange = new EventEmitter<boolean>();
+  @Output() searchValueChange = new EventEmitter<string>();
+  @Output() searchSubmit = new EventEmitter<string>();
+
+  @ViewChild('drawerInput') drawerInput?: ElementRef<HTMLInputElement>;
+
+  openSearch(): void {
+    if (this.searchOpen) return;
+    this.searchOpen = true;
+    this.searchOpenChange.emit(true);
+    setTimeout(() => this.drawerInput?.nativeElement.focus());
+  }
+
+  closeSearch(): void {
+    if (!this.searchOpen) return;
+    this.searchOpen = false;
+    this.searchOpenChange.emit(false);
+  }
+
+  onSearchInput(event: Event): void {
+    this.searchValue = (event.target as HTMLInputElement).value;
+    this.searchValueChange.emit(this.searchValue);
+  }
 
   onNavItemClick(item: string): void {
     this.activeItem = item;
